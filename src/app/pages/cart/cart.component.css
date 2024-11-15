@@ -1,0 +1,39 @@
+.payment-block {
+    font-family: 'Montserrat', sans-serif; /* Шрифт Montserrat */
+    font-weight: 400; /* Тонкий текст (light) */
+    font-size: 16px; /* Размер шрифта */
+    text-align: center; /* Центровка текста */
+    display: flex;
+    flex-direction: column; /* Текст и сумма вертикально */
+    align-items: center; /* Центровка по горизонтали */
+    color: #000000; /* Черный цвет текста */
+    margin-top: 8px;
+    margin-bottom: 8px; /* Отступы сверху и снизу для центровки */
+}
+
+.payment-text {
+    font-weight: 400; /* Тонкий стиль */
+    margin-bottom: 4px; /* Небольшой отступ от суммы */
+}
+
+.delivery-button {
+    background-color: #BFC7FF;
+    color: #333;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    padding: 15px 20px;
+    text-align: center;
+    cursor: pointer;
+    outline: none; /* Убирает стандартный outline */
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 8px;
+    border: none; /* Убирает возможную черную рамку от границы */
+}
+
+
+.px {
+    margin-bottom: 80px;
+  }

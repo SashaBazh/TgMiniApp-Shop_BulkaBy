@@ -1,0 +1,95 @@
+.pickup-point {
+    display: flex;
+    justify-content: space-between;
+    background-color: #E5E7F6;
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 8px;
+    cursor: pointer;
+  }
+  
+  .pickup-point.selected {
+    background-color: #DADFFF;
+  }
+  
+  .pickup-point-info {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .pickup-point-name {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  .rating-value {
+    font-family: 'Montserrat', sans-serif; /* Шрифт Montserrat */
+    font-size: 18px; /* Размер текста */
+    font-weight: bold; /* Жирное начертание */
+    margin-right: 8px; /* Отступ справа перед звёздами */
+    color: #000000; /* Цвет текста */
+  }
+  
+  
+  .pickup-point-rating {
+    display: flex;
+    align-items: center; /* Выравнивание по центру с рейтингом */
+    gap: 1px; /* Отступ между звездами */
+  }
+  
+  .star {
+    width: 24px;
+    height: 24px;
+  }
+  
+  
+  .star.filled path {
+    fill: #FFB730; /* Золотой цвет для заполненных звезд */
+  }
+  
+  .star.empty path {
+    stroke: #CCCCCC; /* Серый контур для пустых звезд */
+  }
+  
+  .pickup-point-hours {
+    font-weight: 400;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    color: #555;
+    margin-top: 15px;
+  }
+  
+  .pickup-point-selector {
+    display: flex;
+    align-items: center;
+  }
+  
+  .circle {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 3px solid #8B8B8B; /* Начальный серый цвет границы */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent; /* Прозрачный фон по умолчанию */
+    transition: border-color 0.3s, background-color 0.3s; /* Плавный переход цвета */
+  }
+  
+  .circle.selected {
+    border-color: #518FFF; /* Синий цвет границы при выборе */
+    background-color: #DADFFF; /* Синий полупрозрачный фон для выбранного состояния */
+  }
+  
+  .circle.selected::after {
+    content: '';
+    width: 18px; /* Размер внутреннего круга */
+    height: 18px;
+    border-radius: 50%;
+    background-color: #518FFF; /* Синий цвет внутреннего круга */
+  }
+  
+  
+  

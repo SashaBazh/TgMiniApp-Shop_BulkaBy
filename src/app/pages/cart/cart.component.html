@@ -1,0 +1,29 @@
+<app-header pageTitle="Корзина"></app-header>
+<app-image-slider></app-image-slider>
+<app-cart-item
+  [imageSrc]="'../../../assets/products/1.png'"
+  [title]="'Кольцо обручальное из розового золота 106010'"
+  [price]="'1242 р.'">
+</app-cart-item>
+<app-cart-item
+  [imageSrc]="'../../../assets/products/2.png'"
+  [title]="'Кольцо обручальное из розового золота 106010'"
+  [price]="'1242 р.'">
+</app-cart-item>
+
+<div class="payment-block">
+    <span class="payment-text">К оплате: 2484 р.</span>
+</div>
+
+<button class="delivery-button" [routerLink]="['/cart', 'address']">
+    Самовывоз
+</button>
+
+<button class="delivery-button" [routerLink]="['/catalog']">
+    Доставка (Связаться с менеджером)
+</button>
+
+<div class="px">
+</div>
+
+<app-navigation></app-navigation>

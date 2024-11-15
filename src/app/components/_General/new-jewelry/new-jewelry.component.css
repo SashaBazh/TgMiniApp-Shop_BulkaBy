@@ -1,0 +1,45 @@
+.new-jewelry {
+    padding-top: 16px;
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+.section-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+    margin: 0 0 0 8px;
+}
+
+.slider-container:last-child {
+    margin-bottom: 0;
+}
+
+.products-row {
+    display: flex;
+    gap: 54px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+    scroll-padding-left: 50px;
+    scroll-padding-right: 150px;
+    padding: 0;
+    position: relative;
+    transition: all 0.3s ease-out;
+    flex-wrap: nowrap;
+}
+
+/* Скрываем стандартный скроллбар */
+.products-row::-webkit-scrollbar {
+    display: none;
+}
+
+app-product-card {
+    scroll-snap-align: start;
+    flex: 0 0 160px;
+    min-width: 0;
+}

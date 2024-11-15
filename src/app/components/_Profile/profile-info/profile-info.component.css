@@ -1,0 +1,117 @@
+.profile-info-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Montserrat', sans-serif;
+    color: #333;
+    margin-top: 60px;
+  }
+  
+  .profile-avatar img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .profile-details {
+    margin-top: 10px;
+    text-align: center;
+  }
+  
+  .username {
+    font-size: 30px;
+    font-weight: bold;
+
+  }
+  
+  .points {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+  .referral-link-container {
+    display: flex;
+    align-items: center;
+    background-color: #e5e7f6;
+    border-radius: 8px;
+    padding: 16px 12px;
+    margin-top: 16px;
+    width: 100%;
+    justify-content: space-between;
+    box-sizing: border-box;
+  }
+  
+  .referral-label {
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+  .referral-link {
+    color: #5c85ff;
+    text-decoration: none;
+    font-size: 14px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    max-width: 160px;
+  }
+  
+  .copy-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+  }
+  
+  .copy-button img {
+    width: 25px;
+    height: 25px;
+  }
+
+  .friends-list-container {
+    background-color: #e5e7f6;
+    border-radius: 8px;
+    width: 100%;
+    margin-top: 16px;
+    padding: 12px;
+    box-sizing: border-box;
+  }
+  
+  .friends-header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: bold;
+    font-size: 14px;
+    color: #333;
+    background-color: #BFC7FF; /* Цвет фона верхней части */
+    padding: 12px;
+    border-radius: 8px 8px 0 0; /* Скругленные верхние углы */
+    margin: -12px -12px 8px -12px; /* Убираем внутренний отступ, чтобы совпало с фоном контейнера */
+  }
+  
+  .friend-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: #333;
+    padding: 8px 0;
+    border-bottom: 1px solid #d4dcff;
+  }
+  
+  .friend-item:last-child {
+    border-bottom: none; /* Убираем нижнюю границу у последнего элемента */
+  }
+  
+  .friend-username {
+    color: #333;
+  }
+  
+  .friend-points {
+    color: #5c85ff;
+  }
+  

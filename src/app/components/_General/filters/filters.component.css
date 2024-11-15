@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+.dynamic-list {
+    display: flex;
+    overflow-x: auto;
+    gap: 4px;
+    padding: 4px 0;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer 10+ */
+}
+
+.dynamic-list::-webkit-scrollbar {
+    display: none;
+}
+
+.list-item {
+    flex: 0 0 132px;
+    height: 32px;
+    border-radius: 12px;
+    background-color: #E3EDFF;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: #000;
+    display: flex;           /* Для центрирования */
+    align-items: center;     /* Центрирование по вертикали */
+    justify-content: center;  /* Центрирование по горизонтали */
+}
+
+/* Отступ только для первого и последнего элемента */
+.list-item:first-child {
+    margin-left: 8px;
+}
+
+.list-item:last-child {
+    margin-right: 8px;
+}
