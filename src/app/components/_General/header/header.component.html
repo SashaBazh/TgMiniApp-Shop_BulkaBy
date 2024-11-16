@@ -1,11 +1,13 @@
 <header class="header">
-    <button class="header-button">
+    <button class="header-button" (click)="redirectToTelegram()">
         <img src="../../../../assets/icons/phone.svg" alt="menu" width="20" height="24">
-    </button>
+      </button>      
+    
 
     <h1 class="header-title">{{ pageTitle }}</h1>
 
-    <button class="header-button">
+    <button class="header-button" [routerLink]="['/settings']">
         <img src="../../../../assets/icons/menu-dots.svg" alt="phone" width="5" height="22">
     </button>
+    
 </header>

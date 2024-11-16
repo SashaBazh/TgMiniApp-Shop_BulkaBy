@@ -1,6 +1,7 @@
 .catalog {
     max-width: 1440px;
     margin: 0 auto;
+    padding: 8px; /* Внутренний отступ для всей секции */
 }
 
 .section-title {
@@ -8,7 +9,7 @@
     font-size: 24px;
     font-weight: 700;
     color: #333;
-    margin: 0 0 16px 8px;
+    margin: 0 0 8px 8px; /* Отступ снизу - 8px */
 }
 
 .catalog-container {
@@ -18,5 +19,6 @@
 .catalog-items {
     display: grid;
     grid-template-columns: repeat(2, 1fr); /* Два столбца */
-    gap: 0px; /* Отступ между элементами */
+    gap: 8px; /* Отступ между элементами */
+    padding-bottom: 8px; /* Отступ снизу для секции */
 }

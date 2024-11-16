@@ -4,6 +4,8 @@ body {
 
 html, body {
     overflow-x: hidden; /* Скрывает вертикальный скролл */
+    -webkit-overflow-scrolling: touch; /* Плавный скролл для iOS */
+    overscroll-behavior: none; /* Убираем bounce-эффект */
 }
 
 * {

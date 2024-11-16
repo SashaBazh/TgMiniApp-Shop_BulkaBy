@@ -1,0 +1,6 @@
+.settings-container {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px; /* Отступ между компонентами */
+}

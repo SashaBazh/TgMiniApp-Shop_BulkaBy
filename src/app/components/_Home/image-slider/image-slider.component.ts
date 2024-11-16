@@ -14,11 +14,7 @@ export class ImageSliderComponent implements OnInit, OnDestroy {
     {
       url: '../../../../assets/image-slider/Rectangle1.png',
       alt: 'Highway in mountains'
-    },
-    {
-      url: '../../../../assets/image-slider/image.png',
-      alt: 'Book on table'
-    },
+    }
 
   ];
 

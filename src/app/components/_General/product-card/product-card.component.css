@@ -10,7 +10,7 @@
     /* Добавляем фиксированную высоту */
     height: 273px; 
     margin: 8px;
-    border: 1px solid #C1C1C1;
+    border: 0.1px solid #E5E7F6;
     /* Добавляем flexbox для контроля расположения элементов */
     display: flex;
     flex-direction: column;
@@ -18,8 +18,8 @@
 
 .favorite-button {
     position: absolute;
-    top: 16px;
-    right: 16px;
+    top: 8px;
+    right: 8px;
     width: 24px;
     height: 24px;
     border-radius: 50%;
@@ -46,7 +46,8 @@
 }
 
 .product-info {
-    background: #E3EDFF;
+    background: #E5E7F6
+    ;
     border-radius: 0 0 8px 8px;  
     margin-top: 0;               
     width: 100%;

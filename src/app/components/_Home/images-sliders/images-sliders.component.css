@@ -1,10 +1,11 @@
 .sliders-container {
     display: flex;
-    gap: 12px;
+    gap: 8px; /* Отступ между блоками */
+    margin-top: -4px;
 }
 
 .slider {
-    width: calc(50% - 6px); /* 50% минус половина gap */
+    width: calc(50% - 4px); /* 50% минус половина нового gap */
     position: relative;
     height: 184px;
     border-radius: 12px;

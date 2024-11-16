@@ -3,10 +3,11 @@
 .dynamic-list {
     display: flex;
     overflow-x: auto;
-    gap: 4px;
-    padding: 4px 0;
+    gap: 8px;
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* Internet Explorer 10+ */
+    padding-top: 8px;
+    padding-bottom: 1px;
 }
 
 .dynamic-list::-webkit-scrollbar {
@@ -17,7 +18,7 @@
     flex: 0 0 132px;
     height: 32px;
     border-radius: 12px;
-    background-color: #E3EDFF;
+    background-color: #E5E7F6;
     font-family: 'Montserrat', sans-serif;
     font-size: 16px;
     font-weight: 400;

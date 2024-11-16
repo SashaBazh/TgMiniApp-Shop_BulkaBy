@@ -1,0 +1,33 @@
+.options-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px; /* Отступ между кнопками */
+    margin: 16px; /* Отступы вокруг контейнера */
+}
+
+.option-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #e5e7f6;
+    border-radius: 16px;
+    padding: 19px;
+    box-sizing: border-box;
+    cursor: pointer;
+    transition: background-color 0.3s, border-color 0.3s;
+    height: 70px; /* Фиксированная высота */
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: #333;
+    text-align: center;
+}
+
+.option-item:hover {
+    background-color: #d4dcff; /* Цвет фона при наведении */
+}
+
+.option-title {
+    font-size: 20px;
+    font-weight: 600; /* Жирный текст */
+}
