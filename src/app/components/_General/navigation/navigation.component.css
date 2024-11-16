@@ -1,4 +1,4 @@
-.nav-container {
+/* .nav-container {
     position: fixed;
     bottom: 0;
     left: 0;
@@ -22,9 +22,37 @@
 }
 
 .nav-item img {
-    filter: brightness(0) invert(1); /* Делает иконку белой */
+    filter: brightness(0) invert(1);
 }
 
 .nav-item.active img {
-    filter: brightness(0) saturate(100%) invert(37%) sepia(74%) saturate(1909%) hue-rotate(211deg) brightness(101%) contrast(101%); /* Делает иконку цвета #518FFF */
+    filter: brightness(0) saturate(100%) invert(37%) sepia(74%) saturate(1909%) hue-rotate(211deg) brightness(101%) contrast(101%);
+} */
+
+
+
+.nav-container {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 1000;
+    background-color: white;
+    border-top: 1px solid #969696;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    transition: all 0.2s;
+}
+
+.nav-item.active img {
+    filter: invert(67%) sepia(14%) saturate(1391%) hue-rotate(198deg) brightness(102%) contrast(96%);
 }

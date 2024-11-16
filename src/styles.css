@@ -5,3 +5,10 @@ body {
 html, body {
     overflow-x: hidden; /* Скрывает вертикальный скролл */
 }
+
+* {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
