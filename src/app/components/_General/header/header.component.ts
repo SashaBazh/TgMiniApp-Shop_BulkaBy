@@ -15,4 +15,5 @@ export class HeaderComponent {
   redirectToTelegram(): void {
     window.location.href = 'https://t.me/GEORG653';
   }
+  
 }

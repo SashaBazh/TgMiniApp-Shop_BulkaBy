@@ -4,13 +4,13 @@ import { RouterModule } from '@angular/router';
 import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-headerback',
+  selector: 'app-headersettings',
   standalone: true,
   imports: [CommonModule, RouterModule],
-  templateUrl: './headerback.component.html',
-  styleUrl: './headerback.component.css'
+  templateUrl: './headersettings.component.html',
+  styleUrl: './headersettings.component.css'
 })
-export class HeaderbackComponent {
+export class HeadersettingsComponent {
   @Input() pageTitle: string = 'Главная';
 
   constructor(private location: Location) { }

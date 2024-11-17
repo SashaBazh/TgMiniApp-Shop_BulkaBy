@@ -33,6 +33,9 @@
     border: none; /* Убирает возможную черную рамку от границы */
 }
 
+.margin {
+    margin-top: -5px;
+}
 
 .px {
     margin-bottom: 80px;

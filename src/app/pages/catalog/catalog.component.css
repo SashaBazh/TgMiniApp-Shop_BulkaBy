@@ -1,12 +1,7 @@
 .jewelry-wrapper {
     margin: -8px;
-}
-
-.scrollable-container {
-    height: 100%; /* Задаём высоту для контейнера */
-    overflow-y: auto; /* Включаем вертикальную прокрутку */
-    -webkit-overflow-scrolling: touch; /* Плавный скролл для iOS */
-    overscroll-behavior: none; /* Убираем bounce-эффект */
-    -webkit-overscroll-behavior: none;
-    scroll-behavior: smooth; /* Для плавного скролла */
+    margin-top: 10px;
+    min-height: 100vh; /* Занимает всю доступную высоту */
+    overflow-y: auto; /* Разрешить вертикальную прокрутку */
+    margin-bottom: 26px;
 }

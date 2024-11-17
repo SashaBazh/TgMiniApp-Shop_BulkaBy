@@ -22,6 +22,8 @@ export class CataloggeneralComponent implements OnInit {
     { id: 7, name: 'Кольца', imageSrc: '../../../../assets/catalog/1.png' },
     { id: 8, name: 'Серьги', imageSrc: '../../../../assets/catalog/2.png' },
     { id: 9, name: 'Браслеты', imageSrc: '../../../../assets/catalog/1.png' },
+    { id: 10, name: 'Браслеты', imageSrc: '../../../../assets/catalog/1.png' },
+    { id: 11, name: 'Кольца', imageSrc: '../../../../assets/catalog/1.png' },
   ];
 
   items = this.fullItems; // По умолчанию показываем все элементы

@@ -50,4 +50,14 @@ export class TelegramService {
     //   console.error('Telegram WebApp API is not available');
     // }
   }
+
+  getUser(): any {
+    if (this.tg && this.tg.initDataUnsafe && this.tg.initDataUnsafe.user) {
+      return this.tg.initDataUnsafe.user; // Возвращает объект пользователя
+    } else {
+      console.warn('Telegram user data is not available.');
+      return null;
+    }
+  }
+  
 }

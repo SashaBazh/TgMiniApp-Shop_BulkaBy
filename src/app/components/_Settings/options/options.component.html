@@ -1,14 +1,30 @@
 <div class="options-container">
-    <div class="option-item" (click)="selectOption('language')">
-        <span class="option-title">Выбрать язык</span>
+    <div class="option-item" (click)="toggleLanguage()">
+      <span class="option-title">{{ 'SELECT_LANGUAGE' | translate }}</span>
+      <span class="right-text">{{ language }}</span>
     </div>
-    <div class="option-item" (click)="selectOption('currency')">
-        <span class="option-title">Выбрать валюту</span>
+    <div class="option-item" (click)="toggleCurrency()">
+      <span class="option-title">{{ 'SELECT_CURRENCY' | translate }}</span>
+      <span class="right-text">{{ currency }}</span>
     </div>
-    <div class="option-item" (click)="selectOption('birthDate')">
-        <span class="option-title">Дата рождения</span>
+    <div class="option-item" (click)="openDatePicker()">
+      <span class="option-title">{{ 'BIRTH_DATE' | translate }}</span>
+      <span class="right-text">{{ birthDate || ('CHOOSE_DATE' | translate) }}</span>
     </div>
-    <div class="option-item" (click)="selectOption('contactManager')">
-        <span class="option-title">Связь с менеджером</span>
+    <div class="option-item" (click)="contactManager()">
+      <span class="option-title">{{ 'CONTACT_MANAGER' | translate }}</span>
     </div>
-</div>
+  </div>
+  
+  <!-- Modal for Date Picker -->
+  <div class="modal" *ngIf="isDatePickerOpen">
+    <div class="modal-content">
+      <h3>{{ 'BIRTH_DATE' | translate }}</h3>
+      <input type="date" [(ngModel)]="selectedDate" />
+      <div class="modal-actions">
+        <button (click)="saveDate()">{{ 'SAVE' | translate }}</button>
+        <button (click)="closeDatePicker()">{{ 'CANCEL' | translate }}</button>
+      </div>
+    </div>
+  </div>
+  

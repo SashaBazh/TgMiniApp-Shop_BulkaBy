@@ -1,14 +1,14 @@
+/* Существующие стили */
 .options-container {
     display: flex;
     flex-direction: column;
-    gap: 16px; /* Отступ между кнопками */
-    margin: 16px; /* Отступы вокруг контейнера */
+    gap: 8px; /* Отступ между кнопками */
 }
 
 .option-item {
     display: flex;
+    justify-content: space-between;
     align-items: center;
-    justify-content: center;
     background-color: #e5e7f6;
     border-radius: 16px;
     padding: 19px;
@@ -20,7 +20,6 @@
     font-size: 18px;
     font-weight: 600;
     color: #333;
-    text-align: center;
 }
 
 .option-item:hover {
@@ -30,4 +29,91 @@
 .option-title {
     font-size: 20px;
     font-weight: 600; /* Жирный текст */
+}
+
+.right-text {
+    color: #90A2CA;
+    font-size: 18px;
+}
+
+/* Обновленные стили модального окна */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: #e5e7f6; /* Такой же фон, как у .option-item */
+    padding: 20px;
+    border-radius: 16px; /* Такой же радиус скругления */
+    width: 320px;
+    text-align: center;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.modal-content h3 {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.modal-content input[type="date"] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #90A2CA;
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal-actions button {
+    flex: 1;
+    padding: 12px;
+    margin: 0 5px;
+    background-color: #90A2CA;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.modal-actions button:hover {
+    background-color: #7f90b3;
+}
+
+/* Общие стили для кнопок */
+button {
+    padding: 8px 16px;
+    margin: 5px;
+    border-radius: 8px;
+    cursor: pointer;
+    background-color: #90A2CA;
+    color: #fff;
+    border: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #7f90b3;
 }

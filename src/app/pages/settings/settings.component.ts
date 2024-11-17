@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
-import { HeaderbackComponent } from '../../components/_General/headerback/headerback.component';
 import { OptionsComponent } from '../../components/_Settings/options/options.component';
+import { HeadersettingsComponent } from '../../components/_Settings/headersettings/headersettings.component';
 
 @Component({
   selector: 'app-settings',
   standalone: true,
-  imports: [HeaderbackComponent, OptionsComponent],
+  imports: [HeadersettingsComponent, OptionsComponent],
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.css'
 })
