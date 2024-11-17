@@ -1,0 +1,13 @@
+<div class="modal-overlay" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+        <h2>Благодарим за покупку!</h2>
+        <app-order-item [imageSrc]="'../../../assets/products/1.png'"
+            [title]="'Кольцо обручальное из розового золота 106010'" [price]="'1242 р.'">
+        </app-order-item>
+        <app-order-item [imageSrc]="'../../../assets/products/2.png'"
+            [title]="'Кольцо обручальное из розового золота 106010'" [price]="'1242 р.'">
+        </app-order-item>
+        <button class="modal-button" (click)="contactManager()">Связаться с менеджером</button>
+        <button class="modal-button" (click)="navigateHome()">На главную</button>
+    </div>
+</div>

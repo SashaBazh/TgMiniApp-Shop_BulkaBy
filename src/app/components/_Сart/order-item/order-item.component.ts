@@ -2,26 +2,17 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 @Component({
-  selector: 'app-cart-item',
+  selector: 'app-order-item',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './cart-item.component.html',
-  styleUrls: ['./cart-item.component.css'] // Исправлено на styleUrls
+  templateUrl: './order-item.component.html',
+  styleUrl: './order-item.component.css'
 })
-export class CartItemComponent {
+export class OrderItemComponent {
   @Input() imageSrc: string = ''; // Добавьте типы
   @Input() title: string = '';
   @Input() price: string = '';
 
   quantity: number = 1; // Начальное количество
 
-  increaseQuantity() {
-    this.quantity++;
-  }
-
-  decreaseQuantity() {
-    if (this.quantity > 1) {
-      this.quantity--;
-    }
-  }
 }

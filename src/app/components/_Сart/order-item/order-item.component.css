@@ -62,19 +62,11 @@
 .quantity-selector {
     background-color: #8892f6;
     border-radius: 8px;
-    padding: clamp(4px, 1vw, 8px); /* Адаптивные отступы */
-    display: flex;
-    align-items: center;
-    justify-content: center; /* Центрируем элементы */
-    width: clamp(50px, 10vw, 80px); /* Адаптивная ширина */
+    padding: 8px 16px;
     color: #ffffff;
     font-family: 'Montserrat', sans-serif;
-    font-size: clamp(14px, 1.5vw, 16px); /* Адаптивный размер шрифта */
-}
-
-/* Число количества */
-.quantity-number {
-    margin-right: 16px; /* Минимальный отступ для небольшой разницы */
+    font-size: 16px;
+    text-align: center;
 }
 
 /* Контейнер для кнопок вверх и вниз */
@@ -104,7 +96,7 @@
 /* Цена */
 .item-price {
     font-family: 'Montserrat', sans-serif;
-    font-size: clamp(14px, 1.5vw, 20px); /* Адаптивный размер текста */
+    font-size: clamp(15px, 1.5vw, 20px); /* Адаптивный размер текста */
     color: #000000;
     text-align: right;
 }

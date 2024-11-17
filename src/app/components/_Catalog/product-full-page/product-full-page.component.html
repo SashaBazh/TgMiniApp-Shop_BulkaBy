@@ -1,93 +1,82 @@
 <div class="product-full-page">
     <!-- Product Image -->
     <div class="product-image">
-      <img src="../../../../assets/catalog/6.png" alt="Product Image" />
+        <img src="../../../../assets/catalog/6.png" alt="Product Image" />
     </div>
-  
+
     <!-- Product Info -->
     <div class="product-info">
-      <h2 class="product-title">
-        Кольцо с бриллиантами из белого золота 585 пробы арт. 961446
-      </h2>
-      <p class="availability">В наличии: в 1 магазине</p>
-  
-      <div class="product-details">
-        <div class="detail">
-          <span class="detail-title">Цена</span>
-          <span class="detail-value">154,5 BYN</span>
+        <h2 class="product-title">
+            Кольцо с бриллиантами из белого золота 585 пробы арт. 961446
+        </h2>
+        <p class="availability">В наличии: в 1 магазине</p>
+
+        <div class="product-details">
+            <div class="detail">
+                <span class="detail-title">Цена</span>
+                <span class="detail-value">154,5 BYN</span>
+            </div>
+            <div class="detail">
+                <span class="detail-title">Металл</span>
+                <span class="detail-value">Золото</span>
+            </div>
+            <div class="detail">
+                <span class="detail-title">Вес изделия</span>
+                <span class="detail-value">1.55 г.</span>
+            </div>
+            <div class="detail">
+                <span class="detail-title">Вставка</span>
+                <span class="detail-value">Бриллиант</span>
+            </div>
+
+            <!-- Дополнительная информация -->
+            <div class="detail-extra" *ngIf="showDetails">
+                <div class="detail">
+                    <span class="detail-title">Чистота</span>
+                    <span class="detail-value">VS1</span>
+                </div>
+                <div class="detail">
+                    <span class="detail-title">Огранка</span>
+                    <span class="detail-value">Отличная</span>
+                </div>
+                <div class="detail">
+                    <span class="detail-title">Вес вставки</span>
+                    <span class="detail-value">0.2 карата</span>
+                </div>
+                <div class="detail">
+                    <span class="detail-title">Форма</span>
+                    <span class="detail-value">Круглая</span>
+                </div>
+            </div>
+
+            <!-- Стрелка для раскрытия дополнительной информации -->
+            <div class="arrow-container" (click)="toggleDetails()">
+                <svg [class.open]="showDetails" xmlns="http://www.w3.org/2000/svg" width="37" height="37"
+                    viewBox="0 0 37 37" fill="none">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M12.014 15.0974C12.6161 14.4953 13.5922 14.4953 14.1943 15.0974L18.5 19.4031L22.8057 15.0974C23.4078 14.4953 24.3839 14.4953 24.986 15.0974C25.588 15.6994 25.588 16.6756 24.986 17.2776L19.5901 22.6735C18.9881 23.2755 18.0119 23.2755 17.4099 22.6735L12.014 17.2776C11.412 16.6756 11.412 15.6994 12.014 15.0974Z"
+                        fill="#4A67A7" />
+                </svg>
+            </div>
         </div>
-        <div class="detail">
-          <span class="detail-title">Металл</span>
-          <span class="detail-value">Золото</span>
+
+
+
+
+
+        <!-- Buttons -->
+        <div class="actions">
+            <button class="buy-now">Купить сейчас</button>
+            <button class="add-to-cart">В корзину</button>
+            <button class="contact-manager">Связаться с менеджером</button>
         </div>
-        <div class="detail">
-          <span class="detail-title">Вес изделия</span>
-          <span class="detail-value">1.55 г.</span>
-        </div>
-        <div class="detail">
-          <span class="detail-title">Вставка</span>
-          <span class="detail-value">Бриллиант</span>
-        </div>
-        <!-- Стрелка для раскрытия дополнительной информации -->
-        <div class="arrow-container" (click)="toggleDetails()">
-          <svg
-            [class.open]="showDetails"
-            xmlns="http://www.w3.org/2000/svg"
-            width="37"
-            height="37"
-            viewBox="0 0 37 37"
-            fill="none"
-          >
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M12.014 15.0974C12.6161 14.4953 13.5922 14.4953 14.1943 15.0974L18.5 19.4031L22.8057 15.0974C23.4078 14.4953 24.3839 14.4953 24.986 15.0974C25.588 15.6994 25.588 16.6756 24.986 17.2776L19.5901 22.6735C18.9881 23.2755 18.0119 23.2755 17.4099 22.6735L12.014 17.2776C11.412 16.6756 11.412 15.6994 12.014 15.0974Z"
-              fill="#4A67A7"
-            />
-          </svg>
-        </div>
-        <!-- Дополнительная информация -->
-        <div class="detail-extra" *ngIf="showDetails">
-          <div class="detail">
-            <span class="detail-title">Чистота</span>
-            <span class="detail-value">VS1</span>
-          </div>
-          <div class="detail">
-            <span class="detail-title">Огранка</span>
-            <span class="detail-value">Отличная</span>
-          </div>
-          <div class="detail">
-            <span class="detail-title">Вес вставки</span>
-            <span class="detail-value">0.2 карата</span>
-          </div>
-          <div class="detail">
-            <span class="detail-title">Форма</span>
-            <span class="detail-value">Круглая</span>
-          </div>
-        </div>
-      </div>
-      
-      
-      
-  
-      <!-- Buttons -->
-      <div class="actions">
-        <button class="buy-now">Купить сейчас</button>
-        <button class="add-to-cart">В корзину</button>
-        <button class="contact-manager">Связаться с менеджером</button>
-      </div>
     </div>
-  
-    <!-- Recommendations -->
-    <div class="recommendations">
-      <h3>Рекомендации</h3>
-      <div class="recommendation-list">
-        <div class="recommendation-item" *ngFor="let item of recommendations">
-          <img [src]="item.image" alt="Recommendation" />
-          <p>{{ item.title }}</p>
-          <p>{{ item.price }} BYN</p>
-        </div>
-      </div>
+
+    <div class="jewelry-wrapper">
+        <app-recomendations></app-recomendations>
     </div>
-  </div>
-  
+
+    <div class="px">
+    </div>
+
+</div>
