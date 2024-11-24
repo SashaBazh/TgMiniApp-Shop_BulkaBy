@@ -6,14 +6,23 @@ import { ImagesSlidersComponent } from '../../components/_Home/images-sliders/im
 import { NewJewelryComponent } from '../../components/_General/new-jewelry/new-jewelry.component';
 import { CatalogButtonComponent } from '../../components/_Home/catalog-button/catalog-button.component';
 import { CataloggeneralComponent } from '../../components/_General/cataloggeneral/cataloggeneral.component';
+import { FiltersComponent } from '../../components/_General/filters/filters.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NavigationComponent, HeaderComponent, ImageSliderComponent, ImagesSlidersComponent, NewJewelryComponent, CatalogButtonComponent, CataloggeneralComponent],
+  imports: [NavigationComponent, HeaderComponent, ImageSliderComponent, ImagesSlidersComponent, NewJewelryComponent, CatalogButtonComponent, CataloggeneralComponent, FiltersComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 export class HomeComponent {
+
+  items: any[] = [
+    { name: 'Кольца' },
+    { name: 'Серьги' },
+    { name: 'Браслеты' },
+    { name: 'Ожерелья' },
+    { name: 'Подвески' }
+  ];
 
 }

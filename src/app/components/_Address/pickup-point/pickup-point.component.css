@@ -1,7 +1,7 @@
 .pickup-point {
     display: flex;
     justify-content: space-between;
-    background-color: #E5E7F6;
+    background-color: #F3EBDA;
     border-radius: 16px;
     padding: 16px;
     margin-bottom: 8px;
@@ -9,7 +9,7 @@
   }
   
   .pickup-point.selected {
-    background-color: #DADFFF;
+    background-color: #E9DABC;
   }
   
   .pickup-point-info {
@@ -21,7 +21,7 @@
     font-family: 'Montserrat', sans-serif;
     font-weight: bold;
     font-size: 14px;
-    margin-bottom: 8px;
+    margin-bottom: 4px;
   }
 
   .rating-value {
@@ -58,7 +58,7 @@
     font-family: 'Montserrat', sans-serif;
     font-size: 14px;
     color: #555;
-    margin-top: 15px;
+    margin-top: 4px;
   }
   
   .pickup-point-selector {
@@ -79,16 +79,16 @@
   }
   
   .circle.selected {
-    border-color: #518FFF; /* Синий цвет границы при выборе */
+    border-color: #F2A056; /* Синий цвет границы при выборе */
     background-color: #DADFFF; /* Синий полупрозрачный фон для выбранного состояния */
   }
   
   .circle.selected::after {
     content: '';
-    width: 18px; /* Размер внутреннего круга */
-    height: 18px;
+    width: 14px; /* Размер внутреннего круга */
+    height: 14px;
     border-radius: 50%;
-    background-color: #518FFF; /* Синий цвет внутреннего круга */
+    background-color: #F2A056; /* Синий цвет внутреннего круга */
   }
   
   

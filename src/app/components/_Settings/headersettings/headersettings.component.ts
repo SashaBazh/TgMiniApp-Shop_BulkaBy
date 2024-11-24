@@ -8,14 +8,24 @@ import { Location } from '@angular/common';
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './headersettings.component.html',
-  styleUrl: './headersettings.component.css'
+  styleUrls: ['./headersettings.component.css']
 })
 export class HeadersettingsComponent {
   @Input() pageTitle: string = 'Главная';
+  isTooltipVisible: boolean = false;
 
   constructor(private location: Location) { }
 
   goBack() {
     this.location.back();
+  }
+
+  toggleInfoTooltip() {
+    this.isTooltipVisible = !this.isTooltipVisible;
+    if (this.isTooltipVisible) {
+      setTimeout(() => {
+        this.isTooltipVisible = false; // Автоматическое скрытие через 3 секунды
+      }, 5000);
+    }
   }
 }

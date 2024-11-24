@@ -1,10 +1,16 @@
 <app-headerback pageTitle="Адрес"></app-headerback>
 
 <div class="pickup-points-list">
-    <app-pickup-point *ngFor="let point of pickupPoints" [pickupPoint]="point" (click)="selectPickupPoint(point)">
+    <app-pickup-point
+        *ngFor="let point of pickupPoints"
+        [pickupPoint]="point"
+        (click)="selectPickupPoint(point)">
     </app-pickup-point>
 </div>
 
-<button class="delivery-button" [routerLink]="['/cart/address', 'payment']">
-    Подтвердить
+<button
+  class="delivery-button"
+  (click)="confirmOrder()"
+  [disabled]="!isPickupPointSelected">
+  Подтвердить
 </button>

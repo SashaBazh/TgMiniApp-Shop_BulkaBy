@@ -1,14 +1,17 @@
 .catalog-button {
-    background-color: #E5E7F6;
+    background-color: #EBEDF7;
     font-family: 'Montserrat', sans-serif;
     font-size: 20px;
-    font-weight: bold;
+    font-weight: 500;
     border-radius: 16px;
     padding: 15px 20px;
     text-align: center;
-    width: 100%;
-    color: #333;
-    margin-top: -18px;
-    border: none; /* Убирает рамку вокруг элемента */
-    outline: none; /* Убирает обводку при фокусе (например, после клика) */
+    width: 96%;
+    box-sizing: border-box; /* Учитывает padding при вычислении ширины */
+    color: #000000;
+    border: none;
+    outline: none;
+    border: 1px solid #C3C9E6;
+    margin-left: 8px; /* Убирает боковые отступы */
+    margin-right: 8px;
 }

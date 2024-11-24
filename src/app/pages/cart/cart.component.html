@@ -1,30 +1,30 @@
 <app-header pageTitle="Корзина"></app-header>
 <app-image-slider></app-image-slider>
 <div class="margin">
-  <app-cart-item [imageSrc]="'../../../assets/products/1.png'" [title]="'Кольцо обручальное из розового золота 106010'"
-    [price]="'1242 р.'">
-  </app-cart-item>
-  <app-cart-item [imageSrc]="'../../../assets/products/2.png'" [title]="'Кольцо обручальное из розового золота 106010'"
-    [price]="'1242 р.'">
-  </app-cart-item>
-</div>
+  <div *ngIf="cart">
+    <app-cart-item *ngFor="let item of cart.items" [imageSrc]="item.image || 'assets/default-image.png'"
+    [title]="item.product_name"
+      [price]="item.price" [quantity]="item.quantity" [productId]="item.product_id"
+      (itemRemoved)="onItemRemoved($event)" (quantityChanged)="onQuantityChanged($event)"></app-cart-item>
 
+    <div class="payment-block">
+      <span class="payment-text">К оплате: {{ cart.total_price }} USD</span>
+    </div>
+  </div>
 
-<div class="payment-block">
-  <span class="payment-text">К оплате: 2484 р.</span>
 </div>
 
 <button class="delivery-button" [routerLink]="['/cart', 'address']">
   Самовывоз
 </button>
 
-<button class="delivery-button" [routerLink]="['/product1']">
+<button class="delivery-button" (click)="redirectToTelegram()">
   Доставка (Связаться с менеджером)
 </button>
 
-<button class="delivery-button" (click)="openModal()">Модалка после оплаты</button>
+<!-- <button class="delivery-button" (click)="openModal()">Модалка после оплаты</button> -->
 
-<app-modal *ngIf="showModal" [items]="items" (close)="closeModal()"></app-modal>
+<!-- <app-modal *ngIf="showModal" [items]="items" (close)="closeModal()"></app-modal> -->
 
 
 

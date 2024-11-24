@@ -9,7 +9,6 @@
     width: 200px; 
     /* Добавляем фиксированную высоту */
     height: 273px; 
-    margin: 8px;
     border: 0.1px solid #E5E7F6;
     /* Добавляем flexbox для контроля расположения элементов */
     display: flex;
@@ -37,17 +36,14 @@
 }
 
 .product-image {
-    width: 90%;
+    width: 100%;
     /* Задаем фиксированную высоту для изображения */
     height: 209px;
     object-fit: cover;
-    border-radius: 8px;
-    margin: 10px auto 0;
 }
 
 .product-info {
-    background: #E5E7F6
-    ;
+    background: #F3EBDA;
     border-radius: 0 0 8px 8px;  
     margin-top: 0;               
     width: 100%;

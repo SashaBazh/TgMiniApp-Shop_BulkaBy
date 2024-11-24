@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { PickupPoint } from '../../../interfaces/_Address/pickup-point.interface';
 import { CommonModule } from '@angular/common';
+import { PickupPoint } from '../../../interfaces/_Address/pickup-point.interface';
 
 @Component({
   selector: 'app-pickup-point',
@@ -16,10 +16,6 @@ export class PickupPointComponent implements OnInit {
 
   ngOnInit(): void {
     this.calculateStarOffsets();
-  }
-
-  selectPickupPoint(): void {
-    this.pickupPoint.selected = !this.pickupPoint.selected;
   }
 
   private calculateStarOffsets(): void {

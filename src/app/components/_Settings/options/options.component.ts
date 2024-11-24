@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-options',
@@ -12,6 +13,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
     FormsModule,
     HttpClientModule,
     TranslateModule,
+    RouterLink
   ],
   templateUrl: './options.component.html',
   styleUrls: ['./options.component.css'],

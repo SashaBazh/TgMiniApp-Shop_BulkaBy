@@ -1,0 +1,116 @@
+<div class="filters-page container">
+  <div *ngIf="message" class="notification" [ngClass]="{'success': isSuccess, 'error': !isSuccess}">
+    <span>{{ message }}</span>
+    <button class="close-btn" (click)="closeNotification()">×</button>
+  </div>
+
+  <section class="create-filter bg-light rounded mb-4 p-4">
+    <h1 class="mb-4">Создание атрибута</h1>
+    <form [formGroup]="createAttributeForm" (ngSubmit)="submitAttributeForm()">
+      <!-- Название атрибута -->
+      <div class="form-group mb-3">
+        <label for="attribute-name" class="form-label">Название атрибута</label>
+        <input
+          id="attribute-name"
+          class="form-control"
+          formControlName="name"
+          placeholder="Введите название атрибута"
+        />
+      </div>
+  
+      <!-- Тип данных -->
+      <div class="form-group mb-3">
+        <label for="attribute-type" class="form-label">Тип данных</label>
+        <select
+          id="attribute-type"
+          class="form-control"
+          formControlName="data_type"
+          (change)="onDataTypeChange($event)"
+        >
+          <option value="">Выберите тип данных</option>
+          <option value="string">Строка</option>
+          <option value="integer">Целое число</option>
+          <option value="float">Дробное число</option>
+          <option value="boolean">Булевый</option>
+          <option value="choice">Перечисление</option>
+        </select>
+      </div>
+  
+      <!-- Опции для атрибута -->
+      <div *ngIf="isChoiceType" class="form-group mb-3">
+        <label for="attribute-options" class="form-label">Опции атрибута</label>
+        <div *ngFor="let option of options; let i = index" class="d-flex mb-2">
+          <input
+            type="text"
+            class="form-control me-2"
+            [(ngModel)]="options[i]"
+            placeholder="Введите опцию"
+            name="option-{{ i }}"
+          />
+          <button type="button" class="btn btn-danger" (click)="removeOption(i)">Удалить</button>
+        </div>
+        <button type="button" class="btn btn-secondary" (click)="addOption()">Добавить опцию</button>
+      </div>
+  
+      <!-- Фильтруемый атрибут -->
+      <div class="form-group mb-3">
+        <label for="attribute-filterable" class="form-label">Можно фильтровать</label>
+        <input
+          id="attribute-filterable"
+          type="checkbox"
+          class="form-check-input"
+          formControlName="is_filterable"
+        />
+        <label for="attribute-filterable" class="form-check-label ms-2">Да</label>
+      </div>
+  
+      <!-- Кнопка создания -->
+      <button type="submit" class="btn btn-primary" [disabled]="createAttributeForm.invalid">
+        Создать атрибут
+      </button>
+    </form>
+  </section>
+  
+
+  <!-- Список атрибутов -->
+  <section class="attributes-list">
+    <h2 class="mb-4">Список атрибутов</h2>
+    <div *ngFor="let attribute of attributes" class="attribute-item mb-3">
+      <div class="d-flex justify-content-between align-items-center">
+        <span>{{ attribute.name }} ({{ attribute.data_type }})</span>
+        <div>
+          <button class="btn btn-info btn-sm me-2" (click)="startEditing(attribute)">Редактировать</button>
+          <button class="btn btn-danger btn-sm" (click)="deleteAttribute(attribute.id)">Удалить</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Форма редактирования -->
+  <section *ngIf="editingAttribute" class="edit-filter bg-light rounded mb-4 p-4">
+    <h1 class="mb-4">Редактирование атрибута</h1>
+    <form [formGroup]="editAttributeForm" (ngSubmit)="updateAttribute()">
+      <div class="form-group mb-3">
+        <label for="edit-name" class="form-label">Название атрибута</label>
+        <input id="edit-name" class="form-control" formControlName="name" />
+      </div>
+      <div class="form-group mb-3">
+        <label for="edit-type" class="form-label">Тип данных</label>
+        <select id="edit-type" class="form-control" formControlName="data_type">
+          <option value="">Выберите тип данных</option>
+          <option value="string">Строка</option>
+          <option value="integer">Целое число</option>
+          <option value="float">Дробное число</option>
+          <option value="boolean">Булевый</option>
+          <option value="choice">Перечисление</option>
+        </select>
+      </div>
+      <div class="form-group mb-3">
+        <label for="edit-filterable" class="form-label">Можно фильтровать</label>
+        <input id="edit-filterable" type="checkbox" class="form-check-input" formControlName="is_filterable" />
+      </div>
+      <button type="submit" class="btn btn-success" [disabled]="editAttributeForm.invalid">Сохранить</button>
+      <button type="button" class="btn btn-secondary" (click)="cancelEditing()">Отмена</button>
+    </form>
+  </section>
+</div>

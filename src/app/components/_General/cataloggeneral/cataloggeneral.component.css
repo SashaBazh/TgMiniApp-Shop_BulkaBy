@@ -1,19 +1,17 @@
 .catalog {
     max-width: 1440px;
     margin: 0 auto;
-    padding: 8px; /* Внутренний отступ для всей секции */
+    padding-left: 8px;
+    padding-right: 8px;
+    height: 90%;
 }
 
 .section-title {
     font-family: 'Montserrat', sans-serif;
     font-size: 24px;
-    font-weight: 700;
-    color: #333;
-    margin: 0 0 8px 8px; /* Отступ снизу - 8px */
-}
-
-.catalog-container {
-    margin-bottom: 16px;
+    font-weight: 400;
+    color: #000000;
+    margin: 8px 0 8px 8px; /* Отступ снизу - 8px */
 }
 
 .catalog-items {

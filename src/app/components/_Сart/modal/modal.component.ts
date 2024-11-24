@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { OrderItemComponent } from '../order-item/order-item.component';
 
 @Component({
@@ -7,23 +8,30 @@ import { OrderItemComponent } from '../order-item/order-item.component';
   standalone: true,
   imports: [CommonModule, OrderItemComponent],
   templateUrl: './modal.component.html',
-  styleUrl: './modal.component.css'
+  styleUrls: ['./modal.component.css'],
 })
 export class ModalComponent {
   @Input() items: { image: string; title: string; price: string }[] = [];
   @Output() close = new EventEmitter<void>();
+
+  constructor(private router: Router) {}
 
   closeModal() {
     this.close.emit(); // Сообщить о закрытии
   }
 
   contactManager() {
-    console.log('Связаться с менеджером');
+    this.redirectToTelegram();
     this.closeModal();
   }
 
   navigateHome() {
-    console.log('Перейти на главную');
-    this.closeModal();
+    this.router.navigate(['/home']).then(() => {
+      this.closeModal();
+    });
+  }
+
+  redirectToTelegram(): void {
+    window.location.href = 'https://t.me/GEORG653';
   }
 }

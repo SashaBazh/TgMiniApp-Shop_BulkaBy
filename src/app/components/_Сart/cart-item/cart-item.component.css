@@ -1,7 +1,7 @@
 .cart-item {
     display: flex;
     align-items: flex-start; /* Выравнивание по верхнему краю всего блока */
-    background-color: #e5e7f6;
+    background-color: #F3EBDA;
     border-radius: 16px;
     padding: 8px;
     gap: 16px; /* Отступ между изображением и текстом, равный отступу переключателя */
@@ -60,7 +60,7 @@
 
 /* Блок выбора количества */
 .quantity-selector {
-    background-color: #8892f6;
+    background-color: #BCC4FA;
     border-radius: 8px;
     padding: clamp(4px, 1vw, 8px); /* Адаптивные отступы */
     display: flex;
@@ -70,6 +70,8 @@
     color: #ffffff;
     font-family: 'Montserrat', sans-serif;
     font-size: clamp(14px, 1.5vw, 16px); /* Адаптивный размер шрифта */
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 /* Число количества */

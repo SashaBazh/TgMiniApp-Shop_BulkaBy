@@ -1,12 +1,27 @@
-<app-headerback pageTitle="Спопособ оплаты"></app-headerback>
+<app-headerback pageTitle="Способ оплаты"></app-headerback>
 
 <div class="payment-methods-container">
-    <app-payment-method-item imageSrc="../../../assets/payments/1.png" title="USDT">
-    </app-payment-method-item>
+    <!-- USDT-BSC -->
+    <div class="payment-method" (click)="handleNetworkClick('USDT-BEP20')">
+        <app-payment-method-item 
+            imageSrc="../../../assets/payments/1.png" 
+            title="USDT-BSC">
+        </app-payment-method-item>
+    </div>
 
-    <app-payment-method-item imageSrc="../../../assets/payments/2.png" title="спб (RUB)">
-    </app-payment-method-item>
-
-    <app-payment-method-item imageSrc="../../../assets/payments/3.png" title="VISA (USD)">
-    </app-payment-method-item>
+    <!-- USDT-TRON -->
+    <div class="payment-method" (click)="handleNetworkClick('USDT-TRC20')">
+        <app-payment-method-item 
+            imageSrc="../../../assets/payments/3.png" 
+            title="USDT-TRON">
+        </app-payment-method-item>
+    </div>
 </div>
+
+<!-- <div *ngIf="orderId; else noOrder">
+    <p>Идентификатор заказа: {{ orderId }}</p>
+</div> -->
+
+<ng-template #noOrder>
+    <p>Заказ не найден. Пожалуйста, вернитесь на страницу выбора.</p>
+</ng-template>

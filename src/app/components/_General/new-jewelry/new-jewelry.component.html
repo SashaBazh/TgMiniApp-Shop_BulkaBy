@@ -1,21 +1,26 @@
 <section class="new-jewelry">
-    <h2 class="section-title">Новые украшения</h2>
-    <app-filters [items]="items"></app-filters>
-
-
-    <!-- Первая строка -->
-    <div class="slider-container">
-        <div class="products-row" #productRow>
-            <app-product-card *ngFor="let product of firstRowProducts" [product]="product">
-            </app-product-card>
+  
+    <div class="products-container">
+      <p *ngIf="isLoading" class="loading-text">Загрузка товаров...</p>
+      <p *ngIf="!isLoading && !products?.length" class="no-results-text">
+        К сожалению, ничего не найдено 😞
+      </p>
+  
+      <!-- Первая строка -->
+      <div class="slider-container">
+        <div class="products-row">
+          <app-product-card *ngFor="let product of firstRowProducts" [product]="product">
+          </app-product-card>
         </div>
-    </div>
-
-    <!-- Вторая строка -->
-    <div class="slider-container">
-        <div class="products-row" #productRow>
-            <app-product-card *ngFor="let product of secondRowProducts" [product]="product">
-            </app-product-card>
+      </div>
+  
+      <!-- Вторая строка -->
+      <div class="slider-container">
+        <div class="products-row">
+          <app-product-card *ngFor="let product of secondRowProducts" [product]="product">
+          </app-product-card>
         </div>
+      </div>
     </div>
-</section>
+  </section>
+  

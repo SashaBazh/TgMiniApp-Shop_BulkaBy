@@ -1,0 +1,85 @@
+.category-title {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 32px;
+    font-weight: 500;
+    color: #000000;
+    margin: 0 0 0 8px;
+}
+
+.loading-text,
+.no-results-text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: #777E91;
+    /* Нейтральный серый цвет */
+    text-align: center;
+    /* Центрируем текст */
+    margin: 20px 0;
+    /* Отступы сверху и снизу */
+}
+
+.filters {
+    margin: 8px;
+}
+
+.no-results-text {
+    margin: 8px;
+    font-size: 20px;
+    /* Увеличиваем размер текста */
+    font-weight: 600;
+    /* Увеличиваем толщину шрифта */
+    color: #4A67A7;
+    /* Насыщенный синий цвет */
+    text-align: center;
+    margin-top: 150px;
+    /* Дополнительный отступ сверху */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    /* Если нужно добавить иконку */
+}
+
+.no-results-text::after {
+    content: "Попробуйте изменить параметры поиска.";
+    font-size: 16px;
+    color: #555;
+    font-weight: 400;
+    margin-top: 8px;
+}
+
+
+.products-container {
+    display: flex;
+    flex-direction: column;
+    /* Размещаем строки вертикально */
+    gap: 8px;
+    /* Расстояние между строками */
+    margin: 8px;
+}
+
+.product-row {
+    display: flex;
+    /* Горизонтальное расположение элементов */
+    gap: 8px;
+    /* Расстояние между элементами в строке */
+    overflow-x: auto;
+    /* Включаем горизонтальный скролл для строки */
+    -webkit-overflow-scrolling: touch;
+    /* Плавный скроллинг для iOS */
+    scrollbar-width: none;
+    /* Скрыть скроллбар в Firefox */
+}
+
+.product-row::-webkit-scrollbar {
+    display: none;
+    /* Скрыть скроллбар в WebKit-браузерах (Chrome, Safari) */
+}
+
+app-product-card {
+    flex: 0 0 calc(50% - 8px);
+    /* Ширина элемента — половина строки минус отступ */
+    box-sizing: border-box;
+    /* Учитываем отступы в ширине */
+}

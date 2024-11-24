@@ -1,38 +1,160 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
-
 .dynamic-list {
-    display: flex;
-    overflow-x: auto;
-    gap: 8px;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* Internet Explorer 10+ */
-    padding-top: 8px;
-    padding-bottom: 1px;
+  display: flex;
+  overflow-x: auto; /* Горизонтальный скроллинг */
+  overflow-y: visible; /* Разрешаем вертикальное перекрытие */
+  gap: 8px;
+  padding-bottom: 150px;
+  scrollbar-width: none; /* Убираем скроллбар в Firefox */
+  -ms-overflow-style: none; /* Убираем скроллбар в IE10+ */
+  position: relative; /* Для позиционирования дочерних элементов */
+  z-index: 1; /* Устанавливаем контекст наложения */
 }
 
 .dynamic-list::-webkit-scrollbar {
-    display: none;
+  display: none; /* Убираем скроллбар в Chrome */
 }
 
 .list-item {
-    flex: 0 0 132px;
-    height: 32px;
-    border-radius: 12px;
-    background-color: #E5E7F6;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 16px;
-    font-weight: 400;
-    color: #000;
-    display: flex;           /* Для центрирования */
-    align-items: center;     /* Центрирование по вертикали */
-    justify-content: center;  /* Центрирование по горизонтали */
+  position: relative; /* Для позиционирования .item-options */
+  flex: 0 0 auto;
+  min-width: 150px;
+  padding: 12px;
+  border-radius: 12px;
+  background-color: #e5e7f6;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #000;
+  text-align: center; /* Текст по центру */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  z-index: 1; /* Чтобы элемент не обрезался */
 }
 
-/* Отступ только для первого и последнего элемента */
-.list-item:first-child {
-    margin-left: 8px;
+.list-item:hover {
+  background-color: #d1d5f0; /* Цвет при наведении */
 }
 
-.list-item:last-child {
-    margin-right: 8px;
+.item-title {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  font-family: 'Montserrat', sans-serif;
+  cursor: pointer;
+  padding-right: 24px; /* Отступ для стрелки */
+}
+
+.toggle-icon {
+  position: absolute;
+  right: 8px; /* Располагаем стрелку справа */
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  transition: transform 0.3s ease;
+}
+
+.toggle-icon.expanded {
+  transform: translateY(-50%) rotate(180deg); /* Поворот стрелки */
+}
+
+.item-options {
+  position: absolute; /* Абсолютное позиционирование */
+  top: 100%; /* Расположить ниже заголовка */
+  left: 0;
+  width: 90%; /* Чтобы совпадало с шириной родителя */
+  background-color: #ffffff; /* Белый фон для видимости */
+  border: 1px solid #d1d5f0; /* Лёгкая граница */
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Тень для улучшения визуала */
+  border-radius: 8px; /* Радиус для стилистики */
+  z-index: 1000; /* Увеличиваем z-index для отображения поверх */
+  padding: 8px; /* Отступы внутри */
+  animation: fade-in 0.3s ease forwards; /* Анимация появления */
+  overflow: hidden; /* Убираем выходящие части */
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.option-item {
+  margin-bottom: 8px;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 400;
+  position: relative;
+  padding-left: 25px; /* Пространство для чекбокса */
+  cursor: pointer;
+}
+
+.checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkbox-container .checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #e5e7f6;
+  border: 1px solid #d1d5f0;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+}
+
+.checkbox-container input:checked ~ .checkmark {
+  background-color: #6366f1;
+  border-color: #6366f1;
+}
+
+.checkbox-container .checkmark:after {
+  content: '';
+  position: absolute;
+  display: none;
+}
+
+.checkbox-container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.checkbox-container .checkmark:after {
+  left: 7px;
+  top: 3px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+.toggle-icon svg path {
+  fill: #8d8b8b; /* Цвет стрелки */
+  transition: fill 0.3s ease;
+}
+
+.list-item:hover .toggle-icon svg path {
+  fill: #6366f1; /* Цвет стрелки при наведении */
 }

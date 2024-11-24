@@ -5,7 +5,7 @@
 .delivery-button {
     position: fixed; /* Фиксируем кнопку */
     bottom: 20px; /* Отступ от нижнего края */
-    background-color: #BFC7FF;
+    background-color: #EBEDF7;
     color: #333;
     font-family: 'Montserrat', sans-serif;
     font-size: 16px;

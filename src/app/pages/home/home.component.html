@@ -1,15 +1,21 @@
 <app-header pageTitle="Главная"></app-header>
 
+<div class="home">
+    <app-image-slider></app-image-slider>
+    <app-images-sliders></app-images-sliders>
 
-<app-image-slider></app-image-slider>
-<app-images-sliders></app-images-sliders>
-<div class="jewelry-wrapper">
-    <app-new-jewelry></app-new-jewelry>
-    <app-cataloggeneral [displayCount]="2"></app-cataloggeneral>
+    <div class="jewelry-wrapper">
+        <h2 class="section-title">Каталог</h2>
+        <app-cataloggeneral [displayCount]="2"></app-cataloggeneral>
+        <app-catalog-button></app-catalog-button>
+        <h2 class="section-title2">Новые украшения</h2>
+        <div class="filters">
+            <app-filters [items]="items"></app-filters>
+        </div>
+        <div class="newjeverly">
+            <app-new-jewelry></app-new-jewelry>
+        </div>
+    </div>
 </div>
 
-<app-catalog-button></app-catalog-button>
-
-<div class="px">
-</div>
 <app-navigation></app-navigation>

@@ -7,10 +7,20 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/home/home.component').then((m) => m.HomeComponent),
   },
+  { 
+    path: 'catalog', 
+    loadComponent: () => 
+      import('./pages/catalog/catalog.component').then((m) => m.CatalogComponent), 
+  },
   {
-    path: 'catalog',
+    path: 'catalog/:category',
     loadComponent: () =>
-      import('./pages/catalog/catalog.component').then((m) => m.CatalogComponent),
+      import('./pages/productsincatalog/productsincatalog.component').then((m) => m.ProductsincatalogComponent),
+  },  
+  {
+    path: 'catalog/:category/:id',
+    loadComponent: () =>
+      import('./pages/product/product.component').then((m) => m.ProductComponent),
   },
   {
     path: 'product1',
@@ -44,5 +54,29 @@ export const routes: Routes = [
         (m) => m.PaymentMethodComponent
       ),
   },
-  { path: '**', redirectTo: '/home' },
+
+
+
+   // Admin panel routes
+   {
+    path: 'admin',
+    loadComponent: () =>
+      import('./pages/_Admin/admin-page/admin-page.component').then((m) => m.AdminPageComponent),
+  },
+   {
+    path: 'admin/categories',
+    loadComponent: () =>
+      import('./admincomponents/categories/categories.component').then((m) => m.CategoriesComponent),
+  },
+  {
+    path: 'admin/products',
+    loadComponent: () =>
+      import('./admincomponents/products/products.component').then((m) => m.ProductsComponent),
+  },
+  {
+    path: 'admin/filters',
+    loadComponent: () =>
+      import('./admincomponents/filters/filters.component').then((m) => m.FiltersComponent),
+  },
+  // { path: '**', redirectTo: '/home' },
 ];

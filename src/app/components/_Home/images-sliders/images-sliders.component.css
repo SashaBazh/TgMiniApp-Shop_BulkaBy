@@ -1,13 +1,13 @@
 .sliders-container {
     display: flex;
     gap: 8px; /* Отступ между блоками */
-    margin-top: -4px;
+    margin-top: 8px;
 }
 
 .slider {
     width: calc(50% - 4px); /* 50% минус половина нового gap */
     position: relative;
-    height: 184px;
+    height: 198px;
     border-radius: 12px;
     overflow: hidden;
 }

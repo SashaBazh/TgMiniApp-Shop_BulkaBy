@@ -1,7 +1,7 @@
 .payment-method-item {
     display: flex;
     align-items: center;
-    background-color: #e5e7f6;
+    background-color: #E9DABC;
     border-radius: 16px;
     padding: 19px;
     gap: 16px; /* Отступ между изображением и текстом */

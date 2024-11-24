@@ -1,0 +1,53 @@
+.search-container {
+  display: flex;
+  align-items: center;
+  background-color: #e5e7f6;
+  border-radius: 12px;
+  padding: 5px 10px;
+  width: calc(100% - 16px); /* Учитываем отступы родителя (8px слева и справа) */
+  box-sizing: border-box;
+  margin: 8px auto; /* Центрируем по горизонтали */
+  overflow: hidden; /* Предотвращаем выход элементов за границы */
+}
+
+
+.search-input {
+  flex: 1; /* Поле ввода занимает всё доступное пространство */
+  border: none;
+  outline: none;
+  background-color: transparent;
+  padding: 10px 12px;
+  font-size: 16px;
+  font-family: 'Montserrat', sans-serif; /* Шрифт Montserrat */
+  color: #333; /* Цвет текста */
+  min-width: 0; /* Позволяет полю уменьшаться, если нужно */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Плавный переход */
+}
+
+.search-input::placeholder {
+  color: #999; /* Цвет текста-заполнителя */
+  font-style: italic; /* Делаем текст-заполнитель более легким */
+}
+
+.search-button {
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-button svg {
+  width: 20px;
+  height: 20px;
+  fill: #777E90;
+  transition: fill 0.2s ease;
+  margin-right: 4px;
+}
+
+.search-button:hover svg {
+  fill: #4f46e5;
+}

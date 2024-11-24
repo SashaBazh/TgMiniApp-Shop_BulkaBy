@@ -1,56 +1,49 @@
-<div class="product-full-page">
-    <!-- Product Image -->
-    <div class="product-image">
-        <img src="../../../../assets/catalog/6.png" alt="Product Image" />
+<div class="product-full-page" *ngIf="product">
+    <div class="media-gallery">
+        <div class="slider">
+            <div class="media-container">
+                <ng-container *ngIf="currentMedia">
+                    <!-- Изображение -->
+                    <img *ngIf="isImage(currentMedia)" [src]="currentMedia" alt="Media Content" class="slider-media" />
+                    <!-- Видео -->
+                    <video *ngIf="isVideo(currentMedia)" [src]="currentMedia" controls class="slider-media"></video>
+                </ng-container>
+            </div>
+
+            <!-- Навигационные точки -->
+            <div class="dots">
+                <button *ngFor="let media of mediaItems; let i = index" class="dot"
+                    [class.active]="i === currentMediaIndex" (click)="selectMedia(i)">
+                </button>
+            </div>
+        </div>
     </div>
+
+
+
 
     <!-- Product Info -->
     <div class="product-info">
-        <h2 class="product-title">
-            Кольцо с бриллиантами из белого золота 585 пробы арт. 961446
-        </h2>
-        <p class="availability">В наличии: в 1 магазине</p>
+        <h2 class="product-title">{{ product.name }}</h2>
 
         <div class="product-details">
-            <div class="detail">
-                <span class="detail-title">Цена</span>
-                <span class="detail-value">154,5 BYN</span>
-            </div>
-            <div class="detail">
-                <span class="detail-title">Металл</span>
-                <span class="detail-value">Золото</span>
-            </div>
-            <div class="detail">
-                <span class="detail-title">Вес изделия</span>
-                <span class="detail-value">1.55 г.</span>
-            </div>
-            <div class="detail">
-                <span class="detail-title">Вставка</span>
-                <span class="detail-value">Бриллиант</span>
+            <!-- Main Attributes -->
+            <div class="detail" *ngFor="let attr of mainAttributes">
+                <span class="detail-title">{{ attr.name }}</span>
+                <span class="detail-value">{{ attr.value }}</span>
             </div>
 
-            <!-- Дополнительная информация -->
+            <!-- Extra Attributes -->
             <div class="detail-extra" *ngIf="showDetails">
-                <div class="detail">
-                    <span class="detail-title">Чистота</span>
-                    <span class="detail-value">VS1</span>
-                </div>
-                <div class="detail">
-                    <span class="detail-title">Огранка</span>
-                    <span class="detail-value">Отличная</span>
-                </div>
-                <div class="detail">
-                    <span class="detail-title">Вес вставки</span>
-                    <span class="detail-value">0.2 карата</span>
-                </div>
-                <div class="detail">
-                    <span class="detail-title">Форма</span>
-                    <span class="detail-value">Круглая</span>
+                <div class="detail" *ngFor="let attr of extraAttributes">
+                    <span class="detail-title">{{ attr.name }}</span>
+                    <span class="detail-value">{{ attr.value }}</span>
                 </div>
             </div>
 
-            <!-- Стрелка для раскрытия дополнительной информации -->
+            <!-- Toggle Details Arrow -->
             <div class="arrow-container" (click)="toggleDetails()">
+                <!-- SVG Arrow Icon -->
                 <svg [class.open]="showDetails" xmlns="http://www.w3.org/2000/svg" width="37" height="37"
                     viewBox="0 0 37 37" fill="none">
                     <path fill-rule="evenodd" clip-rule="evenodd"
@@ -60,23 +53,16 @@
             </div>
         </div>
 
-
-
-
-
         <!-- Buttons -->
         <div class="actions">
-            <button class="buy-now">Купить сейчас</button>
-            <button class="add-to-cart">В корзину</button>
+            <button class="add-to-cart" (click)="addToCartFast()">Купить сейчас</button>
+            <button class="add-to-cart" (click)="addToCart()">В корзину</button>
             <button class="contact-manager">Связаться с менеджером</button>
         </div>
     </div>
 
+    <!-- Recommendations -->
     <div class="jewelry-wrapper">
         <app-recomendations></app-recomendations>
     </div>
-
-    <div class="px">
-    </div>
-
 </div>

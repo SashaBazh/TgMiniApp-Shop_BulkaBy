@@ -19,7 +19,7 @@
     max-width: 400px;
     margin: 8px;
   }
-  
+
   .modal-content h2 {
     font-family: 'Montserrat', sans-serif; /* Шрифт Montserrat */
     font-size: 24px; /* Размер шрифта */
@@ -70,14 +70,19 @@
   }
   
   .modal-button {
-    background: #BFC7FF;
+    background-color: #BFC7FF;
     color: #333;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 16px;
     font-weight: bold;
-    padding: 10px;
-    border: none;
     border-radius: 8px;
-    width: 100%;
-    margin-top: 8px;
+    padding: 15px 20px;
+    text-align: center;
     cursor: pointer;
+    outline: none; /* Убирает стандартный outline */
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 8px;
+    border: none; /* Убирает возможную черную рамку от границы */
   }
   

@@ -1,11 +1,45 @@
 <header class="header">
     <button class="header-button" (click)="goBack()">
-        <img src="../../../../assets/icons/back.svg" alt="назад" width="9" height="12">
+      <img src="../../../../assets/icons/back.svg" alt="назад" width="9" height="12">
     </button>
-
+  
     <h1 class="header-title">{{ pageTitle }}</h1>
-
-    <button class="header-button" [routerLink]="['/settings']">
-        <img src="../../../../assets/icons/info.svg" alt="phone" width="24" height="24">
+  
+    <button class="header-button" (click)="toggleInfoTooltip()">
+      <img src="../../../../assets/icons/info.svg" alt="info" width="24" height="24">
     </button>
-</header>
+  </header>
+  
+  <!-- Всплывающее сообщение -->
+<div *ngIf="isTooltipVisible" class="info-tooltip">
+    <div class="tooltip-content">
+      <p class="tooltip-title">Что вы можете сделать в настройках:</p>
+      <div class="options-container">
+        <div class="option-item">
+          <span class="option-title">Выбор языка</span>
+          <p class="option-description">
+            Переключите язык интерфейса на удобный вам. Поддерживаются несколько языков, включая русский и английский.
+          </p>
+        </div>
+        <!-- <div class="option-item">
+          <span class="option-title">Выбор валюты</span>
+          <p class="option-description">
+            Установите предпочитаемую валюту для отображения цен, чтобы сделать покупки удобнее.
+          </p>
+        </div> -->
+        <div class="option-item">
+          <span class="option-title">Указать дату рождения</span>
+          <p class="option-description">
+            Добавьте дату рождения, чтобы мы могли предложить вам персонализированные рекомендации и скидки.
+          </p>
+        </div>
+        <div class="option-item">
+          <span class="option-title">Связаться с менеджером</span>
+          <p class="option-description">
+            Напишите нашему менеджеру, чтобы задать вопросы, уточнить детали заказа или получить консультацию.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+  

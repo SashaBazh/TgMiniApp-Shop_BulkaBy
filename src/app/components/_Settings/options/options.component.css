@@ -9,7 +9,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #e5e7f6;
+    background-color: #F3EBDA;
     border-radius: 16px;
     padding: 19px;
     box-sizing: border-box;
@@ -18,22 +18,23 @@
     height: 70px; /* Фиксированная высота */
     font-family: 'Montserrat', sans-serif;
     font-size: 18px;
-    font-weight: 600;
-    color: #333;
+    font-weight: 500;
+    color: #000000;
 }
 
 .option-item:hover {
-    background-color: #d4dcff; /* Цвет фона при наведении */
+    background-color: #EBDFC7; /* Цвет фона при наведении */
 }
 
 .option-title {
-    font-size: 20px;
-    font-weight: 600; /* Жирный текст */
+    font-size: 21px;
+    font-weight: 500; /* Жирный текст */
 }
 
 .right-text {
-    color: #90A2CA;
+    color: #DCA74B;
     font-size: 18px;
+    font-weight: 500; /* Жирный текст */
 }
 
 /* Обновленные стили модального окна */
@@ -51,7 +52,7 @@
 }
 
 .modal-content {
-    background-color: #e5e7f6; /* Такой же фон, как у .option-item */
+    background-color: #F4EEE1; /* Такой же фон, как у .option-item */
     padding: 20px;
     border-radius: 16px; /* Такой же радиус скругления */
     width: 320px;

@@ -1,0 +1,44 @@
+<div class="admin-container">
+  <!-- Tab Navigation -->
+  <div class="tab-navigation">
+    <button 
+      class="tab-button" 
+      [class.active]="currentTab === ActiveTab.CATEGORIES"
+      (click)="setActiveTab(ActiveTab.CATEGORIES)"
+    >
+      Categories
+    </button>
+    <button 
+      class="tab-button" 
+      [class.active]="currentTab === ActiveTab.PRODUCTS"
+      (click)="setActiveTab(ActiveTab.PRODUCTS)"
+    >
+      Products
+    </button>
+    <button 
+      class="tab-button" 
+      [class.active]="currentTab === ActiveTab.FILTERS"
+      (click)="setActiveTab(ActiveTab.FILTERS)"
+    >
+      Filters
+    </button>
+  </div>
+
+  <!-- Tab Content -->
+  <div class="tab-content">
+    <!-- Categories Tab -->
+    <app-categories 
+      *ngIf="currentTab === ActiveTab.CATEGORIES"
+    ></app-categories>
+
+    <!-- Products Tab -->
+    <app-products 
+      *ngIf="currentTab === ActiveTab.PRODUCTS"
+    ></app-products>
+
+    <!-- Filters Tab -->
+    <app-filters 
+      *ngIf="currentTab === ActiveTab.FILTERS"
+    ></app-filters>
+  </div>
+</div>

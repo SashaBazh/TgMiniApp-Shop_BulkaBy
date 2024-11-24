@@ -1,49 +1,44 @@
 .new-jewelry {
-    padding-top: 12px;
-    max-width: 1440px;
-    margin: 0 auto;
-}
-
-.section-title {
+    margin: 8px;
+  }
+  
+  .section-title {
     font-family: 'Montserrat', sans-serif;
     font-size: 24px;
-    font-weight: 700;
-    color: #333;
-    margin: 0 0 0 8px;
-}
-
-.slider-container {
-    margin-bottom: -8px; /* Отступ между строками */
-}
-
-.products-row {
+    font-weight: 500;
+    color: #000000;
+    margin: 0 8px 7px;
+  }
+  
+  .products-container {
     display: flex;
-    gap: 10px; /* Отступ между блоками */
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    -webkit-overflow-scrolling: touch;
-    scroll-behavior: smooth;
-    scroll-padding-left: 10px; /* Слева немного уменьшен */
-    scroll-padding-right: 8px; /* Убирает обрезание */
-    padding-right: 8px; /* Добавляем отступ для последнего элемента */
-    position: relative;
-    transition: all 0.3s ease-out;
-    flex-wrap: nowrap;
-}
-
-/* Скрываем стандартный скроллбар */
-.products-row::-webkit-scrollbar {
-    display: none;
-}
-
-app-product-card {
-    scroll-snap-align: start;
-    flex: 0 0 200px; /* Фиксированная ширина карточки */
-    min-width: 0;
-}
-
-app-product-card:last-child {
-    margin-right: 10px; /* Убедитесь, что последний продукт не обрезан */
-}
+    flex-direction: column;
+    gap: 8px;
+  }
+  
+  .slider-container {
+    overflow-x: auto; /* Включаем горизонтальный скроллинг */
+    scrollbar-width: none; /* Скрываем стандартный скроллбар (Firefox) */
+    -ms-overflow-style: none; /* Скрываем стандартный скроллбар (IE/Edge) */
+    -webkit-overflow-scrolling: touch; /* Плавный скроллинг на iOS */
+  }
+  
+  .slider-container::-webkit-scrollbar {
+    display: none; /* Скрываем стандартный скроллбар (Chrome/Safari) */
+  }
+  
+  .products-row {
+    display: flex;
+    gap: 8px; /* Расстояние между карточками */
+  }
+  
+  app-product-card {
+    flex: 0 0 calc(33.333% - 16px); /* Ширина карточки — треть строки */
+    box-sizing: border-box;
+    scroll-snap-align: start; /* Удобное позиционирование при скроллинге */
+  }
+  
+  .products-row app-product-card:last-child {
+    margin-right: 16px; /* Чтобы последний элемент не обрезался */
+  }
+  

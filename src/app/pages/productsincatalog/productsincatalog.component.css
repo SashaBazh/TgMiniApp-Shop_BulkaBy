@@ -1,0 +1,7 @@
+.products-wrapper {
+    margin: -8px;
+    min-height: 100vh; /* Занимает всю доступную высоту */
+    overflow-y: auto; /* Разрешить вертикальную прокрутку */
+    margin-bottom: 26px;
+    margin-top: 50px
+}

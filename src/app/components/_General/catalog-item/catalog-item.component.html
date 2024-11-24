@@ -1,7 +1,6 @@
 <div class="catalog-item">
-    <div class="item-image">
-      <img [src]="imageSrc" alt="{{ name }}" />
-    </div>
-    <span class="item-name">{{ name }}</span>
+  <div class="item-image">
+    <img [src]="imageSrc || 'assets/default-image.png'" alt="{{ name }}" />
   </div>
-  
+  <span class="item-name">{{ name }}</span>
+</div>

@@ -1,7 +1,33 @@
+
+
 .jewelry-wrapper {
   margin: -8px;
+  margin-bottom: 26px;
 }
 
-.px {
-  margin-bottom: 60px;
+.section-title {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  color: #000000;
+  margin: 8px 16px;
+  margin-top: 16px;
+}
+
+.section-title2 {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  color: #000000;
+  margin: 8px 16px;
+  margin-top: 8px;
+}
+
+.filters {
+  margin: 8px;
+}
+
+.newjeverly {
+  margin-top: -150px;
+  padding-bottom: 24px;
 }
