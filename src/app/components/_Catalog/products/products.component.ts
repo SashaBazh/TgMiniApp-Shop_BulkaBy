@@ -9,11 +9,12 @@ import { CategoryService } from '../../../services/_Catalog/category.service';
 import { Product } from '../../../interfaces/_General/product.interface';
 import { ProductCardComponent } from '../../_General/product-card/product-card.component';
 import { ImageStreamService } from '../../../services/_Image/image-stream.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [CommonModule, CapitalizePipe, HeaderbackComponent, SearchComponent, FiltersComponent, ProductCardComponent],
+  imports: [CommonModule, CapitalizePipe, HeaderbackComponent, SearchComponent, FiltersComponent, ProductCardComponent, TranslateModule],
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css'],
 })
@@ -59,7 +60,7 @@ export class ProductsComponent implements OnInit {
 
   private loadFilters() {
     if (this.categoryId === null) return;
-  
+
     this.categoryAttributesService.getCategoryAttributes(this.categoryId).subscribe({
       next: (data) => {
         this.filters = data.map((attribute: any) => ({
@@ -73,14 +74,14 @@ export class ProductsComponent implements OnInit {
       },
     });
   }
-  
+
 
   private loadProducts(categoryId: number, search?: string) {
     console.log('Вызван метод loadProducts с categoryId:', categoryId, 'и поисковым запросом:', search);
     this.isLoading = true;
-  
+
     const filters = this.selectedFilters; // Используем выбранные фильтры
-  
+
     this.categoryAttributesService.getProductsByCategory(categoryId, filters, search).subscribe({
       next: (data) => {
         console.log('Полученные данные от API:', data);
@@ -100,19 +101,20 @@ export class ProductsComponent implements OnInit {
       },
     });
   }
-   
-  
+
+
+
 
   onFiltersChanged(filters: any) {
     console.log('Выбранные фильтры:', filters);
     this.selectedFilters = filters;
-  
+
     if (this.categoryId !== null) {
       this.loadProducts(this.categoryId); // Загружаем продукты с выбранными фильтрами
     }
   }
-  
-  
+
+
 
   onSearch(query: string) {
     console.log('Поисковый запрос:', query);

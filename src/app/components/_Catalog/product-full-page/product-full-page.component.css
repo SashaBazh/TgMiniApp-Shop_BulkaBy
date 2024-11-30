@@ -24,7 +24,34 @@
   margin: 8px 0;
   color: #000;
   /* Цвет текста (чёрный, можно изменить) */
+  text-align: left; /* Выровнять текст по левому краю */
 }
+
+.price-container {
+  display: flex;
+  justify-content: flex-start; /* Выровнять по левому краю */
+  align-items: center;
+  gap: 8px; /* Отступ между старой и новой ценой */
+  font-family: 'Montserrat', sans-serif;
+  font-size: 18px;
+  font-weight: 500;
+  margin: 10px 0;
+  color: #333333;
+}
+
+.old-price {
+  text-decoration: line-through;
+  color: #a0a0a0;
+  font-size: 16px;
+}
+
+.new-price {
+  color: #ff4500;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+
 
 .availability {
   font-family: 'Montserrat', sans-serif;
@@ -35,6 +62,7 @@
   /* Размер текста */
   margin: 8px 0;
   color: #666;
+  text-align: left; /* Выровнять текст по левому краю */
 }
 
 hr {
@@ -105,10 +133,10 @@ hr {
 
 .buy-now {
   background-color: #BFC7FF;
-  color: #333;
+  color: #000000;
   font-family: 'Montserrat', sans-serif;
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 500;
   border-radius: 8px;
   padding: 15px 20px;
   text-align: center;
@@ -124,10 +152,10 @@ hr {
 
 .add-to-cart {
   background-color: #EBDFC7;
-  color: #333;
+  color: #000000;
   font-family: 'Montserrat', sans-serif;
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 500;
   border-radius: 8px;
   padding: 15px 20px;
   text-align: center;
@@ -143,10 +171,10 @@ hr {
 
 .contact-manager {
   background-color: #F4EEE1;
-  color: #333;
+  color: #000000;
   font-family: 'Montserrat', sans-serif;
   font-size: 16px;
-  font-weight: bold;
+  font-weight: 500;
   border-radius: 8px;
   padding: 15px 20px;
   text-align: center;
@@ -184,6 +212,7 @@ hr {
   height: 420px; /* Изображение растягивается на всю высоту */
   object-fit: cover; /* Обрезка изображения с сохранением пропорций */
   transition: opacity 0.5s ease-in-out; /* Плавный переход */
+  border-radius: 16px;
 }
 
 

@@ -1,4 +1,4 @@
-<app-headerback pageTitle="Каталог"></app-headerback>
+<app-headerback [pageTitle]="'CATALOG' | translate"></app-headerback>
 <section class="category-page">
   <h2 class="category-title">{{ categoryName | capitalize }}</h2>
   <app-search (search)="onSearch($event)"></app-search>
@@ -6,9 +6,9 @@
     <app-filters [items]="filters" (filtersChanged)="onFiltersChanged($event)"></app-filters>
   </div>
   <div class="products-container">
-    <p *ngIf="isLoading" class="loading-text">Загрузка товаров...</p>
+    <p *ngIf="isLoading" class="loading-text">{{ 'ENTER_QUERY' | translate }}</p>
     <p *ngIf="!isLoading && !products?.length" class="no-results-text">
-      К сожалению, ничего не найдено для категории "{{ categoryName }}" 😞
+      {{ 'NOT_FOUND_FOR_CATEGORY' | translate }} "{{ categoryName }}" 😞
     </p>
     <div class="product-row" *ngFor="let row of getRows(products)">
       <app-product-card *ngFor="let product of row" [product]="product" (click)="openProduct(product.id)">

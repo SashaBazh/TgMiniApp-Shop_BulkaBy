@@ -1,23 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductCardComponent } from '../product-card/product-card.component';
-import { FiltersComponent } from '../filters/filters.component';
 import { CategoryService } from '../../../services/_Catalog/category.service';
 import { Product } from '../../../interfaces/_General/product.interface';
 import { ImageStreamService } from '../../../services/_Image/image-stream.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-jewelry',
   standalone: true,
-  imports: [CommonModule, ProductCardComponent, FiltersComponent],
+  imports: [CommonModule, ProductCardComponent],
   templateUrl: './new-jewelry.component.html',
   styleUrls: ['./new-jewelry.component.css']
 })
 export class NewJewelryComponent implements OnInit {
   products: Product[] = [];
   isLoading = false;
+  categoryId: number | null = null;
 
-  constructor(private categoryService: CategoryService, private imageService: ImageStreamService, ) {}
+  constructor(private categoryService: CategoryService, private imageService: ImageStreamService, private router: Router) {
+    this.categoryId = 1;
+  }
 
   ngOnInit() {
     this.loadProductsByCategory();
@@ -62,4 +65,10 @@ export class NewJewelryComponent implements OnInit {
     { name: 'Ожерелья' },
     { name: 'Подвески' }
   ];
+
+  openProduct(productId: number) {
+    if (this.categoryId !== null) {
+      this.router.navigate([`/catalog/${this.categoryId}/${productId}`]); // Переход на детальную страницу товара
+    }
+  }
 }

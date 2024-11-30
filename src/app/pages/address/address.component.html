@@ -1,4 +1,4 @@
-<app-headerback pageTitle="Адрес"></app-headerback>
+<app-headerback [pageTitle]="'ADDRESS' | translate"></app-headerback>
 
 <div class="pickup-points-list">
     <app-pickup-point
@@ -12,5 +12,5 @@
   class="delivery-button"
   (click)="confirmOrder()"
   [disabled]="!isPickupPointSelected">
-  Подтвердить
+  {{ 'CONFIRM' | translate }}
 </button>

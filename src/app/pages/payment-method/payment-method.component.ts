@@ -5,11 +5,12 @@ import { ActivatedRoute, RouterModule } from '@angular/router';
 import { PaymentMethodItemComponent } from '../../components/_PaymentMethod/payment-method-item/payment-method-item.component';
 import { PaymentService } from '../../services/_Payment/payment.service';
 import { PaymentInitializeResponse } from '../../interfaces/_Payment/paymen.interface';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-payment-method',
   standalone: true,
-  imports: [HeaderbackComponent, CommonModule, RouterModule, PaymentMethodItemComponent],
+  imports: [HeaderbackComponent, CommonModule, RouterModule, PaymentMethodItemComponent, TranslateModule],
   templateUrl: './payment-method.component.html',
   styleUrls: ['./payment-method.component.css']
 })

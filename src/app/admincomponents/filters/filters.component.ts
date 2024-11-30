@@ -1,9 +1,21 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { FiltersService } from '../../services/_Admin/filters.service';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Attribute } from '../../interfaces/_Admin/attribute.interface';
+import { firstValueFrom } from 'rxjs';
+
+
+interface IOption {
+  value: string;
+}
+
+interface IOptionData {
+  attribute_id: number;
+  value: string;
+}
+
 
 @Component({
   selector: 'app-filters',
@@ -17,16 +29,18 @@ export class FiltersComponent implements OnInit {
   editAttributeForm: FormGroup;
   attributes: Attribute[] = [];
   editingAttribute: Attribute | null = null;
-  options: string[] = []; // Список опций для атрибута
+  options: { value: string }[] = [];
   isChoiceType: boolean = false; // Проверка, является ли атрибут типа CHOICE
   message: string = '';
   isSuccess: boolean = true;
+
 
   constructor(private fb: FormBuilder, private filtersService: FiltersService) {
     this.createAttributeForm = this.fb.group({
       name: ['', Validators.required],
       data_type: ['', Validators.required],
       is_filterable: [false],
+      options: this.fb.array([])
     });
 
     this.editAttributeForm = this.fb.group({
@@ -55,25 +69,97 @@ export class FiltersComponent implements OnInit {
     const dataType = (event.target as HTMLSelectElement).value;
     this.isChoiceType = dataType === 'choice';
     if (!this.isChoiceType) {
-      this.options = []; // Очищаем опции, если тип данных изменен
+      while (this.optionsArray.length) {
+        this.optionsArray.removeAt(0);
+      }
+    } else {
+      this.addOption();
     }
   }
 
+  get optionsArray() {
+    return this.createAttributeForm.get('options') as FormArray;
+  }
+
   addOption() {
-    this.options.push('');
+    this.optionsArray.push(this.fb.group({
+      value: ['']
+    }));
   }
 
   removeOption(index: number) {
-    this.options.splice(index, 1);
+    this.optionsArray.removeAt(index);
   }
 
+  
+
+  updateOptionValue(index: number, value: string) {
+    this.options[index] = { ...this.options[index], value: value };
+    console.log('Обновленные опции:', this.options); // для отладки
+  }
+
+  createOptions(attributeId: number) {
+
+    
+    // Получаем значения из FormArray
+    const options = this.optionsArray.value;
+    
+    // Фильтруем пустые значения и создаем массив промисов
+    const optionRequests = options
+      .filter((option: IOption) => option.value.trim() !== '')
+      .map((option: IOption) => {
+        const optionData: IOptionData = {
+          attribute_id: attributeId,
+          value: option.value.trim()
+        };
+        
+        // Возвращаем промис для каждого запроса
+        return this.filtersService.createOption(optionData).toPromise();
+      });
+  
+    // Если есть опции для создания
+    if (optionRequests.length > 0) {
+      // Ждем выполнения всех запросов
+      Promise.all(optionRequests)
+        .then(() => {
+          console.log('Все опции успешно созданы');
+          this.message = 'Атрибут и опции успешно созданы';
+          this.isSuccess = true;
+          this.createAttributeForm.reset();
+          this.loadAttributes();
+        })
+        .catch((error) => {
+          console.error('Ошибка при создании опций:', error);
+          this.message = 'Ошибка при создании опций';
+          this.isSuccess = false;
+        });
+    }
+  }
+  
+  // И обновим метод submitAttributeForm
   submitAttributeForm() {
     if (this.createAttributeForm.valid) {
-      const attributeData = this.createAttributeForm.value;
+      const attributeData = {
+        name: this.createAttributeForm.get('name')?.value,
+        data_type: this.createAttributeForm.get('data_type')?.value,
+        is_filterable: this.createAttributeForm.get('is_filterable')?.value
+      };
+      
+      // Создаем атрибут
       this.filtersService.createAttribute(attributeData).subscribe({
         next: (response) => {
-          if (this.isChoiceType && this.options.length > 0) {
-            this.createOptions(response.id); // Создаем опции для атрибута
+          console.log('Ответ сервера при создании атрибута:', response);
+          const attributeId = response.attribute_id;
+      
+          if (!attributeId) {
+            console.error('attribute_id отсутствует в ответе сервера');
+            this.message = 'Ошибка: сервер не вернул ID атрибута';
+            this.isSuccess = false;
+            return;
+          }
+      
+          if (this.isChoiceType && this.optionsArray.length > 0) {
+            this.createOptions(attributeId);
           } else {
             this.message = 'Атрибут успешно создан';
             this.isSuccess = true;
@@ -87,35 +173,36 @@ export class FiltersComponent implements OnInit {
           this.isSuccess = false;
         },
       });
+      
     }
   }
-
-  createOptions(attributeId: number) {
-    const optionsData = this.options.map((option) => ({
-      attribute_id: attributeId,
-      value: option, // Здесь value должно быть строкой
-    }));
   
-    this.filtersService.createOptions(optionsData).subscribe({
-      next: () => {
-        this.message = 'Атрибут и его опции успешно созданы';
-        this.isSuccess = true;
-        this.createAttributeForm.reset();
-        this.loadAttributes();
-      },
-      error: (err) => {
-        console.error('Ошибка при создании опций:', err);
-        this.message = 'Ошибка при создании опций';
-        this.isSuccess = false;
-      },
-    });
-  }
+  
+  
+  
   
 
   startEditing(attribute: Attribute) {
     this.editingAttribute = attribute;
-    this.editAttributeForm.patchValue(attribute);
+  
+    // Заполняем форму для редактирования
+    this.editAttributeForm.patchValue({
+      name: attribute.name,
+      data_type: attribute.data_type,
+      is_filterable: attribute.is_filterable,
+    });
+  
+    // Проверяем, есть ли опции у атрибута
+    if (attribute.options?.length) {
+      console.log('Опции для редактирования:', attribute.options);
+    } else {
+      console.log('У атрибута нет опций.');
+    }
   }
+  
+
+  
+  
 
   updateAttribute() {
     if (this.editingAttribute && this.editAttributeForm.valid) {
@@ -141,22 +228,92 @@ export class FiltersComponent implements OnInit {
     this.editAttributeForm.reset();
   }
 
-  deleteAttribute(attributeId: number) {
-    this.filtersService.deleteAttribute(attributeId).subscribe({
-      next: () => {
-        this.message = 'Атрибут успешно удален';
+  deleteAttributeWithOptions(attributeId: number, options: { id: number }[]) {
+    // Сначала удаляем все опции
+    this.deleteAllAttributeOptions(options)
+      .then(() => {
+        console.log('Все опции удалены, теперь удаляем атрибут');
+        return firstValueFrom(this.filtersService.deleteAttribute(attributeId));
+      })
+      .then(() => {
+        console.log('Атрибут успешно удален');
+        this.message = 'Атрибут и его опции успешно удалены';
         this.isSuccess = true;
         this.loadAttributes();
-      },
-      error: (err) => {
-        console.error('Ошибка при удалении атрибута:', err);
-        this.message = 'Ошибка при удалении атрибута';
+      })
+      .catch(err => {
+        console.error('Ошибка при удалении атрибута или его опций:', err);
+        this.message = 'Ошибка при удалении атрибута или его опций';
         this.isSuccess = false;
-      },
-    });
+      });
   }
+
+  deleteAttribute(attribute: Attribute) {
+    if (attribute.options && attribute.options.length > 0) {
+      this.deleteAttributeWithOptions(attribute.id, attribute.options);
+    } else {
+      // Если у атрибута нет опций, просто удаляем его
+      this.filtersService.deleteAttribute(attribute.id).subscribe({
+        next: () => {
+          console.log('Атрибут успешно удален');
+          this.message = 'Атрибут успешно удален';
+          this.isSuccess = true;
+          this.loadAttributes();
+        },
+        error: (err) => {
+          console.error('Ошибка при удалении атрибута:', err);
+          this.message = 'Ошибка при удалении атрибута';
+          this.isSuccess = false;
+        },
+      });
+    }
+  }
+  
+  
+  
 
   closeNotification() {
     this.message = '';
   }
+
+  deleteOption(optionId: number, index: number) {
+    // Проверяем, что editingAttribute существует и содержит options
+    if (this.editingAttribute === null || this.editingAttribute.options === undefined) {
+      console.error('Нет атрибута для редактирования или опций');
+      return;
+    }
+  
+    this.filtersService.deleteAttributeOption(optionId).subscribe({
+      next: () => {
+        // Удаляем опцию из локального массива
+        this.editingAttribute!.options!.splice(index, 1);
+        console.log(`Опция с ID ${optionId} удалена.`);
+        this.message = 'Опция успешно удалена';
+        this.isSuccess = true;
+      },
+      error: (err) => {
+        console.error('Ошибка при удалении опции:', err);
+        this.message = 'Ошибка при удалении опции';
+        this.isSuccess = false;
+      },
+    });
+  }
+  
+  
+  
+  
+
+  deleteAllAttributeOptions(options: { id: number }[]): Promise<any> {
+    const deleteRequests = options.map(option =>
+      firstValueFrom(this.filtersService.deleteAttributeOption(option.id))
+        .catch(err => {
+          console.error(`Ошибка при удалении опции с ID ${option.id}:`, err);
+          throw new Error(`Не удалось удалить опцию с ID ${option.id}`);
+        })
+    );
+  
+    return Promise.all(deleteRequests);
+  }
+  
+  
 }

@@ -49,30 +49,29 @@ export class CategoriesService {
   }
 
   // Обновление категории
-  updateCategory(
-    categoryId: number,
-    categoryData: { name: string; description: string; image?: File | null }
-  ): Observable<any> {
-    const formData = new FormData();
-
-    formData.append(
-      'category_data',
-      JSON.stringify({
-        name: categoryData.name,
-        description: categoryData.description,
-      })
-    );
-    if (categoryData.image) {
-      formData.append('image', categoryData.image, categoryData.image.name);
-    }
-
-    return this.http.put(`${this.apiUrl}/${categoryId}`, formData);
+  updateCategory(formData: FormData): Observable<any> {
+    const headers = new HttpHeaders({
+      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
+    });
+  
+    return this.http.put(`${this.apiUrl}/categories`, formData, { headers });
   }
+  
+
+
+
 
   // Удаление категории
   deleteCategory(categoryId: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${categoryId}`);
+    const headers = new HttpHeaders({
+      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
+    });
+  
+    const url = `${this.apiUrl}/categories/${categoryId}`;
+  
+    return this.http.delete(url, { headers })
   }
+  
 
   getCategoryAttributes(categoryId: number): Observable<AttributeResponse[]> {
     const headers = new HttpHeaders({
@@ -80,7 +79,6 @@ export class CategoriesService {
     });
 
     const url = `${this.apiUrl}/category/${categoryId}/attributes`;
-    console.log('Making GET request to:', url, 'with headers:', headers); // Логирование запроса
 
     return this.http.get<AttributeResponse[]>(url, { headers })
       .pipe(
@@ -88,17 +86,25 @@ export class CategoriesService {
       );
   }
 
-  assignAttributesToCategory(categoryId: number, attributeIds: number[]): Observable<any> {
+  assignAttributesToCategory(categoryId: number, attributeIds: number[]): Observable<any[]> {
     const headers = new HttpHeaders({
       'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
       'Content-Type': 'application/json',
     });
   
-    const url = `${this.apiUrl}/categories/${categoryId}/attributes`;
+    const url = `${this.apiUrl}/categories/attributes`;
   
-    return this.http.put(url, { attribute_ids: attributeIds }, { headers });
+    // Создаем массив запросов, по одному на каждый атрибут
+    const requests = attributeIds.map(attributeId => {
+      const payload = { category_id: categoryId, attribute_id: attributeId };
+      console.log('Sending POST request for attribute:', payload); // Логируем отправляемые данные
+      return this.http.post(url, payload, { headers });
+    });
+  
+    // Возвращаем массив запросов, который можно обработать дальше
+    return forkJoin(requests);
   }
-  
+
 
   // categories.service.ts
 

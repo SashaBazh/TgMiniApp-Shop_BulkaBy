@@ -4,17 +4,16 @@ import { RouterModule } from '@angular/router';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { routes } from './app.routes'; // Ваши маршруты
 
-// Импорт маршрутов
-import { routes } from './app.routes';
-
-// Фабика загрузчика переводов
+// Фабрика загрузчика переводов
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 @NgModule({
-  declarations: [], // Добавьте AppComponent в declarations
+  declarations: [
+  ],
   imports: [
     BrowserModule,
     HttpClientModule,
@@ -25,9 +24,10 @@ export function HttpLoaderFactory(http: HttpClient) {
         useFactory: HttpLoaderFactory,
         deps: [HttpClient],
       },
+      defaultLanguage: 'ru', // Установить язык по умолчанию
     }),
   ],
   providers: [],
-  bootstrap: [], // Укажите AppComponent как корневой компонент
+  bootstrap: [], // Указан AppComponent как корневой
 })
 export class AppModule {}

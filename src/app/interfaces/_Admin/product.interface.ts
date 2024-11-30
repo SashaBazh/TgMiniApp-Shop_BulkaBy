@@ -1,11 +1,12 @@
 // interfaces/product.interface.ts
+
 export interface ProductCreateData {
   category_id: number;
   name: string;
   description: string;
   price: number;
   attributes: any;
-  images: File[]; // Обновлено: массив файлов
+  images: File[]; // Массив файлов изображений
 }
 
 export interface ProductResponse {
@@ -14,11 +15,10 @@ export interface ProductResponse {
   name: string;
   description?: string;
   price: number;
-  media?: string[]; // Массив строк для ссылок на изображения
+  media?: string[]; // Массив ссылок на изображения
   attribute_values?: ProductAttributeValue[];
-  mediaUrl?: string; // Новое свойство для преобразованного URL
+  mediaUrl?: string; // Поле для URL изображения (если требуется)
 }
-
 
 export interface ProductAttributeValue {
   id: number;

@@ -4,23 +4,23 @@ import { HeaderComponent } from '../../components/_General/header/header.compone
 import { ImageSliderComponent } from '../../components/_Home/image-slider/image-slider.component';
 import { CartItemComponent } from '../../components/_Сart/cart-item/cart-item.component';
 import { RouterModule } from '@angular/router';
-import { ModalComponent } from '../../components/_Сart/modal/modal.component';
 import { CommonModule } from '@angular/common';
 import { CartService } from '../../services/_Cart/cart.service';
 import { CartResponse } from '../../interfaces/_Cart/cart.interface';
+import { ImageStreamService } from '../../services/_Image/image-stream.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [NavigationComponent, HeaderComponent, ImageSliderComponent, CartItemComponent, RouterModule, CommonModule],
+  imports: [NavigationComponent, HeaderComponent, ImageSliderComponent, CartItemComponent, RouterModule, CommonModule, TranslateModule],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css'
 })
 export class CartComponent implements OnInit {
   cart: CartResponse | null = null;
-  imageService: any;
 
-  constructor(private cartService: CartService) {}
+  constructor(private cartService: CartService, private imageService: ImageStreamService) {}
 
   ngOnInit() {
     this.loadCart();
@@ -34,8 +34,8 @@ export class CartComponent implements OnInit {
           ...data,
           items: data.items.map((item) => ({
             ...item,
-            image: item.media && item.media.length > 0
-              ? this.imageService.getImageUrl(item.media[0]) // Первая картинка из media
+            image: item.product.media && item.product.media.length > 0
+              ? this.imageService.getImageUrl(item.product.media[0]) // Получаем первую картинку из media
               : 'assets/default-image.png', // Изображение по умолчанию
           })),
         };

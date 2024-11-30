@@ -7,16 +7,21 @@ import { NewJewelryComponent } from '../../components/_General/new-jewelry/new-j
 import { CatalogButtonComponent } from '../../components/_Home/catalog-button/catalog-button.component';
 import { CataloggeneralComponent } from '../../components/_General/cataloggeneral/cataloggeneral.component';
 import { FiltersComponent } from '../../components/_General/filters/filters.component';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NavigationComponent, HeaderComponent, ImageSliderComponent, ImagesSlidersComponent, NewJewelryComponent, CatalogButtonComponent, CataloggeneralComponent, FiltersComponent],
+  imports: [NavigationComponent, HeaderComponent, ImageSliderComponent, ImagesSlidersComponent, NewJewelryComponent, CatalogButtonComponent, CataloggeneralComponent, FiltersComponent, TranslateModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
+export class HomeComponent{
 
+  constructor(private translate: TranslateService) {
+    this.translate.setDefaultLang('ru');
+  }
+  
   items: any[] = [
     { name: 'Кольца' },
     { name: 'Серьги' },
@@ -24,5 +29,4 @@ export class HomeComponent {
     { name: 'Ожерелья' },
     { name: 'Подвески' }
   ];
-
 }

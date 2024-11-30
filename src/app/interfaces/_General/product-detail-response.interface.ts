@@ -24,7 +24,7 @@ export interface AttributeOptionResponse {
     name: string;
     description?: string;
     price: number;
-    image?: string;
+    media: string[];
   }
   
   export interface ProductDetailResponse extends ProductResponse {

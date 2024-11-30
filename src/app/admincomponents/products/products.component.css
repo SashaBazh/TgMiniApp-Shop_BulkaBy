@@ -35,3 +35,132 @@
   .notification .close-btn:hover {
     opacity: 0.8;
   }
+
+
+
+
+
+
+
+
+  .custom-slider {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .slider-container {
+    position: relative;
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+  }
+  
+  .slider-image-wrapper {
+    text-align: center;
+  }
+  
+  .slider-image {
+    width: 100%;
+    max-height: 400px;
+    object-fit: contain;
+    border-radius: 5px;
+    transition: opacity 0.5s ease-in-out;
+  }
+  
+  .slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 10;
+    border-radius: 50%;
+  }
+  
+  .slider-btn:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+  
+  .prev-btn {
+    left: 10px;
+  }
+  
+  .next-btn {
+    right: 10px;
+  }
+  
+  .slider-thumbnails {
+    display: flex;
+    margin-top: 10px;
+    overflow-x: auto;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .thumbnail {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    cursor: pointer;
+    border-radius: 5px;
+    border: 2px solid transparent;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+  
+  .thumbnail.active {
+    border-color: #007bff;
+    transform: scale(1.1);
+  }
+  
+  .thumbnail:hover {
+    transform: scale(1.1);
+  }
+  
+
+
+  .slider-media {
+    max-width: 100%;
+    max-height: 400px;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto;
+  }
+  
+  .dots {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  
+  .dot {
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
+    border: none;
+    border-radius: 50%;
+    background-color: #ccc;
+    cursor: pointer;
+  }
+  
+  .dot.active {
+    background-color: #4A67A7;
+  }
+  
+  .slider-navigation button {
+    margin: 5px;
+    padding: 5px 10px;
+    border: none;
+    background-color: #4A67A7;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  .slider-navigation button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  

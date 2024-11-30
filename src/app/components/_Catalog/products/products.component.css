@@ -42,7 +42,7 @@
 }
 
 .no-results-text::after {
-    content: "Попробуйте изменить параметры поиска.";
+    /* content: "Попробуйте изменить параметры поиска."; */
     font-size: 16px;
     color: #555;
     font-weight: 400;
@@ -57,6 +57,7 @@
     gap: 8px;
     /* Расстояние между строками */
     margin: 8px;
+    margin-top: -146px;
 }
 
 .product-row {

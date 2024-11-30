@@ -179,51 +179,84 @@ export class CategoriesComponent implements OnInit {
     this.editImagePreview = null;
   }
 
-  onEditImageSelected(event: Event): void {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
-      const selectedFile = input.files[0];
+  applyCategoryChanges() {
+    if (!this.editedCategory || !this.editingCategoryId) {
+      return;
+    }
+  
+    const formData = new FormData();
+  
+    // Добавляем основные данные категории
+    formData.append('category_data', JSON.stringify({
+      id: this.editingCategoryId,
+      name: this.editedCategory.name,
+      description: this.editedCategory.description,
+    }));
+  
+    // Добавляем изображение, если оно выбрано
+    if (this.selectedImage) {
+      formData.append('image', this.selectedImage, this.selectedImage.name);
+    }
+  
+    // Сохранение изменений категории
+    this.categoriesService.updateCategory(formData).subscribe({
+      next: () => {
+        console.log('Категория успешно обновлена');
+  
+        // Отправка запросов для каждого атрибута
+        this.categoriesService.assignAttributesToCategory(this.editingCategoryId!, this.selectedAttributes).subscribe({
+          next: (responses) => {
+            console.log('Атрибуты успешно добавлены для категории:', responses);
+            this.showNotification('Категория и атрибуты успешно обновлены');
+            this.loadCategories(); // Перезагружаем список категорий
+            this.cancelEditing();
+          },
+          error: (error) => {
+            this.showNotification(
+              error.error?.detail || 'Произошла ошибка при назначении атрибутов категории',
+              false
+            );
+            console.error('Ошибка при назначении атрибутов:', error);
+          },
+        });
+      },
+      error: (err) => {
+        console.error('Ошибка при обновлении категории:', err);
+        this.showNotification('Ошибка при обновлении категории', false);
+      },
+    });
+  }
+  
+  
+  
+  
+  
 
+  onEditImageSelected(event: Event) {
+    const file = (event.target as HTMLInputElement).files?.[0];
+    if (file) {
+      this.selectedImage = file; // Сохраняем файл изображения
+  
+      // Генерируем превью изображения
       const reader = new FileReader();
       reader.onload = () => {
-        this.editImagePreview = reader.result;
+        this.editImagePreview = reader.result as string; // Показываем превью
       };
-      reader.readAsDataURL(selectedFile);
-
-      this.editedCategory.image = selectedFile;
+      reader.readAsDataURL(file);
     }
   }
-
-  applyCategoryChanges() {
-    if (this.editingCategoryId !== null) {
-      const updatedCategoryData = {
-        name: this.editedCategory.name,
-        description: this.editedCategory.description,
-        image: this.editedCategory.image,
-      };
-
-      this.categoriesService.updateCategory(this.editingCategoryId, updatedCategoryData).subscribe({
-        next: () => {
-          this.assignAttributesToCategory(this.editingCategoryId!);
-        },
-        error: (error) => {
-          this.showNotification(
-            error.error?.detail || 'Произошла ошибка при обновлении категории',
-            false
-          );
-        },
-      });
-    }
-  }
+  
+  
+  
 
   assignAttributesToCategory(categoryId: number) {
     this.categoriesService.assignAttributesToCategory(categoryId, this.selectedAttributes).subscribe({
       next: () => {
-        this.showNotification('Категория успешно обновлена');
-        this.loadCategories();
+        this.showNotification('Атрибуты успешно назначены категории');
+        this.loadCategories(); // Перезагружаем список категорий
         this.cancelEditing();
       },
-      error: (error: { error: { detail: any } }) => {
+      error: (error) => {
         this.showNotification(
           error.error?.detail || 'Произошла ошибка при назначении атрибутов категории',
           false
@@ -231,6 +264,7 @@ export class CategoriesComponent implements OnInit {
       },
     });
   }
+  
   
 
   deleteCategory(categoryId: number) {
@@ -255,13 +289,14 @@ export class CategoriesComponent implements OnInit {
   onAttributeCheckboxChange(event: Event) {
     const checkbox = event.target as HTMLInputElement;
     const attributeId = parseInt(checkbox.value, 10);
-
+  
     if (checkbox.checked) {
       this.selectedAttributes.push(attributeId);
     } else {
       this.selectedAttributes = this.selectedAttributes.filter(id => id !== attributeId);
     }
   }
+  
 
   // Загрузка всех доступных атрибутов
   loadAllAttributes(): void {

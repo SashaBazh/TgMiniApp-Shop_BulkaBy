@@ -10,23 +10,15 @@
       <!-- Название атрибута -->
       <div class="form-group mb-3">
         <label for="attribute-name" class="form-label">Название атрибута</label>
-        <input
-          id="attribute-name"
-          class="form-control"
-          formControlName="name"
-          placeholder="Введите название атрибута"
-        />
+        <input id="attribute-name" class="form-control" formControlName="name"
+          placeholder="Введите название атрибута" />
       </div>
-  
+
       <!-- Тип данных -->
       <div class="form-group mb-3">
         <label for="attribute-type" class="form-label">Тип данных</label>
-        <select
-          id="attribute-type"
-          class="form-control"
-          formControlName="data_type"
-          (change)="onDataTypeChange($event)"
-        >
+        <select id="attribute-type" class="form-control" formControlName="data_type"
+          (change)="onDataTypeChange($event)">
           <option value="">Выберите тип данных</option>
           <option value="string">Строка</option>
           <option value="integer">Целое число</option>
@@ -35,42 +27,44 @@
           <option value="choice">Перечисление</option>
         </select>
       </div>
-  
+
       <!-- Опции для атрибута -->
-      <div *ngIf="isChoiceType" class="form-group mb-3">
+      <div *ngIf="isChoiceType" class="form-group mb-3" [formGroup]="createAttributeForm">
         <label for="attribute-options" class="form-label">Опции атрибута</label>
-        <div *ngFor="let option of options; let i = index" class="d-flex mb-2">
-          <input
-            type="text"
-            class="form-control me-2"
-            [(ngModel)]="options[i]"
-            placeholder="Введите опцию"
-            name="option-{{ i }}"
-          />
-          <button type="button" class="btn btn-danger" (click)="removeOption(i)">Удалить</button>
+        <div formArrayName="options">
+          <div *ngFor="let option of optionsArray.controls; let i = index" class="d-flex mb-2">
+            <div [formGroupName]="i">
+              <input type="text" class="form-control me-2" formControlName="value" placeholder="Введите опцию" />
+            </div>
+            <button type="button" class="btn btn-danger" (click)="removeOption(i)">Удалить</button>
+          </div>
         </div>
         <button type="button" class="btn btn-secondary" (click)="addOption()">Добавить опцию</button>
+
+        <!-- Отображение текущего состояния options
+        <div class="mt-3">
+          <strong>Текущие опции:</strong>
+          <pre>{{ optionsArray.value | json }}</pre>
+        </div> -->
       </div>
-  
+
+
+
+
       <!-- Фильтруемый атрибут -->
       <div class="form-group mb-3">
         <label for="attribute-filterable" class="form-label">Можно фильтровать</label>
-        <input
-          id="attribute-filterable"
-          type="checkbox"
-          class="form-check-input"
-          formControlName="is_filterable"
-        />
+        <input id="attribute-filterable" type="checkbox" class="form-check-input" formControlName="is_filterable" />
         <label for="attribute-filterable" class="form-check-label ms-2">Да</label>
       </div>
-  
+
       <!-- Кнопка создания -->
       <button type="submit" class="btn btn-primary" [disabled]="createAttributeForm.invalid">
         Создать атрибут
       </button>
     </form>
   </section>
-  
+
 
   <!-- Список атрибутов -->
   <section class="attributes-list">
@@ -80,7 +74,7 @@
         <span>{{ attribute.name }} ({{ attribute.data_type }})</span>
         <div>
           <button class="btn btn-info btn-sm me-2" (click)="startEditing(attribute)">Редактировать</button>
-          <button class="btn btn-danger btn-sm" (click)="deleteAttribute(attribute.id)">Удалить</button>
+          <button class="btn btn-danger btn-sm" (click)="deleteAttribute(attribute)">Удалить</button>
         </div>
       </div>
     </div>
@@ -109,8 +103,25 @@
         <label for="edit-filterable" class="form-label">Можно фильтровать</label>
         <input id="edit-filterable" type="checkbox" class="form-check-input" formControlName="is_filterable" />
       </div>
-      <button type="submit" class="btn btn-success" [disabled]="editAttributeForm.invalid">Сохранить</button>
+
+      <!-- Секция для отображения опций -->
+      <!-- Секция для отображения и удаления опций -->
+      <div *ngIf="editingAttribute?.options" class="form-group mb-3">
+        <label class="form-label">Опции атрибута</label>
+        <ul class="list-group">
+          <li *ngFor="let option of editingAttribute.options; let i = index"
+            class="list-group-item d-flex justify-content-between align-items-center">
+            {{ option.value }}
+            <button type="button" class="btn btn-danger btn-sm" (click)="deleteOption(option.id, i)">Удалить</button>
+          </li>
+        </ul>
+      </div>
+
+
+
+      <button type="submit" class="btn btn-success success" [disabled]="editAttributeForm.invalid">Сохранить</button>
       <button type="button" class="btn btn-secondary" (click)="cancelEditing()">Отмена</button>
     </form>
   </section>
+
 </div>

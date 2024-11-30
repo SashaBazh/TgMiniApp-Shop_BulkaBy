@@ -61,9 +61,6 @@ export class ProductFullPageComponent {
       value: attr.value
     }));
 
-    // Add price at the beginning
-    allAttributes.unshift({ name: 'Цена', value: `${this.product.price} BYN` });
-
     // Split into main and extra attributes
     this.mainAttributes = allAttributes.slice(0, 3);
     this.extraAttributes = allAttributes.slice(3);

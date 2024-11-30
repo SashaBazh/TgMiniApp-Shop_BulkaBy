@@ -9,7 +9,7 @@
       <!-- Первая строка -->
       <div class="slider-container">
         <div class="products-row">
-          <app-product-card *ngFor="let product of firstRowProducts" [product]="product">
+          <app-product-card *ngFor="let product of firstRowProducts" [product]="product" (click)="openProduct(product.id)">
           </app-product-card>
         </div>
       </div>
@@ -17,7 +17,7 @@
       <!-- Вторая строка -->
       <div class="slider-container">
         <div class="products-row">
-          <app-product-card *ngFor="let product of secondRowProducts" [product]="product">
+          <app-product-card *ngFor="let product of secondRowProducts" [product]="product" (click)="openProduct(product.id)">
           </app-product-card>
         </div>
       </div>

@@ -8,9 +8,19 @@ export interface AddProduct {
     product_name: string;
     quantity: number;
     price: number;
-    media?: string[]; // Массив URL изображений
-    image?: string; // Первое изображение из media
+    product: ProductResponse;
+    image?: string; // Добавлено поле image
   }
+  
+  export interface ProductResponse {
+    id: number;
+    category_id: number;
+    name: string;
+    description?: string;
+    price: number;
+    media?: string[];
+  }
+  
   
   export interface CartResponse {
     items: CartItem[];

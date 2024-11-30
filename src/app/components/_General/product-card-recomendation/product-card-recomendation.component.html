@@ -5,6 +5,10 @@
     <img [src]="product.image" [alt]="product.name" class="product-image">
     <div class="product-info">
         <h3 class="product-title">{{ product.name }}</h3>
-        <p class="product-price">{{ product.price }} {{ product.currency }}</p>
+        <p class="product-price">
+            <span *ngIf="product.discounted_price !== null" class="old-price">{{ product.price }} USD</span>
+            <span *ngIf="product.discounted_price !== null" class="new-price">{{ product.discounted_price }} USD</span>
+            <span *ngIf="product.discounted_price === null">{{ product.price }} USD</span>
+        </p>
     </div>
 </div>

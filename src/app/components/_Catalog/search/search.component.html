@@ -1,6 +1,6 @@
 <div class="search-container">
   <input type="text" [(ngModel)]="searchText" (input)="onSearch()" 
-  placeholder="Введите запрос..."
+  placeholder="{{ 'ENTER_QUERY' | translate }}"
   class="search-input"
   />
   <button (click)="onSearch()" class="search-button">

@@ -1,17 +1,17 @@
-<app-header pageTitle="Главная"></app-header>
+<app-header [pageTitle]="'HOME' | translate"></app-header>
 
 <div class="home">
     <app-image-slider></app-image-slider>
     <app-images-sliders></app-images-sliders>
 
     <div class="jewelry-wrapper">
-        <h2 class="section-title">Каталог</h2>
+        <h2 class="section-title">{{ 'CATALOG' | translate }}</h2>
         <app-cataloggeneral [displayCount]="2"></app-cataloggeneral>
         <app-catalog-button></app-catalog-button>
-        <h2 class="section-title2">Новые украшения</h2>
-        <div class="filters">
+        <h2 class="section-title2">{{ 'NEW_JEWELRY' | translate }}</h2>
+        <!-- <div class="filters">
             <app-filters [items]="items"></app-filters>
-        </div>
+        </div> -->
         <div class="newjeverly">
             <app-new-jewelry></app-new-jewelry>
         </div>

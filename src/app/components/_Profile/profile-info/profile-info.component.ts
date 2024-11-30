@@ -2,11 +2,12 @@ import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { Friend } from '../../../interfaces/_Profile/friend.interface';
 import { TelegramService } from '../../../services/_Telegram/telegram.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-profile-info',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule],
   templateUrl: './profile-info.component.html',
   styleUrl: './profile-info.component.css'
 })

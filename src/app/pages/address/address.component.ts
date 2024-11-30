@@ -8,11 +8,12 @@ import { PickupPoint } from '../../interfaces/_Address/pickup-point.interface';
 import { PickupPointService } from '../../services/_Address/pickup-point.service';
 import { OrderService } from '../../services/_Order/order.service';
 import { DeliveryMethod, OrderCreateRequest } from '../../interfaces/_Order/order.interface';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-address',
   standalone: true,
-  imports: [HeaderbackComponent, PickupPointComponent, CommonModule, RouterModule],
+  imports: [HeaderbackComponent, PickupPointComponent, CommonModule, RouterModule, TranslateModule],
   templateUrl: './address.component.html',
   styleUrls: ['./address.component.css']
 })

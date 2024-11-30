@@ -7,12 +7,12 @@
     <!-- Имя пользователя и количество баллов -->
     <div class="profile-details">
       <span class="username">{{ username }}</span>
-      <span class="points">{{ points }} баллов</span>
+      <span class="points">{{ points }} {{ 'POINTS' | translate }}</span>
     </div>
   
     <!-- Блок реферальной ссылки -->
     <div class="referral-link-container">
-      <span class="referral-label">Referel link:</span>
+      <span class="referral-label">{{ 'REFERRAL_LINK' | translate }}</span>
       <a [href]="referralLink" target="_blank" class="referral-link">{{ referralLink | slice:0:24 }}...</a>
       <button class="copy-button" (click)="copyReferralLink()">
         <img src="../../../../assets/icons/ref.svg" alt="Copy icon" />
@@ -22,12 +22,12 @@
     <!-- Блок списка друзей -->
     <div class="friends-list-container">
       <div class="friends-header">
-        <span>Друзей: {{ friends.length }}</span>
-        <span class="total-points">+{{ totalFriendPoints }} балов</span>
+        <span>{{ 'FRIENDS' | translate }} {{ friends.length }}</span>
+        <span class="total-points">+{{ totalFriendPoints }} {{ 'POINTS' | translate }}</span>
       </div>
       <div *ngFor="let friend of friends" class="friend-item">
         <span class="friend-username">{{ friend.username }}</span>
-        <span class="friend-points">+{{ friend.points }} балов</span>
+        <span class="friend-points">+{{ friend.points }} {{ 'POINTS' | translate }}</span>
       </div>
     </div>
   </div>

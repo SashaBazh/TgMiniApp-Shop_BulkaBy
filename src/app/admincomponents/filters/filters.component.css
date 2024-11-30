@@ -35,3 +35,11 @@
   .notification .close-btn:hover {
     opacity: 0.8;
   }
+  
+  .form-label {
+    margin-right: 10px;
+  }
+
+  .success {
+    margin-right: 10px;
+  }

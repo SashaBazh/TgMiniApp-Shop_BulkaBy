@@ -7,4 +7,5 @@ export interface Product {
   media?: string[]; // Массив URL-ов изображений
   image?: string; // URL первого изображения из media
   currency: string; // Валюта (например, ₽)
+  discounted_price: number;
 }

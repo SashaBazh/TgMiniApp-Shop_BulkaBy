@@ -3,7 +3,7 @@
       <img src="../../../../assets/icons/back.svg" alt="назад" width="9" height="12">
     </button>
   
-    <h1 class="header-title">{{ pageTitle }}</h1>
+    <h1 class="header-title">{{ 'SETTINGS' | translate }}</h1>
   
     <button class="header-button" (click)="toggleInfoTooltip()">
       <img src="../../../../assets/icons/info.svg" alt="info" width="24" height="24">
@@ -13,12 +13,12 @@
   <!-- Всплывающее сообщение -->
 <div *ngIf="isTooltipVisible" class="info-tooltip">
     <div class="tooltip-content">
-      <p class="tooltip-title">Что вы можете сделать в настройках:</p>
+      <p class="tooltip-title">{{ 'SETTINGS_DESCRIPTION' | translate }}</p>
       <div class="options-container">
         <div class="option-item">
-          <span class="option-title">Выбор языка</span>
+          <span class="option-title">{{ 'LANGUAGE_SELECTION' | translate }}</span>
           <p class="option-description">
-            Переключите язык интерфейса на удобный вам. Поддерживаются несколько языков, включая русский и английский.
+            {{ 'LANGUAGE_SELECTION_DESCRIPTION' | translate }}
           </p>
         </div>
         <!-- <div class="option-item">
@@ -28,15 +28,15 @@
           </p>
         </div> -->
         <div class="option-item">
-          <span class="option-title">Указать дату рождения</span>
+          <span class="option-title">{{ 'ADD_BIRTH_DATE' | translate }}</span>
           <p class="option-description">
-            Добавьте дату рождения, чтобы мы могли предложить вам персонализированные рекомендации и скидки.
+            {{ 'ADD_BIRTH_DATE_DESCRIPTION' | translate }}
           </p>
         </div>
         <div class="option-item">
-          <span class="option-title">Связаться с менеджером</span>
+          <span class="option-title">{{ 'CONTACT_MANAGER' | translate }}</span>
           <p class="option-description">
-            Напишите нашему менеджеру, чтобы задать вопросы, уточнить детали заказа или получить консультацию.
+            {{ 'CONTACT_MANAGER_DESCRIPTION' | translate }}
           </p>
         </div>
       </div>

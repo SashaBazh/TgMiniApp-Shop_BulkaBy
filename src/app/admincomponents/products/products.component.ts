@@ -29,12 +29,9 @@ export class ProductsComponent implements OnInit {
   selectedImages: File[] = []; // Обновлено: массив файлов
   imagePreviews: (string | ArrayBuffer | null)[] = [];
 
-  viewingProductForm: FormGroup;
   isEditingProduct = false;
-  isViewingProduct = false;
   editProductForm: FormGroup;
   currentEditingProductId: number | null = null;
-  viewingProduct: ViewingProduct | null = null;
 
 
   // ID текущей выбранной категории
@@ -48,6 +45,13 @@ export class ProductsComponent implements OnInit {
   // Image handling
   selectedImage: File | null = null;
   imagePreview: string | ArrayBuffer | null = null;
+
+  isViewingProduct: boolean = false;
+  viewingProduct: any = null;
+  viewingProductForm: FormGroup = new FormGroup({});
+  currentMediaIndex: number = 0;
+
+  mediaItems: string[] = [];
 
   constructor(
     private fb: FormBuilder,
@@ -97,44 +101,47 @@ export class ProductsComponent implements OnInit {
     }
   }
 
-  loadCategories() {
+  loadCategories(): void {
     this.categoriesService.getCategories().subscribe({
       next: (data) => {
         this.categories = data;
+        console.log('Категории загружены:', this.categories);
       },
-      error: (err: any) => {
+      error: (err) => {
+        console.error('Ошибка при загрузке категорий:', err);
         this.showNotification('Не удалось загрузить категории', false);
-        console.error(err);
-      }
+      },
     });
   }
+
+
 
   loadProducts(categoryId: number, search?: string): void {
     if (!categoryId) {
       console.error('Category ID is required to load products.');
       return;
     }
-  
+
     console.log('Вызван метод loadProducts с categoryId:', categoryId, 'и поисковым запросом:', search);
     this.isLoading = true;
-  
+
     const filters = this.selectedFilters || {};
-  
+
     this.productsService.getProducts({ category_id: categoryId, filters, search }).subscribe({
       next: (data) => {
         console.log('Полученные данные от API:', data);
-    
+
         this.products = data.map((product: ProductResponse) => {
-          const firstImage = product.media && product.media.length > 0 
+          const firstImage = product.media && product.media.length > 0
             ? this.imageService.getImageUrl(product.media[0]) // Преобразуем первый путь из media
             : '../../../assets/products/5.png'; // Изображение по умолчанию
-    
+
           return {
             ...product,
             mediaUrl: firstImage // Добавляем поле mediaUrl для шаблона
           };
         });
-    
+
         console.log('Обработанные данные продуктов:', this.products);
         this.isLoading = false;
       },
@@ -145,10 +152,8 @@ export class ProductsComponent implements OnInit {
         this.isLoading = false;
       },
     });
-    
-    
-  }  
-  
+  }
+
 
 
   fetchCategoryAttributes(categoryId: number) {
@@ -166,8 +171,11 @@ export class ProductsComponent implements OnInit {
     });
   }
 
+
   updateAttributesForm(attributes: AttributeResponse[]) {
     const attributesGroup = this.createProductForm.get('attributes') as FormGroup;
+
+    // Удаляем старые контролы
     Object.keys(attributesGroup.controls).forEach(key => {
       attributesGroup.removeControl(key);
     });
@@ -186,7 +194,8 @@ export class ProductsComponent implements OnInit {
           control = this.fb.control('', [Validators.required, Validators.pattern(/^\d+(\.\d+)?$/)]);
           break;
         case 'boolean':
-          control = this.fb.control(attr.default_value ?? false); // Ensure `false` is assigned if undefined
+          // Устанавливаем начальное значение как `false`, если значение отсутствует
+          control = this.fb.control(attr.default_value ?? false);
           break;
         case 'enum':
           control = this.fb.control('', Validators.required);
@@ -195,9 +204,11 @@ export class ProductsComponent implements OnInit {
           control = this.fb.control('');
       }
 
+      // Добавляем FormControl для текущего атрибута
       attributesGroup.addControl(`attribute_${attr.id}`, control);
     });
   }
+
 
   onImagesSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -227,6 +238,10 @@ export class ProductsComponent implements OnInit {
       this.categoryAttributes.forEach((attr) => {
         const controlName = `attribute_${attr.id}`;
         const value = attributesGroup.get(controlName)?.value;
+
+        if (value !== null && value !== undefined) {
+          attributeValues[attr.id] = value; // Значение true или false передается напрямую
+        }
 
         if (value !== null && value !== undefined) {
           if (attr.options && attr.options.length > 0) {
@@ -295,6 +310,9 @@ export class ProductsComponent implements OnInit {
 
   toggleCategorySelection(): void {
     this.showCategorySelector = !this.showCategorySelector;
+    if (this.showCategorySelector) {
+      this.categoryId = null; // Сбрасываем выбранную категорию
+    }
   }
 
   onCategoryChange(event: Event): void {
@@ -303,15 +321,40 @@ export class ProductsComponent implements OnInit {
     if (!isNaN(categoryId)) {
       this.categoryId = categoryId;
       this.loadProducts(categoryId); // Загружаем товары для выбранной категории
-      this.showCategorySelector = false; // Скрываем селектор после выбора
+      this.showCategorySelector = false; // Скрываем выпадающий список после выбора
+      console.log('Выбрана категория с ID:', this.categoryId); // Логирование
+    } else {
+      console.error('Некорректный ID категории:', target.value);
     }
   }
+
+
+  onCategoryClick(categoryId: number): void {
+    console.log('Категория выбрана (click):', categoryId);
+    if (this.categoryId !== categoryId) {
+      this.categoryId = categoryId;
+      this.loadProducts(categoryId); // Загружаем товары для выбранной категории
+    } else {
+      console.log('Выбрана текущая категория, обновление товаров.');
+      this.loadProducts(categoryId); // Принудительно обновляем товары
+    }
+  }
+
+
 
   viewProduct(productId: number): void {
     this.productsService.getProductDetail(productId).subscribe({
       next: (product) => {
         if (product) {
           this.viewingProduct = product;
+          console.log('Медиа продукта:', this.viewingProduct.media); // Добавьте логирование
+          if (this.viewingProduct.media && this.viewingProduct.media.length > 0) {
+            this.mediaItems = this.viewingProduct.media.map((mediaUrl: string) =>
+              this.imageService.getImageUrl(mediaUrl)
+            );
+          } else {
+            console.error('У продукта отсутствуют медиа.');
+          }
           this.viewingProductForm.patchValue({
             name: product.name,
             description: product.description,
@@ -330,50 +373,17 @@ export class ProductsComponent implements OnInit {
     });
   }
 
+
   updateAttributeValue(attributeId: number, event: Event): void {
     const input = event.target as HTMLInputElement;
     const value = input.value; // Получаем значение из input
     if (this.viewingProduct) {
-      const attribute = this.viewingProduct.attribute_values.find((attr) => attr.attribute.id === attributeId);
+      const attribute = this.viewingProduct.attribute_values.find((attr: { attribute: { id: number; }; }) => attr.attribute.id === attributeId);
       if (attribute) {
         attribute.value = value;
       }
     }
   }
-
-
-  submitViewingProductForm(): void {
-    if (this.viewingProductForm.valid && this.viewingProduct) {
-      const updatedData = {
-        ...this.viewingProductForm.value,
-        attributes: this.viewingProduct.attribute_values.map((attr) => ({
-          id: attr.attribute.id,
-          value: attr.value,
-        })),
-      };
-
-      this.productsService.updateProduct(this.viewingProduct.id, updatedData).subscribe({
-        next: () => {
-          this.showNotification('Продукт успешно обновлен.');
-          this.closeViewModal();
-          if (this.categoryId) {
-            this.loadProducts(this.categoryId);
-          }
-        },
-        error: (err) => {
-          console.error('Ошибка обновления продукта:', err);
-          this.showNotification('Ошибка обновления продукта.', false);
-        },
-      });
-    }
-  }
-
-  closeViewModal(): void {
-    this.isViewingProduct = false;
-    this.viewingProduct = null;
-    this.viewingProductForm.reset();
-  }
-
 
   onSearch(query: string) {
     console.log('Поисковый запрос:', query);
@@ -382,6 +392,93 @@ export class ProductsComponent implements OnInit {
     }
   }
 
+  // Проверка наличия медиа
+  hasMedia(): boolean {
+    return !!(this.viewingProduct?.media && this.viewingProduct.media.length > 0);
+  }
 
+  // Получение текущего медиа
+  get currentMedia(): string | null {
+    return this.mediaItems.length > 0 ? this.mediaItems[this.currentMediaIndex] : null;
+  }
+
+
+  // Проверка, является ли медиа изображением
+  isImage(mediaUrl: string): boolean {
+    return /\.(jpg|jpeg|png|gif|webp)$/i.test(mediaUrl);
+  }
+
+  // Проверка, является ли медиа видео
+  isVideo(mediaUrl: string): boolean {
+    return /\.(mp4|webm|ogg)$/i.test(mediaUrl);
+  }
+
+  // Навигация по медиа
+  selectMedia(index: number): void {
+    this.currentMediaIndex = index;
+  }
+
+  prevMedia(): void {
+    this.currentMediaIndex =
+      (this.currentMediaIndex - 1 + this.viewingProduct.media.length) %
+      this.viewingProduct.media.length;
+  }
+
+  nextMedia(): void {
+    this.currentMediaIndex =
+      (this.currentMediaIndex + 1) % this.viewingProduct.media.length;
+  }
+
+  closeViewModal(): void {
+    this.isViewingProduct = false;
+  }
+
+  submitViewingProductForm(): void {
+    if (this.viewingProduct && this.viewingProductForm.valid) {
+      const productData = {
+        id: this.viewingProduct.id,
+        name: this.viewingProductForm.value.name,
+        description: this.viewingProductForm.value.description,
+        price: this.viewingProductForm.value.price,
+        category_id: this.viewingProduct.category_id, // Добавляем category_id
+      };
+  
+      this.productsService.updateProduct(this.viewingProduct.id, productData).subscribe({
+        next: (response) => {
+          console.log('Продукт успешно обновлен:', response);
+          this.showNotification('Продукт успешно обновлен');
+          this.isViewingProduct = false; // Закрываем модальное окно
+          if (this.categoryId !== null) {
+            this.loadProducts(this.categoryId); // Обновляем список продуктов в категории
+          }
+        },
+        error: (err) => {
+          console.error('Ошибка обновления продукта:', err);
+          this.showNotification('Ошибка обновления продукта', false);
+        },
+      });
+    } else {
+      console.error('Форма недействительна.');
+      this.showNotification('Пожалуйста, заполните все обязательные поля', false);
+    }
+  }
+  
+
+  deleteProduct(productId: number): void {
+    if (confirm('Вы уверены, что хотите удалить этот продукт?')) {
+      this.productsService.deleteProduct(productId).subscribe({
+        next: () => {
+          this.showNotification('Продукт успешно удалён', true);
+          // Удаляем продукт из локального списка
+          this.products = this.products.filter(product => product.id !== productId);
+        },
+        error: (err) => {
+          console.error('Ошибка при удалении продукта:', err);
+          this.showNotification('Ошибка при удалении продукта', false);
+        },
+      });
+    }
+  }
+  
 
 }

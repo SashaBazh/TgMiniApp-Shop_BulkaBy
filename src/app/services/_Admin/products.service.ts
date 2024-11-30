@@ -19,16 +19,16 @@ export class ProductsService {
     const formData = new FormData();
 
     // Prepare product data
-    formData.append(
-      'product_data',
-      JSON.stringify({
-        category_id: productData.category_id,
-        name: productData.name,
-        description: productData.description,
-        price: productData.price,
-        attributes: productData.attributes,
-      })
-    );
+    const productDataJson = JSON.stringify({
+      category_id: productData.category_id,
+      name: productData.name,
+      description: productData.description,
+      price: productData.price,
+      attributes: productData.attributes,
+    });
+    formData.append('product_data', productDataJson);
+
+    console.log('Product Data JSON:', productDataJson);
 
     // Add images if provided
     if (productData.images && productData.images.length > 0) {
@@ -42,7 +42,7 @@ export class ProductsService {
       'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
     });
 
-    return this.http.post(`${this.apiUrl}`, formData, { headers });
+    return this.http.post(`${this.apiUrl}/`, formData, { headers });
   }
 
   getProducts(params: { category_id?: number, filters?: any, search?: string, limit?: number, offset?: number } = {}): Observable<Product[]> {
@@ -69,12 +69,6 @@ export class ProductsService {
 
     return this.http.get<Product[]>(url, { headers, params: httpParams });
   }
-
-  // Optional: Delete product method
-  deleteProduct(productId: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${productId}`);
-  }
-
 
   getCategoryAttributes(categoryId: number): Observable<AttributeResponse[]> {
     const headers = new HttpHeaders({
@@ -103,12 +97,33 @@ export class ProductsService {
     );
   }
 
-  updateProduct(productId: number, productData: Partial<ProductResponse>): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${productId}`, productData, {
+  updateProduct(productId: number, productData: { id: number; name: string; description: string; price: number; category_id: number }): Observable<any> {
+    const formData = new FormData();
+  
+    // Добавляем данные в FormData
+    formData.append('product_data', JSON.stringify(productData)); // Включаем category_id
+  
+    // Логируем отправляемые данные
+    console.log('Отправляемые данные в FormData:');
+    formData.forEach((value, key) => {
+      console.log(`${key}: ${value}`);
+    });
+  
+    return this.http.put(`${this.apiUrl}/`, formData, {
       headers: {
         'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
-        'Content-Type': 'application/json',
+        // Content-Type не указывается для FormData
       },
     });
   }
+  
+
+  deleteProduct(productId: number): Observable<any> {
+    return this.http.delete(`${this.apiUrl}/${productId}`);
+  }
+  
+
+
+
+
 }
