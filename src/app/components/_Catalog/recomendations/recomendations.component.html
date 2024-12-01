@@ -1,13 +1,12 @@
 <section class="new-jewelry">
-    <h2 class="section-title">Рекомендации</h2>
-  
-    <div class="slider-container">
-      <div class="products-row">
-        <app-product-card-recomendation
-          *ngFor="let product of recommendedProducts"
-          [product]="product">
-        </app-product-card-recomendation>
-      </div>
+  <h2 class="section-title">Рекомендации</h2>
+
+  <div class="slider-container">
+    <div class="products-row">
+      <app-product-card-recomendation 
+        *ngFor="let product of recommendedProducts" 
+        [product]="product">
+      </app-product-card-recomendation>
     </div>
-  </section>
-  
+  </div>
+</section>

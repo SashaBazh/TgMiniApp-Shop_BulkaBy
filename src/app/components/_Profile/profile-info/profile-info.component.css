@@ -1,117 +1,186 @@
 .profile-info-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-family: 'Montserrat', sans-serif;
-    color: #333;
-    margin-top: 60px;
-  }
-  
-  .profile-avatar img {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .profile-details {
-    margin-top: 10px;
-    text-align: center;
-  }
-  
-  .username {
-    font-size: 30px;
-    font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: 'Montserrat', sans-serif;
+  color: #333;
+  margin-top: 60px;
+}
 
-  }
-  
-  .points {
-    display: block;
-    font-size: 14px;
-    font-weight: bold;
-  }
-  
-  .referral-link-container {
-    display: flex;
-    align-items: center;
-    background-color: #F4EEE1;
-    border-radius: 8px;
-    padding: 16px 12px;
-    margin-top: 16px;
-    width: 100%;
-    justify-content: space-between;
-    box-sizing: border-box;
-  }
-  
-  .referral-label {
-    font-size: 14px;
-    font-weight: bold;
-  }
-  
-  .referral-link {
-    color: #5294FF;
-    text-decoration: none;
-    font-size: 14px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    max-width: 160px;
-  }
-  
-  .copy-button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    display: flex;
-    align-items: center;
-  }
-  
-  .copy-button img {
-    width: 25px;
-    height: 25px;
-  }
+.profile-avatar img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
-  .friends-list-container {
-    background-color: #F4EEE1;
-    border-radius: 8px;
-    width: 100%;
-    margin-top: 8px;
-    padding: 12px;
-    box-sizing: border-box;
+.profile-details {
+  margin-top: 10px;
+  text-align: center;
+}
+
+.username {
+  font-size: 30px;
+  font-weight: bold;
+
+}
+
+.points {
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.referral-link-container {
+  display: flex;
+  align-items: center;
+  background-color: #F4EEE1;
+  border-radius: 8px;
+  padding: 16px 12px;
+  margin-top: 16px;
+  width: 100%;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.referral-label {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.referral-link {
+  color: #5294FF;
+  text-decoration: none;
+  font-size: 14px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 160px;
+}
+
+.copy-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.copy-button img {
+  width: 25px;
+  height: 25px;
+}
+
+.friends-list-container {
+  background-color: #F4EEE1;
+  border-radius: 8px;
+  width: 100%;
+  margin-top: 8px;
+  padding: 12px;
+  box-sizing: border-box;
+}
+
+.friends-header {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  font-size: 14px;
+  color: #333;
+  background-color: #E6D8BA;
+  /* Цвет фона верхней части */
+  padding: 12px;
+  border-radius: 8px 8px 0 0;
+  /* Скругленные верхние углы */
+  margin: -12px -12px 8px -12px;
+  /* Убираем внутренний отступ, чтобы совпало с фоном контейнера */
+}
+
+.friend-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #333;
+  padding: 8px 0;
+  border-bottom: 1px solid #d4dcff;
+}
+
+.friend-item:last-child {
+  border-bottom: none;
+  /* Убираем нижнюю границу у последнего элемента */
+}
+
+.friend-username {
+  color: #333;
+}
+
+.friend-points {
+  color: #5294FF;
+}
+
+
+/* Общие стили для статуса */
+.status {
+  font-size: 18px;
+  font-weight: bold;
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* Градиент текста с анимацией */
+.status-gold {
+  background: linear-gradient(90deg, #ffd700, #ffcc00, #e6b800, #ffd700); /* Повтор градиента для плавности */
+  background-size: 200% 200%; /* Увеличение размеров для плавного движения */
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+  animation: gradient-move 3s infinite linear;
+}
+
+.status-black {
+  background: linear-gradient(90deg, #333333, #666666, #333333);
+  background-size: 200% 200%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+  animation: gradient-move 3s infinite linear;
+}
+
+.status-diamond {
+  background: linear-gradient(90deg, #a9f1ff, #ffffff, #d4fc79, #a9f1ff);
+  background-size: 200% 200%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+  animation: gradient-move 3s infinite linear;
+}
+
+.status-silver {
+  background: linear-gradient(90deg, #c0c0c0, #e0e0e0, #b0b0b0, #c0c0c0);
+  background-size: 200% 200%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -moz-background-clip: text;
+  -moz-text-fill-color: transparent;
+  animation: gradient-move 3s infinite linear;
+}
+
+/* Анимация движения градиента */
+@keyframes gradient-move {
+  0% {
+    background-position: 0% 50%;
   }
-  
-  .friends-header {
-    display: flex;
-    justify-content: space-between;
-    font-weight: bold;
-    font-size: 14px;
-    color: #333;
-    background-color: #E6D8BA; /* Цвет фона верхней части */
-    padding: 12px;
-    border-radius: 8px 8px 0 0; /* Скругленные верхние углы */
-    margin: -12px -12px 8px -12px; /* Убираем внутренний отступ, чтобы совпало с фоном контейнера */
+  100% {
+    background-position: 100% 50%;
   }
-  
-  .friend-item {
-    display: flex;
-    justify-content: space-between;
-    font-size: 14px;
-    color: #333;
-    padding: 8px 0;
-    border-bottom: 1px solid #d4dcff;
-  }
-  
-  .friend-item:last-child {
-    border-bottom: none; /* Убираем нижнюю границу у последнего элемента */
-  }
-  
-  .friend-username {
-    color: #333;
-  }
-  
-  .friend-points {
-    color: #5294FF;
-  }
-  
+}

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { environment } from '../../enviroments/environment';
 import { AddProduct, CartResponse } from '../../interfaces/_Cart/cart.interface';
 
@@ -14,8 +14,13 @@ export class CartService {
 
   getCart(): Observable<CartResponse> {
     const headers = this.getHeaders();
-    return this.http.get<CartResponse>(this.apiUrl, { headers });
+    return this.http.get<CartResponse>(this.apiUrl, { headers }).pipe(
+      tap((data) => {
+        console.log('Данные, полученные из getCart:', data);
+      })
+    );
   }
+  
 
   addItemToCart(productId: number, quantity: number = 1): Observable<any> {
     const headers = this.getHeaders();

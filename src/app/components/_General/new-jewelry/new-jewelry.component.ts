@@ -23,16 +23,15 @@ export class NewJewelryComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loadProductsByCategory();
+    this.loadNewProducts();
   }
-
-  private loadProductsByCategory() {
+  
+  private loadNewProducts() {
     this.isLoading = true;
   
-    this.categoryService.getProductsByCategory(1).subscribe({
+    this.categoryService.getNewProducts(6).subscribe({
       next: (data) => {
-        // Обрабатываем продукты
-        this.products = data.slice(0, 6).map((product) => ({
+        this.products = data.map((product) => ({
           ...product,
           image: product.media && product.media.length > 0
             ? this.imageService.getImageUrl(product.media[0]) // Первая картинка из media
@@ -41,11 +40,12 @@ export class NewJewelryComponent implements OnInit {
         this.isLoading = false;
       },
       error: (err) => {
-        console.error('Ошибка загрузки продуктов категории 1:', err);
+        console.error('Ошибка загрузки новых продуктов:', err);
         this.isLoading = false;
       },
     });
   }
+  
   
 
   // Получение первой строки (3 элемента)

@@ -9,8 +9,10 @@ export interface AddProduct {
     quantity: number;
     price: number;
     product: ProductResponse;
-    image?: string; // Добавлено поле image
-  }
+    image?: string;
+    discounted_price: number | null; // Обновлено
+  }  
+  
   
   export interface ProductResponse {
     id: number;
@@ -25,5 +27,6 @@ export interface AddProduct {
   export interface CartResponse {
     items: CartItem[];
     total_price: number;
+    discounted_price: number,
   }
   

@@ -3,8 +3,13 @@
 <div class="margin">
   <div *ngIf="cart">
     <app-cart-item *ngFor="let item of cart.items" [imageSrc]="item.image || 'assets/default-image.png'"
-      [title]="item.product_name" [price]="item.price" [quantity]="item.quantity" [productId]="item.product_id"
-      (itemRemoved)="onItemRemoved($event)" (quantityChanged)="onQuantityChanged($event)"></app-cart-item>
+      [title]="item.product_name" [price]="item.price" [discountedPrice]="item.discounted_price" 
+      [quantity]="item.quantity"
+      [productId]="item.product_id"
+      (itemRemoved)="onItemRemoved($event)"
+      (quantityChanged)="onQuantityChanged($event)"
+      ></app-cart-item>
+
 
 
     <div class="payment-block">

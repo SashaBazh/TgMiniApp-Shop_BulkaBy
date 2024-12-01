@@ -24,21 +24,19 @@ export class RecomendationsComponent implements OnInit {
 
   private loadRecommendedProducts() {
     this.isLoading = true;
-  
-    this.categoryService.getProductsByCategory(1).subscribe({
+
+    this.categoryService.getPersonalOffers(6).subscribe({
       next: (data) => {
-        // Обработка продуктов
-        this.recommendedProducts = data.slice(0, 6).map((product) => ({
+        this.recommendedProducts = data.map((product) => ({
           ...product,
           image: product.media && product.media.length > 0
             ? this.imageService.getImageUrl(product.media[0]) // Первая картинка из media
             : 'assets/default-image.png', // Изображение по умолчанию
         }));
-  
         this.isLoading = false;
       },
       error: (err) => {
-        console.error('Ошибка загрузки рекомендованных продуктов:', err);
+        console.error('Ошибка загрузки персональных рекомендаций:', err);
         this.isLoading = false;
       },
     });

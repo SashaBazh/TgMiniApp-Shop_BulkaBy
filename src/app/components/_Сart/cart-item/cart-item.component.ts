@@ -1,10 +1,12 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CartService } from '../../../services/_Cart/cart.service';
 import { ImageStreamService } from '../../../services/_Image/image-stream.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-cart-item',
   standalone: true,
+  imports: [CommonModule],
   templateUrl: './cart-item.component.html',
   styleUrls: ['./cart-item.component.css'],
 })
@@ -14,6 +16,7 @@ export class CartItemComponent {
   @Input() price: number = 0;
   @Input() quantity: number = 1;
   @Input() productId: number = 0;
+  @Input() discountedPrice: number | null = null;
 
   @Output() itemRemoved = new EventEmitter<number>(); // Событие для уведомления родителя
   @Output() quantityChanged = new EventEmitter<{ productId: number; quantity: number }>();

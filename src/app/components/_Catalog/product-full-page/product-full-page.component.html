@@ -26,7 +26,7 @@
 
         <div class="price-container">
             <span *ngIf="product.discounted_price !== null" class="old-price">{{ product.price }} BYN</span>
-            <span *ngIf="product.discounted_price !== null" class="new-price">{{ product.discounted_price }} BYN</span>
+            <span *ngIf="product.discounted_price !== null" class="new-price">{{ product.discounted_price }} USD</span>
             <span *ngIf="product.discounted_price === null">{{ product.price }} BYN</span>
         </div>
 

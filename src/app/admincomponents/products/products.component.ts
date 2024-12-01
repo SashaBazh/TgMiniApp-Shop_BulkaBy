@@ -7,10 +7,7 @@ import { ProductCategory } from '../../interfaces/_Catalog/catalog.interface';
 import { ProductsService } from '../../services/_Admin/products.service';
 import { ProductResponse } from '../../interfaces/_Admin/product.interface';
 import { AttributeResponse } from '../../interfaces/_Admin/attribute.interface';
-import { ProductDetailResponse } from '../../interfaces/_General/product-detail-response.interface';
 import { SearchComponent } from '../../components/_Catalog/search/search.component';
-
-interface ViewingProduct extends ProductDetailResponse { }
 
 @Component({
   selector: 'app-products',
@@ -32,7 +29,9 @@ export class ProductsComponent implements OnInit {
   isEditingProduct = false;
   editProductForm: FormGroup;
   currentEditingProductId: number | null = null;
-
+  editedImage: File | null = null; // Для хранения нового загруженного изображения
+  editedImagePreview: string | ArrayBuffer | null = null; // Для предварительного просмотра
+  
 
   // ID текущей выбранной категории
   categoryId: number | null = null;
@@ -100,6 +99,20 @@ export class ProductsComponent implements OnInit {
       this.loadProducts(this.categoryId); // Загружаем товары, если категория выбрана
     }
   }
+
+  onEditImageSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files[0]) {
+      this.editedImage = input.files[0];
+  
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.editedImagePreview = reader.result; // Показываем предварительный просмотр
+      };
+      reader.readAsDataURL(this.editedImage);
+    }
+  }
+  
 
   loadCategories(): void {
     this.categoriesService.getCategories().subscribe({
@@ -373,18 +386,6 @@ export class ProductsComponent implements OnInit {
     });
   }
 
-
-  updateAttributeValue(attributeId: number, event: Event): void {
-    const input = event.target as HTMLInputElement;
-    const value = input.value; // Получаем значение из input
-    if (this.viewingProduct) {
-      const attribute = this.viewingProduct.attribute_values.find((attr: { attribute: { id: number; }; }) => attr.attribute.id === attributeId);
-      if (attribute) {
-        attribute.value = value;
-      }
-    }
-  }
-
   onSearch(query: string) {
     console.log('Поисковый запрос:', query);
     if (this.categoryId !== null) {
@@ -436,14 +437,27 @@ export class ProductsComponent implements OnInit {
   submitViewingProductForm(): void {
     if (this.viewingProduct && this.viewingProductForm.valid) {
       const productData = {
-        id: this.viewingProduct.id,
+        id: this.viewingProduct.id, // Включаем ID продукта
         name: this.viewingProductForm.value.name,
         description: this.viewingProductForm.value.description,
         price: this.viewingProductForm.value.price,
         category_id: this.viewingProduct.category_id, // Добавляем category_id
       };
   
-      this.productsService.updateProduct(this.viewingProduct.id, productData).subscribe({
+      const formData = new FormData();
+  
+      // Добавляем ID в FormData
+      formData.append('id', productData.id.toString());
+  
+      // Добавляем остальные данные продукта
+      formData.append('product_data', JSON.stringify(productData));
+  
+      // Если пользователь загрузил новое изображение
+      if (this.editedImage) {
+        formData.append('image', this.editedImage, this.editedImage.name);
+      }
+  
+      this.productsService.updateProduct(this.viewingProduct.id, formData).subscribe({
         next: (response) => {
           console.log('Продукт успешно обновлен:', response);
           this.showNotification('Продукт успешно обновлен');
@@ -463,6 +477,8 @@ export class ProductsComponent implements OnInit {
     }
   }
   
+  
+  
 
   deleteProduct(productId: number): void {
     if (confirm('Вы уверены, что хотите удалить этот продукт?')) {
@@ -479,6 +495,21 @@ export class ProductsComponent implements OnInit {
       });
     }
   }
+
+
+  updateAttributeValue(attributeId: number, event: Event): void {
+    const input = event.target as HTMLInputElement | HTMLSelectElement;
+    const value = input.value; // Получаем значение из input или select
+    if (this.viewingProduct) {
+      const attribute = this.viewingProduct.attribute_values.find(
+        (attr: { attribute: { id: number } }) => attr.attribute.id === attributeId
+      );
+      if (attribute) {
+        attribute.value = value;
+      }
+    }
+  }
+  
   
 
 }

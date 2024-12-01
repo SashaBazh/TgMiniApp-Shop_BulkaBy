@@ -20,4 +20,5 @@ export class ProductCategoryService {
 
     return this.http.get<ProductCategory[]>(`${this.apiUrl}/category`, { headers });
   }
+  
 }

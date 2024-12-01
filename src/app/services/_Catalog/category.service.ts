@@ -12,6 +12,8 @@ export class CategoryService {
 
   constructor(private http: HttpClient) { }
 
+  
+
   getCategoryAttributes(categoryId: number): Observable<any[]> {
     const headers = new HttpHeaders({
       'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
@@ -26,6 +28,10 @@ export class CategoryService {
         })
       );
   }
+
+
+
+
 
   getCategories(): Observable<any[]> {
     const headers = new HttpHeaders({
@@ -76,4 +82,37 @@ export class CategoryService {
     return this.http.get<Product[]>(`${this.apiUrl}/category/${categoryId}`, { headers, params });
   }
 
+  getPersonalOffers(limit: number = 10): Observable<Product[]> {
+    const headers = new HttpHeaders({
+      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
+      'Content-Type': 'application/json',
+    });
+  
+    const params = new HttpParams().set('limit', limit.toString());
+  
+    return this.http.get<Product[]>(`${this.apiUrl}/personal-offers`, { headers, params }).pipe(
+      tap((response) => {
+        console.log('Полученные персональные рекомендации:', response);
+      })
+    );
+  }
+  
+
+
+  getNewProducts(limit: number = 10, offset: number = 0): Observable<Product[]> {
+    const headers = new HttpHeaders({
+      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
+      'Content-Type': 'application/json',
+    });
+  
+    const params = new HttpParams()
+      .set('limit', limit.toString())
+      .set('offset', offset.toString());
+  
+    return this.http.get<Product[]>(`${this.apiUrl}/new`, { headers, params }).pipe(
+      tap((response) => {
+        console.log('Полученные новые продукты:', response);
+      })
+    );
+  }
 }

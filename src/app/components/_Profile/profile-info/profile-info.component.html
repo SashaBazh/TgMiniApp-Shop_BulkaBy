@@ -1,34 +1,35 @@
 <div class="profile-info-container">
-    <!-- Аватар пользователя -->
-    <div class="profile-avatar">
+  <!-- Аватар пользователя -->
+  <div class="profile-avatar">
       <img [src]="avatarUrl" alt="User Avatar" />
-    </div>
-  
-    <!-- Имя пользователя и количество баллов -->
-    <div class="profile-details">
+  </div>
+
+  <!-- Имя пользователя и количество баллов -->
+  <div class="profile-details">
       <span class="username">{{ username }}</span>
       <span class="points">{{ points }} {{ 'POINTS' | translate }}</span>
-    </div>
-  
-    <!-- Блок реферальной ссылки -->
-    <div class="referral-link-container">
+      <!-- Статус с динамическим классом -->
+      <span class="status" [ngClass]="getStatusClass(status)">{{ status }}</span>
+  </div>
+
+  <!-- Блок реферальной ссылки -->
+  <div class="referral-link-container">
       <span class="referral-label">{{ 'REFERRAL_LINK' | translate }}</span>
       <a [href]="referralLink" target="_blank" class="referral-link">{{ referralLink | slice:0:24 }}...</a>
       <button class="copy-button" (click)="copyReferralLink()">
-        <img src="../../../../assets/icons/ref.svg" alt="Copy icon" />
+          <img src="../../../../assets/icons/ref.svg" alt="Copy icon" />
       </button>
-    </div>
-  
-    <!-- Блок списка друзей -->
-    <div class="friends-list-container">
+  </div>
+
+  <!-- Блок списка друзей -->
+  <div class="friends-list-container">
       <div class="friends-header">
-        <span>{{ 'FRIENDS' | translate }} {{ friends.length }}</span>
-        <span class="total-points">+{{ totalFriendPoints }} {{ 'POINTS' | translate }}</span>
+          <span>{{ 'FRIENDS' | translate }} {{ friends.length }}</span>
+          <span class="total-points">+{{ totalFriendPoints }} {{ 'POINTS' | translate }}</span>
       </div>
       <div *ngFor="let friend of friends" class="friend-item">
-        <span class="friend-username">{{ friend.username }}</span>
-        <span class="friend-points">+{{ friend.points }} {{ 'POINTS' | translate }}</span>
+          <span class="friend-username">{{ friend.username }}</span>
+          <span class="friend-points">+{{ friend.points }} {{ 'POINTS' | translate }}</span>
       </div>
-    </div>
   </div>
-  
+</div>

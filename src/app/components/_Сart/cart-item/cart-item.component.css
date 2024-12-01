@@ -1,17 +1,21 @@
 .cart-item {
     display: flex;
-    align-items: flex-start; /* Выравнивание по верхнему краю всего блока */
+    align-items: flex-start;
+    /* Выравнивание по верхнему краю всего блока */
     background-color: #F3EBDA;
     border-radius: 16px;
     padding: 8px;
-    gap: 16px; /* Отступ между изображением и текстом, равный отступу переключателя */
+    gap: 16px;
+    /* Отступ между изображением и текстом, равный отступу переключателя */
     box-sizing: border-box;
     margin-bottom: 8px;
-    position: relative; /* Для позиционирования иконки */
+    position: relative;
+    /* Для позиционирования иконки */
 }
 
 .item-image {
-    flex: 0 0 25%; /* Картинка занимает 25% ширины блока */
+    flex: 0 0 25%;
+    /* Картинка занимает 25% ширины блока */
     border-radius: 16px;
     overflow: hidden;
     display: flex;
@@ -24,73 +28,94 @@
     height: 100%;
     object-fit: cover;
     border-radius: 16px;
+    height: 90px;
 }
 
 .item-details {
-    flex: 1 1 75%; /* Остальная часть для текста и цены */
+    flex: 1 1 75%;
+    /* Остальная часть для текста и цены */
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* Выравнивание содержимого по левому краю */
-    gap: 8px; /* Отступы между элементами внутри */
-    padding-left: 0; /* Убедитесь, что нет лишнего отступа */
+    align-items: flex-start;
+    /* Выравнивание содержимого по левому краю */
+    gap: 8px;
+    /* Отступы между элементами внутри */
+    padding-left: 0;
+    /* Убедитесь, что нет лишнего отступа */
 }
 
 .item-title {
     font-family: 'Montserrat', sans-serif;
-    font-size: clamp(15px, 2vw, 20px); /* Минимум 13px, максимум 20px, динамический размер */
-    font-weight: 600; /* Более тонкий стиль, если требуется */
+    font-size: clamp(15px, 2vw, 20px);
+    /* Минимум 13px, максимум 20px, динамический размер */
+    font-weight: 600;
+    /* Более тонкий стиль, если требуется */
     color: #333;
-    margin: 0; /* Убираем внешние отступы */
-    margin-left: -4px; /* Отступ, равный `gap` переключателя */
-    text-align: left; /* Текст выравнивается влево */
+    margin: 0;
+    /* Убираем внешние отступы */
+    margin-left: -4px;
+    /* Отступ, равный `gap` переключателя */
+    text-align: left;
+    /* Текст выравнивается влево */
 }
 
 
 .item-footer {
     position: absolute;
     bottom: 12px;
-    left: 30%; /* Оставляем место для изображения */
-    right: 15px; /* Отступ от правого края */
+    left: 30%;
+    /* Оставляем место для изображения */
+    right: 15px;
+    /* Отступ от правого края */
     display: flex;
     align-items: end;
     justify-content: space-between;
-    height: 60px; /* Фиксированная высота */
-    min-height: 60px; /* Минимальная высота */
+    height: 60px;
+    /* Фиксированная высота */
+    min-height: 60px;
+    /* Минимальная высота */
 }
 
 /* Блок выбора количества */
 .quantity-selector {
     background-color: #BCC4FA;
     border-radius: 8px;
-    padding: clamp(4px, 1vw, 8px); /* Адаптивные отступы */
+    padding: clamp(4px, 1vw, 8px);
+    /* Адаптивные отступы */
     display: flex;
     align-items: center;
-    justify-content: center; /* Центрируем элементы */
-    width: clamp(50px, 10vw, 80px); /* Адаптивная ширина */
+    justify-content: center;
+    /* Центрируем элементы */
+    width: clamp(50px, 10vw, 80px);
+    /* Адаптивная ширина */
     color: #ffffff;
     font-family: 'Montserrat', sans-serif;
-    font-size: clamp(14px, 1.5vw, 16px); /* Адаптивный размер шрифта */
+    font-size: clamp(14px, 1.5vw, 16px);
+    /* Адаптивный размер шрифта */
     padding-left: 10px;
     padding-right: 10px;
 }
 
 /* Число количества */
 .quantity-number {
-    margin-right: 16px; /* Минимальный отступ для небольшой разницы */
+    margin-right: 16px;
+    /* Минимальный отступ для небольшой разницы */
 }
 
 /* Контейнер для кнопок вверх и вниз */
 .quantity-controls {
     display: flex;
     flex-direction: column;
-    gap: 2px; /* Небольшое расстояние между кнопками */
+    gap: 2px;
+    /* Небольшое расстояние между кнопками */
 }
 
 .quantity-controls button {
     background: none;
     border: none;
     color: #ffffff;
-    font-size: clamp(10px, 1.2vw, 14px); /* Адаптивный размер кнопок */
+    font-size: clamp(10px, 1.2vw, 14px);
+    /* Адаптивный размер кнопок */
     line-height: 1;
     cursor: pointer;
     padding: 0;
@@ -100,21 +125,34 @@
 .price-and-remove {
     display: flex;
     align-items: center;
-    gap: clamp(4px, 1vw, 8px); /* Отступ между ценой и крестиком */
+    gap: 8px;
 }
 
-/* Цена */
+.old-price {
+    text-decoration: line-through;
+    color: #a0a0a0;
+    font-size: 14px;
+}
+
+.new-price {
+    color: #ff4500;
+    font-size: 16px;
+    font-weight: bold;
+    margin-left: 3px;
+}
+
 .item-price {
-    font-family: 'Montserrat', sans-serif;
-    font-size: clamp(14px, 1.5vw, 20px); /* Адаптивный размер текста */
-    color: #000000;
-    text-align: right;
+    color: #000;
+    font-size: 16px;
+    font-weight: bold;
 }
 
 /* Иконка удаления */
 .remove-icon {
-    width: clamp(16px, 2vw, 24px); /* Адаптивный размер */
-    height: clamp(16px, 2vw, 24px); /* Адаптивный размер */
+    width: clamp(16px, 2vw, 24px);
+    /* Адаптивный размер */
+    height: clamp(16px, 2vw, 24px);
+    /* Адаптивный размер */
     cursor: pointer;
     transform: rotate(45deg);
 }

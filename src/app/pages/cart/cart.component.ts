@@ -29,14 +29,14 @@ export class CartComponent implements OnInit {
   loadCart() {
     this.cartService.getCart().subscribe({
       next: (data) => {
-        // Обработка media для каждого товара
         this.cart = {
           ...data,
           items: data.items.map((item) => ({
             ...item,
             image: item.product.media && item.product.media.length > 0
-              ? this.imageService.getImageUrl(item.product.media[0]) // Получаем первую картинку из media
-              : 'assets/default-image.png', // Изображение по умолчанию
+              ? this.imageService.getImageUrl(item.product.media[0])
+              : 'assets/default-image.png',
+            discounted_price: item.discounted_price ?? null, // Гарантируем, что undefined заменяется на null
           })),
         };
       },
@@ -44,7 +44,9 @@ export class CartComponent implements OnInit {
         console.error('Ошибка при загрузке корзины:', err);
       },
     });
-  }
+  }  
+  
+  
   
 
   onItemRemoved(productId: number) {

@@ -22,6 +22,7 @@ import { OptionsService } from '../../../services/_Options/option.service';
 export class OptionsComponent {
   selectedDate: string | null = null;
   isDatePickerOpen: boolean = false;
+  todayDate: string = new Date().toISOString().split('T')[0];
 
   // Свойства, отображаемые в шаблоне
   get language(): string {

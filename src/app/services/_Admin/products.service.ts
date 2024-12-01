@@ -97,30 +97,23 @@ export class ProductsService {
     );
   }
 
-  updateProduct(productId: number, productData: { id: number; name: string; description: string; price: number; category_id: number }): Observable<any> {
-    const formData = new FormData();
-  
-    // Добавляем данные в FormData
-    formData.append('product_data', JSON.stringify(productData)); // Включаем category_id
-  
-    // Логируем отправляемые данные
-    console.log('Отправляемые данные в FormData:');
-    formData.forEach((value, key) => {
-      console.log(`${key}: ${value}`);
-    });
-  
+  updateProduct(productId: number, formData: FormData): Observable<any> {
     return this.http.put(`${this.apiUrl}/`, formData, {
       headers: {
         'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
-        // Content-Type не указывается для FormData
       },
     });
-  }
+  }  
+  
   
 
   deleteProduct(productId: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${productId}`);
+    const headers = {
+      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
+    };
+    return this.http.delete(`${this.apiUrl}/${productId}`, { headers });
   }
+  
   
 
 
