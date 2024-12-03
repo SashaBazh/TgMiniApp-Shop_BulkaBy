@@ -3,25 +3,19 @@
 <div class="payment-methods-container">
     <!-- USDT-BSC -->
     <div class="payment-method" (click)="handleNetworkClick('LTCT')">
-        <app-payment-method-item 
-            imageSrc="../../../assets/payments/1.png" 
-            title="USDT-BSC">
+        <app-payment-method-item imageSrc="../../../assets/payments/1.png" title="USDT-BSC">
         </app-payment-method-item>
     </div>
 
     <!-- USDT-TRON -->
     <div class="payment-method" (click)="handleNetworkClick('USDT-TRC20')">
-        <app-payment-method-item 
-            imageSrc="../../../assets/payments/3.png" 
-            title="USDT-TRON">
+        <app-payment-method-item imageSrc="../../../assets/payments/3.png" title="USDT-TRON">
+        </app-payment-method-item>
+    </div>
+
+    <!-- New Fiat Service -->
+    <div class="payment-method" (click)="handlePaymentMethodClick('iyzipay')">
+        <app-payment-method-item imageSrc="../../../assets/payments/3.png" title="iyzipay">
         </app-payment-method-item>
     </div>
 </div>
-
-<!-- <div *ngIf="orderId; else noOrder">
-    <p>Идентификатор заказа: {{ orderId }}</p>
-</div> -->
-
-<ng-template #noOrder>
-    <p>Заказ не найден. Пожалуйста, вернитесь на страницу выбора.</p>
-</ng-template>

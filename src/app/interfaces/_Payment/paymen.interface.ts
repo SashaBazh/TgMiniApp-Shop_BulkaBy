@@ -1,9 +1,14 @@
 export interface PaymentInitializeResponse {
     payment_id: number;
-    payment_url?: string; // Поле может быть undefined
+    payment_url?: string;
     status_url?: string;
     qrcode_url?: string;
-}
+    checkout_form_content?: string;
+    payment_page_url?: string;
+    pay_with_iyzico_page_url?: string;
+    // Add new fields for the new payment service
+    new_service_specific_field?: string;
+  }
 
 
 export interface CreatePaymentRequest {
@@ -11,3 +16,9 @@ export interface CreatePaymentRequest {
     currency: string;
     email: string;
 }
+
+export enum PaymentType {
+    IYZIPAY = "iyzipay",
+    COINPAYMENTS = "coinpayments",
+    CASH = "cash"
+  }

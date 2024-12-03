@@ -54,6 +54,14 @@ export const routes: Routes = [
         (m) => m.PaymentMethodComponent
       ),
   },
+  {
+    path: 'cart/address/payment/modal',
+    loadComponent: () =>
+      import('./components/_PaymentMethod/payment-modal/payment-modal.component').then(
+        (m) => m.PaymentModalComponent
+      ),
+  },
+  
 
 
 

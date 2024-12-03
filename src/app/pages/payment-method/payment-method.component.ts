@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HeaderbackComponent } from '../../components/_General/headerback/headerback.component';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, RouterModule } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { PaymentMethodItemComponent } from '../../components/_PaymentMethod/payment-method-item/payment-method-item.component';
 import { PaymentService } from '../../services/_Payment/payment.service';
 import { PaymentInitializeResponse } from '../../interfaces/_Payment/paymen.interface';
@@ -12,7 +12,7 @@ import { TranslateModule } from '@ngx-translate/core';
   standalone: true,
   imports: [HeaderbackComponent, CommonModule, RouterModule, PaymentMethodItemComponent, TranslateModule],
   templateUrl: './payment-method.component.html',
-  styleUrls: ['./payment-method.component.css']
+  styleUrls: ['./payment-method.component.css'],
 })
 export class PaymentMethodComponent implements OnInit {
   orderId: number | null = null;
@@ -22,17 +22,19 @@ export class PaymentMethodComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private paymentService: PaymentService
   ) { }
 
   ngOnInit(): void {
-    // Извлекаем `orderId` из параметров маршрута
-    this.route.queryParamMap.subscribe(params => {
+    console.log('[PaymentMethodComponent] Инициализация компонента.');
+    this.route.queryParamMap.subscribe((params) => {
+      console.log('[PaymentMethodComponent] Параметры маршрута:', params.keys, params.toString());
       this.orderId = Number(params.get('orderId'));
       if (!this.orderId) {
-        console.error('Идентификатор заказа не найден.');
+        console.error('[PaymentMethodComponent] Ошибка: Идентификатор заказа не найден.');
       } else {
-        console.log('Текущий orderId:', this.orderId);
+        console.log('[PaymentMethodComponent] Текущий orderId:', this.orderId);
       }
     });
   }
@@ -44,36 +46,48 @@ export class PaymentMethodComponent implements OnInit {
 
   handleNetworkClick(network: string): void {
     console.log(`Нажата кнопка: ${network}`);
-    this.selectNetwork(network);
+    this.selectNetwork(network, 'coinpayments');
   }
 
-  selectNetwork(network: string): void {
+  selectNetwork(network: string, paymentType: string): void {
     if (!this.orderId) {
-      console.error('Ошибка: orderId не может быть null.');
+      console.error('[PaymentMethodComponent] Ошибка: orderId не может быть null.');
       return;
     }
 
     const paymentRequest = {
       order_id: this.orderId, // Здесь гарантированно number
       currency: network,
-      email: 'nelox001@gmail.com'
+      payment_type: paymentType, // Добавлено поле payment_type
+      email: 'nelox001@gmail.com',
     };
 
-    console.log('Отправка запроса:', paymentRequest);
+    console.log('[PaymentMethodComponent] Отправка запроса:', paymentRequest);
 
     this.paymentService.createPayment(paymentRequest).subscribe({
       next: (response: PaymentInitializeResponse) => {
         if (response.payment_url) {
-          console.log('Перенаправление на:', response.payment_url);
+          console.log('[PaymentMethodComponent] Перенаправление на:', response.payment_url);
           window.location.href = response.payment_url;
         } else {
-          console.error('Ошибка: Ссылка на оплату отсутствует.');
+          console.error('[PaymentMethodComponent] Ошибка: Ссылка на оплату отсутствует.');
         }
       },
       error: (err) => {
-        console.error('Ошибка при создании платежа:', err);
-      }
+        console.error('[PaymentMethodComponent] Ошибка при создании платежа:', err);
+      },
     });
   }
-  
+
+  handlePaymentMethodClick(paymentMethod: string): void {
+    console.log(`[PaymentMethodComponent] Обработка метода оплаты: ${paymentMethod}`);
+    if (paymentMethod === 'iyzipay') {
+      // Переход на новый маршрут, с добавлением параметра queryParams
+      this.router.navigate(['/cart/address/payment/modal'], {
+        queryParams: { orderId: this.orderId },
+      });
+    } else {
+      console.error('[PaymentMethodComponent] Ошибка: Неподдерживаемый метод оплаты.');
+    }
+  }
 }
