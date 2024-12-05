@@ -65,7 +65,7 @@ export class CategoriesService {
   // Удаление категории
   deleteCategory(categoryId: number): Observable<any> {
     const headers = new HttpHeaders({
-      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
+      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '1',
     });
   
     const url = `${this.apiUrl}/categories/${categoryId}`;
@@ -76,7 +76,7 @@ export class CategoriesService {
 
   getCategoryAttributes(categoryId: number): Observable<AttributeResponse[]> {
     const headers = new HttpHeaders({
-      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
+      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '1',
     });
 
     const url = `${this.apiUrl}/category/${categoryId}/attributes`;

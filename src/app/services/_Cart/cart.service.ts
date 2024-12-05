@@ -42,7 +42,7 @@ export class CartService {
 
   private getHeaders(): HttpHeaders {
     return new HttpHeaders({
-      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
+      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '1',
       'Content-Type': 'application/json',
     });
   }

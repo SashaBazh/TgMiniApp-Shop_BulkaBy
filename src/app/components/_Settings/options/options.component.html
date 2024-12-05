@@ -3,23 +3,18 @@
     <span class="option-title">{{ 'SELECT_LANGUAGE' | translate }}</span>
     <span class="right-text">{{ language }}</span>
   </div>
-  <!-- <div class="option-item" (click)="toggleCurrency()">
-      <span class="option-title">{{ 'SELECT_CURRENCY' | translate }}</span>
-      <span class="right-text">{{ currency }}</span>
-    </div> -->
   <div class="option-item" (click)="openDatePicker()">
     <span class="option-title">{{ 'BIRTH_DATE' | translate }}</span>
-    <span class="right-text">{{ birthDate || ('CHOOSE_DATE' | translate) }}</span>
+    <span class="right-text">{{ birthday || ('CHOOSE_DATE' | translate) }}</span>
   </div>
   <div class="option-item" (click)="contactManager()">
     <span class="option-title">{{ 'CONTACT_MANAGER' | translate }}</span>
   </div>
-  <div class="option-item" [routerLink]="['/admin']">
+  <div class="option-item" *ngIf="isAdmin" [routerLink]="['/admin']">
     <span class="option-title">{{ 'ADMINPNAEL' | translate }}</span>
   </div>
 </div>
 
-<!-- Modal for Date Picker -->
 <!-- Modal for Date Picker -->
 <div class="modal" *ngIf="isDatePickerOpen">
   <div class="modal-content">

@@ -94,8 +94,16 @@ export class OptionsService {
 
   updateBirthDate(date: string): Observable<any> {
     const telegramId = (window as any).Telegram.WebApp.initDataUnsafe?.user?.id; // Получение ID пользователя
-    return this.http.put(`${this.apiUrl}/birthday`, { telegram_id: 312321, birthday: date });
+  
+    // Преобразование даты в формат 'YYYY-MM-DD HH:MM:SS.ssssss'
+    const formattedDate = new Date(date).toISOString().replace('T', ' ').replace('Z', '');
+  
+    return this.http.put(`${this.apiUrl}/birthday`, {
+      telegram_id: 312321,
+      birthday: formattedDate,
+    });
   }
+  
 
   // Manager contact
   contactManager(): void {

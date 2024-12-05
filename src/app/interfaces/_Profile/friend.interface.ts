@@ -10,7 +10,7 @@ export interface UserProfileResponse {
   referral_link: string;
   referrals_count: number;
   referrals_earning: number;
-  referrals: ReferralData[];
+  birthday: string | null;
   image_url?: string;
   status: string;
 }

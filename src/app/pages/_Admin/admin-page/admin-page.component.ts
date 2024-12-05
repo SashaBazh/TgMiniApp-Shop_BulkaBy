@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CategoriesComponent } from '../../../admincomponents/categories/categories.component';
 import { ProductsComponent } from '../../../admincomponents/products/products.component';
 import { FiltersComponent } from '../../../admincomponents/filters/filters.component';
+import { SalesComponent } from '../../../admincomponents/sales/sales.component';
 
 @Component({
   selector: 'app-admin-page',
@@ -12,6 +13,7 @@ import { FiltersComponent } from '../../../admincomponents/filters/filters.compo
     CategoriesComponent,
     ProductsComponent,
     FiltersComponent,
+    SalesComponent
   ],
   templateUrl: './admin-page.component.html',
   styleUrls: ['./admin-page.component.css'],
@@ -22,6 +24,7 @@ export class AdminPageComponent {
     CATEGORIES: 'categories',
     PRODUCTS: 'products',
     FILTERS: 'filters',
+    SALES: 'sales', // Добавлено
   };
 
   // Track the current active tab

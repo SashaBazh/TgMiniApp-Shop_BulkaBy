@@ -31,7 +31,10 @@ export class ProductsComponent implements OnInit {
   currentEditingProductId: number | null = null;
   editedImage: File | null = null; // Для хранения нового загруженного изображения
   editedImagePreview: string | ArrayBuffer | null = null; // Для предварительного просмотра
-  
+
+  editedImages: File[] = []; // Новые изображения
+  editedImagesPreview: (string | ArrayBuffer | null)[] = [];
+
 
   // ID текущей выбранной категории
   categoryId: number | null = null;
@@ -66,7 +69,7 @@ export class ProductsComponent implements OnInit {
       descriptionEn: [''],
       price: ['', [Validators.required, Validators.min(0)]],
       attributes: this.fb.group({}) // Dynamic attributes group
-    });    
+    });
 
     // Listen for category changes to fetch attributes and products
     this.createProductForm.get('category_id')?.valueChanges.subscribe(categoryId => {
@@ -106,7 +109,7 @@ export class ProductsComponent implements OnInit {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
       this.editedImage = input.files[0];
-  
+
       const reader = new FileReader();
       reader.onload = () => {
         this.editedImagePreview = reader.result; // Показываем предварительный просмотр
@@ -114,7 +117,7 @@ export class ProductsComponent implements OnInit {
       reader.readAsDataURL(this.editedImage);
     }
   }
-  
+
 
   loadCategories(): void {
     this.categoriesService.getCategories().subscribe({
@@ -245,15 +248,15 @@ export class ProductsComponent implements OnInit {
   submitProductForm() {
     if (this.createProductForm.valid && this.selectedImages.length > 0) {
       const formValue = this.createProductForm.value;
-  
+
       // Prepare attributes for submission
       const attributeValues: Record<number, any> = {};
       const attributesGroup = this.createProductForm.get('attributes') as FormGroup;
-  
+
       this.categoryAttributes.forEach((attr) => {
         const controlName = `attribute_${attr.id}`;
         const value = attributesGroup.get(controlName)?.value;
-  
+
         if (value !== null && value !== undefined) {
           if (attr.options && attr.options.length > 0) {
             // Если это атрибут с опциями, используем выбранный ID опции
@@ -264,7 +267,7 @@ export class ProductsComponent implements OnInit {
           }
         }
       });
-  
+
       // Prepare translations for submission
       const translations = {
         ru: {
@@ -276,7 +279,7 @@ export class ProductsComponent implements OnInit {
           description: formValue.descriptionEn,
         }
       };
-  
+
       // Формируем FormData
       const formData = new FormData();
       formData.append(
@@ -289,12 +292,12 @@ export class ProductsComponent implements OnInit {
           translations,
         })
       );
-  
+
       // Добавляем изображения в FormData
       this.selectedImages.forEach((file) => {
         formData.append('files', file, file.name);
       });
-  
+
       // Отправляем данные на сервер
       this.productsService.createProduct(formData).subscribe({
         next: () => {
@@ -319,8 +322,8 @@ export class ProductsComponent implements OnInit {
       this.showNotification('Please fill all required fields and upload images', false);
     }
   }
-  
-  
+
+
 
   clearCategoryAttributes() {
     const attributesGroup = this.createProductForm.get('attributes') as FormGroup;
@@ -462,27 +465,30 @@ export class ProductsComponent implements OnInit {
 
   submitViewingProductForm(): void {
     if (this.viewingProduct && this.viewingProductForm.valid) {
+      const formValue = this.viewingProductForm.value;
+  
+      // Подготавливаем данные продукта для отправки
       const productData = {
-        id: this.viewingProduct.id, // Включаем ID продукта
-        name: this.viewingProductForm.value.name,
-        description: this.viewingProductForm.value.description,
-        price: this.viewingProductForm.value.price,
-        category_id: this.viewingProduct.category_id, // Добавляем category_id
+        id: this.viewingProduct.id,
+        category_id: this.viewingProduct.category_id,
+        name: formValue.name,
+        description: formValue.description,
+        price: formValue.price,
+        media: this.viewingProduct.media, // Текущие изображения
+        attributes: this.viewingProduct.attributes, // Если есть атрибуты
+        translations: this.viewingProduct.translations, // Если есть переводы
       };
   
+      // Формируем FormData
       const formData = new FormData();
-  
-      // Добавляем ID в FormData
-      formData.append('id', productData.id.toString());
-  
-      // Добавляем остальные данные продукта
       formData.append('product_data', JSON.stringify(productData));
   
-      // Если пользователь загрузил новое изображение
-      if (this.editedImage) {
-        formData.append('image', this.editedImage, this.editedImage.name);
-      }
+      // Добавляем новые изображения в FormData
+      this.editedImages.forEach((file) => {
+        formData.append('files', file, file.name);
+      });
   
+      // Отправляем данные на сервер
       this.productsService.updateProduct(this.viewingProduct.id, formData).subscribe({
         next: (response) => {
           console.log('Продукт успешно обновлен:', response);
@@ -502,9 +508,28 @@ export class ProductsComponent implements OnInit {
       this.showNotification('Пожалуйста, заполните все обязательные поля', false);
     }
   }
+
+
+  onEditImagesSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.editedImages = Array.from(input.files);
+      this.editedImagesPreview = [];
   
-  
-  
+      // Генерация превью для новых изображений
+      this.editedImages.forEach((file) => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          this.editedImagesPreview.push(reader.result);
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+  }
+
+
+
+
 
   deleteProduct(productId: number): void {
     if (confirm('Вы уверены, что хотите удалить этот продукт?')) {
@@ -535,7 +560,7 @@ export class ProductsComponent implements OnInit {
       }
     }
   }
-  
-  
+
+
 
 }

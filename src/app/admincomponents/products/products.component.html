@@ -180,7 +180,7 @@
                         <h5 class="card-title">{{ product.name }}</h5>
                         <p class="card-text">{{ product.description }}</p>
                         <div class="d-flex justify-content-between align-items-center">
-                            <span class="badge bg-primary">{{ product.price }} ₽</span>
+                            <span class="badge bg-primary">{{ product.price }} $</span>
                             <div>
                                 <button class="btn btn-info btn-sm me-2" (click)="viewProduct(product.id)">
                                     Редактировать
@@ -228,17 +228,19 @@
                                     </ng-container>
                                 </div>
                                 <div class="form-group mb-3">
-                                    <label for="edit-image" class="form-label">Загрузить новое изображение</label>
-                                    <input type="file" id="edit-image" class="form-control"
-                                        (change)="onEditImageSelected($event)" />
+                                    <label for="edit-images" class="form-label">Загрузить новые изображения</label>
+                                    <input type="file" id="edit-images" class="form-control" (change)="onEditImagesSelected($event)" multiple />
                                 </div>
-
-                                <!-- Предварительный просмотр нового изображения -->
-                                <div class="image-preview mb-3" *ngIf="editedImagePreview">
-                                    <p>Предварительный просмотр нового изображения:</p>
-                                    <img [src]="editedImagePreview" alt="Image Preview" class="img-fluid rounded"
-                                        style="max-height: 300px;" />
+                                
+                                <!-- Предварительный просмотр новых изображений -->
+                                <div class="image-preview mb-3" *ngIf="editedImagesPreview && editedImagesPreview.length > 0">
+                                    <p>Предварительный просмотр новых изображений:</p>
+                                    <div class="image-preview-list">
+                                        <img *ngFor="let preview of editedImagesPreview" [src]="preview" alt="Image Preview" class="img-fluid rounded"
+                                            style="max-height: 300px; margin: 5px;" />
+                                    </div>
                                 </div>
+                                
 
 
                                 <!-- Навигационные точки -->

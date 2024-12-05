@@ -94,7 +94,7 @@ export class ProductsService {
   updateProduct(productId: number, formData: FormData): Observable<any> {
     return this.http.put(`${this.apiUrl}/`, formData, {
       headers: {
-        'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
+        'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '1',
       },
     });
   }  
@@ -103,7 +103,7 @@ export class ProductsService {
 
   deleteProduct(productId: number): Observable<any> {
     const headers = {
-      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
+      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '1',
     };
     return this.http.delete(`${this.apiUrl}/${productId}`, { headers });
   }
