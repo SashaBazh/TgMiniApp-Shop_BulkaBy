@@ -37,7 +37,11 @@ export class OptionsComponent {
 
   toggleLanguage(): void {
     this.optionsService.toggleLanguage();
-  }
+    // Обновление страницы
+    setTimeout(() => {
+      window.location.reload();
+    }, 100); // Небольшая задержка для выполнения API-запроса
+  }  
 
   toggleCurrency(): void {
     this.optionsService.toggleCurrency();
@@ -53,10 +57,25 @@ export class OptionsComponent {
 
   saveDate(): void {
     if (this.selectedDate) {
-      this.optionsService.setBirthDate(this.selectedDate);
-      this.closeDatePicker();
+      // Обновляем дату рождения через сервис
+      this.optionsService.updateBirthDate(this.selectedDate).subscribe({
+        next: (response) => {
+          console.log('Дата рождения обновлена успешно:', response);
+          if (this.selectedDate !== null) {
+            this.optionsService.setBirthDate(this.selectedDate); // Сохраняем локально
+          } else {
+            console.error('Дата не выбрана');
+          }
+          this.closeDatePicker();
+        },
+        error: (error) => {
+          console.error('Ошибка при обновлении даты рождения:', error);
+          alert('Не удалось обновить дату рождения.');
+        },
+      });
     }
   }
+  
 
   contactManager(): void {
     this.optionsService.contactManager();

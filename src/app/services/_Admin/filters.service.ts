@@ -26,20 +26,21 @@ export class FiltersService {
       data_type: attributeData.data_type.toLowerCase(), // Приводим тип данных к нижнему регистру
     };
 
-
+    const initData = (window as any).Telegram?.WebApp?.initData;
+    if (!initData) {
+      console.error('Telegram init data is missing');
+    }
     const headers = new HttpHeaders({
-      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '', // Добавляем нужные заголовки
+      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '1',
     });
 
 
     return this.http.post(`${this.apiUrl}/attributes`, formattedData, { headers });
-
-
   }
 
   updateAttribute(attributeId: number, attributeData: { name: string; data_type: string; is_filterable: boolean }): Observable<any> {
     const headers = new HttpHeaders({
-      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
+      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '1',
     });
 
     return this.http.put(`${this.apiUrl}/attributes/${attributeId}`, attributeData, { headers });
@@ -48,34 +49,34 @@ export class FiltersService {
 
   deleteAttribute(attributeId: number): Observable<any> {
     const headers = new HttpHeaders({
-      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
+      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '1',
     });
 
     return this.http.delete(`${this.apiUrl}/attributes/${attributeId}`, { headers });
-  } 
+  }
 
 
 
-  createOption(optionData: { attribute_id: number; value: string }): Observable<any> {
+  createOption(optionData: { attribute_id: number; value: string; translations: { [key: string]: { value: string } } }): Observable<any> { 
     const headers = new HttpHeaders({
-      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
+      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '1',
       'Content-Type': 'application/json',
     });
-
-    // Логирование данных, которые отправляются
-    console.log('Отправляемые данные:', optionData);
-
+  
+    // Логирование данных
+    console.log('Отправляемые данные для создания опции:', optionData);
+  
     return this.http.post(`${this.apiUrl}/attribute/option`, optionData, { headers });
-  }
+  }   
 
   deleteAttributeOption(optionId: number): Observable<any> {
     const headers = new HttpHeaders({
-      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
+      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '1',
     });
-  
+
     return this.http.delete(`${this.apiUrl}/attribute/option/${optionId}`, { headers });
   }
-  
+
 
 
 

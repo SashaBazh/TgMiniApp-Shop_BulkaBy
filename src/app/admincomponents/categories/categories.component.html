@@ -1,141 +1,142 @@
 <div class="categories-page container">
-    <div *ngIf="message" class="notification" [ngClass]="{'success': isSuccess, 'error': !isSuccess}">
-        <span>{{ message }}</span>
-        <button class="close-btn" (click)="closeNotification()">×</button>
+  <div *ngIf="message" class="notification" [ngClass]="{'success': isSuccess, 'error': !isSuccess}">
+    <span>{{ message }}</span>
+    <button class="close-btn" (click)="closeNotification()">×</button>
+  </div>
+
+  <section class="create-category bg-light rounded mb-4 p-4">
+    <h1 class="mb-4">Создание категории</h1>
+    <form [formGroup]="createCategoryForm" (ngSubmit)="submitCategoryForm()" class="needs-validation" novalidate>
+      <div class="form-group mb-3">
+        <label for="name" class="form-label">Название (Русский)</label>
+        <input id="name" class="form-control" formControlName="name" placeholder="Введите название категории на русском"
+          [ngClass]="{'is-invalid': createCategoryForm.get('name')?.invalid && createCategoryForm.get('name')?.touched}" />
+        <div class="invalid-feedback">
+          Название категории на русском обязательно
+        </div>
+      </div>
+
+      <!-- Название категории на английском -->
+      <div class="form-group mb-3">
+        <label for="nameEn" class="form-label">Название (Английский)</label>
+        <input id="nameEn" class="form-control" formControlName="nameEn"
+          placeholder="Введите название категории на английском"
+          [ngClass]="{'is-invalid': createCategoryForm.get('nameEn')?.invalid && createCategoryForm.get('nameEn')?.touched}" />
+        <div class="invalid-feedback">
+          Название категории на английском обязательно
+        </div>
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="description" class="form-label">Описание</label>
+        <textarea id="description" class="form-control" formControlName="description"
+          placeholder="Введите описание категории"
+          [ngClass]="{'is-invalid': createCategoryForm.get('description')?.invalid && createCategoryForm.get('description')?.touched}"></textarea>
+        <div class="invalid-feedback">
+          Описание категории обязательно
+        </div>
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="image" class="form-label">Изображение</label>
+        <input type="file" id="image" class="form-control" (change)="onImageSelected($event)" />
+      </div>
+
+      <div *ngIf="imagePreview" class="image-preview mb-3">
+        <p>Предварительный просмотр:</p>
+        <img [src]="imagePreview" alt="Image Preview" class="img-fluid rounded" style="max-height: 300px;" />
+      </div>
+
+      <button type="submit" class="btn btn-primary" [disabled]="createCategoryForm.invalid || !selectedImage">
+        Создать категорию
+      </button>
+    </form>
+  </section>
+
+  <section class="category-list">
+    <h1 class="mb-4">Список категорий</h1>
+
+    <div *ngIf="categories.length > 0; else noCategories">
+      <div class="category-grid row g-4">
+        <div *ngFor="let category of categories" class="col-12 col-md-6 col-lg-4">
+          <div class="category-item card h-100">
+            <ng-container *ngIf="editingCategoryId === category.id; else viewMode">
+              <!-- Режим редактирования -->
+              <form (ngSubmit)="applyCategoryChanges()" enctype="multipart/form-data" novalidate>
+                <div class="card-body">
+                  <!-- Поле для выбора изображения -->
+                  <div class="mb-3">
+                    <label class="form-label">Изображение</label>
+                    <input type="file" class="form-control" (change)="onEditImageSelected($event)" />
+                    <img *ngIf="editImagePreview" [src]="editImagePreview" class="img-fluid mt-2"
+                      style="max-height: 200px;" />
+                  </div>
+
+                  <!-- Поле для редактирования названия -->
+                  <div class="mb-3">
+                    <label class="form-label">Название</label>
+                    <input type="text" class="form-control" [(ngModel)]="editedCategory.name" name="name"
+                      placeholder="Название" required />
+                  </div>
+
+                  <!-- <div class="mb-3">
+                    <label class="form-label">Название (Английский)</label>
+                    <input type="text" class="form-control" [(ngModel)]="editedCategory.nameEn" name="nameEn"
+                        placeholder="Название (English)" required />
+                </div> -->
+                
+
+                  <!-- Поле для редактирования описания -->
+                  <div class="mb-3">
+                    <label class="form-label">Описание</label>
+                    <textarea class="form-control" [(ngModel)]="editedCategory.description" name="description"
+                      placeholder="Описание" required></textarea>
+                  </div>
+
+                  <!-- Блок для атрибутов -->
+                  <div class="mb-3">
+                    <label class="form-label">Атрибуты</label>
+                    <div class="form-check" *ngFor="let attribute of availableAttributes">
+                      <input class="form-check-input" type="checkbox" [value]="attribute.id"
+                        [checked]="selectedAttributes.includes(attribute.id)"
+                        (change)="onAttributeCheckboxChange($event)" id="attributeCheckbox{{ attribute.id }}" />
+                      <label class="form-check-label" [for]="'attributeCheckbox' + attribute.id">
+                        {{ attribute.name }}
+                      </label>
+                    </div>
+                  </div>
+
+                  <!-- Кнопки сохранения и отмены -->
+                  <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-success btn-sm">Применить</button>
+                    <button type="button" class="btn btn-secondary btn-sm" (click)="cancelEditing()">Отмена</button>
+                  </div>
+                </div>
+              </form>
+            </ng-container>
+
+
+            <ng-template #viewMode>
+              <img [src]="imageService.getImageUrl(category.image || 'assets/default-image.png')" class="card-img-top"
+                alt="Category Image" style="height: 250px; object-fit: cover;" />
+              <div class="card-body">
+                <h5 class="card-title">{{ category.name }}</h5>
+                <p class="card-text">{{ category.description }}</p>
+                <div class="d-flex justify-content-between mt-3">
+                  <button class="btn btn-warning btn-sm" (click)="startEditing(category)">Редактировать</button>
+                  <button class="btn btn-danger btn-sm" (click)="deleteCategory(category.id)">Удалить</button>
+                </div>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <section class="create-category bg-light rounded mb-4 p-4">
-        <h1 class="mb-4">Создание категории</h1>
-        <form [formGroup]="createCategoryForm" (ngSubmit)="submitCategoryForm()" class="needs-validation" novalidate>
-            <div class="form-group mb-3">
-                <label for="name" class="form-label">Название</label>
-                <input id="name" class="form-control" formControlName="name" placeholder="Введите название категории"
-                    [ngClass]="{'is-invalid': createCategoryForm.get('name')?.invalid && createCategoryForm.get('name')?.touched}" />
-                <div class="invalid-feedback">
-                    Название категории обязательно
-                </div>
-            </div>
-
-            <div class="form-group mb-3">
-                <label for="description" class="form-label">Описание</label>
-                <textarea id="description" class="form-control" formControlName="description"
-                    placeholder="Введите описание категории"
-                    [ngClass]="{'is-invalid': createCategoryForm.get('description')?.invalid && createCategoryForm.get('description')?.touched}"></textarea>
-                <div class="invalid-feedback">
-                    Описание категории обязательно
-                </div>
-            </div>
-
-            <div class="form-group mb-3">
-                <label for="image" class="form-label">Изображение</label>
-                <input type="file" id="image" class="form-control" (change)="onImageSelected($event)" />
-            </div>
-
-            <div *ngIf="imagePreview" class="image-preview mb-3">
-                <p>Предварительный просмотр:</p>
-                <img [src]="imagePreview" alt="Image Preview" class="img-fluid rounded" style="max-height: 300px;" />
-            </div>
-
-            <button type="submit" class="btn btn-primary" [disabled]="createCategoryForm.invalid || !selectedImage">
-                Создать категорию
-            </button>
-        </form>
-    </section>
-
-    <section class="category-list">
-        <h1 class="mb-4">Список категорий</h1>
-
-        <div *ngIf="categories.length > 0; else noCategories">
-            <div class="category-grid row g-4">
-                <div *ngFor="let category of categories" class="col-12 col-md-6 col-lg-4">
-                    <div class="category-item card h-100">
-                        <ng-container *ngIf="editingCategoryId === category.id; else viewMode">
-                            <!-- Режим редактирования -->
-                            <form (ngSubmit)="applyCategoryChanges()" enctype="multipart/form-data" novalidate>
-                              <div class="card-body">
-                                <!-- Поле для выбора изображения -->
-                                <div class="mb-3">
-                                  <label class="form-label">Изображение</label>
-                                  <input type="file" class="form-control" (change)="onEditImageSelected($event)" />
-                                  <img *ngIf="editImagePreview" [src]="editImagePreview" class="img-fluid mt-2" style="max-height: 200px;" />
-                                </div>
-                          
-                                <!-- Поле для редактирования названия -->
-                                <div class="mb-3">
-                                  <label class="form-label">Название</label>
-                                  <input
-                                    type="text"
-                                    class="form-control"
-                                    [(ngModel)]="editedCategory.name"
-                                    name="name"
-                                    placeholder="Название"
-                                    required
-                                  />
-                                </div>
-                          
-                                <!-- Поле для редактирования описания -->
-                                <div class="mb-3">
-                                  <label class="form-label">Описание</label>
-                                  <textarea
-                                    class="form-control"
-                                    [(ngModel)]="editedCategory.description"
-                                    name="description"
-                                    placeholder="Описание"
-                                    required
-                                  ></textarea>
-                                </div>
-                          
-                                <!-- Блок для атрибутов -->
-                                <div class="mb-3">
-                                  <label class="form-label">Атрибуты</label>
-                                  <div class="form-check" *ngFor="let attribute of availableAttributes">
-                                    <input
-                                      class="form-check-input"
-                                      type="checkbox"
-                                      [value]="attribute.id"
-                                      [checked]="selectedAttributes.includes(attribute.id)"
-                                      (change)="onAttributeCheckboxChange($event)"
-                                      id="attributeCheckbox{{ attribute.id }}"
-                                    />
-                                    <label class="form-check-label" [for]="'attributeCheckbox' + attribute.id">
-                                      {{ attribute.name }}
-                                    </label>
-                                  </div>
-                                </div>
-                          
-                                <!-- Кнопки сохранения и отмены -->
-                                <div class="d-flex justify-content-between">
-                                  <button type="submit" class="btn btn-success btn-sm">Применить</button>
-                                  <button type="button" class="btn btn-secondary btn-sm" (click)="cancelEditing()">Отмена</button>
-                                </div>
-                              </div>
-                            </form>
-                          </ng-container>
-                          
-
-                        <ng-template #viewMode>
-                            <img [src]="imageService.getImageUrl(category.image || 'assets/default-image.png')"
-                                class="card-img-top" alt="Category Image" style="height: 250px; object-fit: cover;" />
-                            <div class="card-body">
-                                <h5 class="card-title">{{ category.name }}</h5>
-                                <p class="card-text">{{ category.description }}</p>
-                                <div class="d-flex justify-content-between mt-3">
-                                    <button class="btn btn-warning btn-sm"
-                                        (click)="startEditing(category)">Редактировать</button>
-                                    <button class="btn btn-danger btn-sm"
-                                        (click)="deleteCategory(category.id)">Удалить</button>
-                                </div>
-                            </div>
-                        </ng-template>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <ng-template #noCategories>
-            <div class="alert alert-info text-center" role="alert">
-                Нет доступных категорий.
-            </div>
-        </ng-template>
-    </section>
+    <ng-template #noCategories>
+      <div class="alert alert-info text-center" role="alert">
+        Нет доступных категорий.
+      </div>
+    </ng-template>
+  </section>
 </div>

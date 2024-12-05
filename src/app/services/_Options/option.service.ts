@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../enviroments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +11,8 @@ export class OptionsService {
   private _language: string = 'RU';
   private _currency: string = 'BYN';
   private _birthDate: string | null = null;
+
+
 
   constructor(private translate: TranslateService, private http: HttpClient) {
     this.translate.addLangs(['en', 'ru']);
@@ -51,6 +53,24 @@ export class OptionsService {
     }
     this._language = lang.toUpperCase();
     localStorage.setItem('appLanguage', lang.toLowerCase());
+    this.updateLanguage(lang.toLowerCase()).subscribe(
+      (response: any) => console.log(response),
+      (error: any) => console.error('Error updating language:', error)
+    );
+  }
+
+  private updateLanguage(lang: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
+      'Content-Type': 'application/json',
+    });
+
+    const payload = { telegram_id: 	123456789, lang }; //this.getTelegramId()
+    return this.http.post(`${this.apiUrl}/lang`, payload, { headers });
+  }
+
+  private getTelegramId(): number | undefined {
+    return (window as any).Telegram.WebApp.initDataUnsafe?.user?.id;
   }
 
   // Currency methods
@@ -74,7 +94,7 @@ export class OptionsService {
 
   updateBirthDate(date: string): Observable<any> {
     const telegramId = (window as any).Telegram.WebApp.initDataUnsafe?.user?.id; // Получение ID пользователя
-    return this.http.put(`${this.apiUrl}/birthday`, { telegram_id: telegramId, birthday: date });
+    return this.http.put(`${this.apiUrl}/birthday`, { telegram_id: 312321, birthday: date });
   }
 
   // Manager contact

@@ -15,35 +15,29 @@ export class ProductsService {
 
   constructor(private http: HttpClient) { }
 
-  createProduct(productData: ProductCreateData): Observable<any> {
-    const formData = new FormData();
-
-    // Prepare product data
-    const productDataJson = JSON.stringify({
-      category_id: productData.category_id,
-      name: productData.name,
-      description: productData.description,
-      price: productData.price,
-      attributes: productData.attributes,
-    });
-    formData.append('product_data', productDataJson);
-
-    console.log('Product Data JSON:', productDataJson);
-
-    // Add images if provided
-    if (productData.images && productData.images.length > 0) {
-      productData.images.forEach((file) => {
-        formData.append('files', file, file.name); // Обновлено: используем 'files' как ключ
-      });
-    }
-
-    // Add Telegram initialization data
+  createProduct(formData: FormData): Observable<any> {
     const headers = new HttpHeaders({
-      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
+      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '1',
     });
-
+  
+    // Логируем содержимое FormData
+    console.log('FormData содержит:');
+    formData.forEach((value, key) => {
+      if (value instanceof File) {
+        console.log(`${key}: File (name=${value.name}, size=${value.size}, type=${value.type})`);
+      } else {
+        console.log(`${key}: ${value}`);
+      }
+    });
+  
+    // Отправляем FormData на сервер
     return this.http.post(`${this.apiUrl}/`, formData, { headers });
   }
+  
+  
+  
+  
+  
 
   getProducts(params: { category_id?: number, filters?: any, search?: string, limit?: number, offset?: number } = {}): Observable<Product[]> {
     const { category_id, filters = {}, search, limit = 50, offset = 0 } = params;

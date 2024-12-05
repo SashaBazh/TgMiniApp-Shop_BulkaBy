@@ -37,11 +37,12 @@ export class FiltersComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private filtersService: FiltersService) {
     this.createAttributeForm = this.fb.group({
-      name: ['', Validators.required],
-      data_type: ['', Validators.required],
-      is_filterable: [false],
-      options: this.fb.array([])
-    });
+      nameRu: ['', Validators.required],  // Поле для русского названия
+      nameEn: ['', Validators.required],  // Поле для английского названия
+      data_type: ['', Validators.required], // Поле для типа данных
+      is_filterable: [false], // Опциональное поле для фильтруемости
+      options: this.fb.array([]) // Массив для опций
+    });    
 
     this.editAttributeForm = this.fb.group({
       name: ['', Validators.required],
@@ -82,13 +83,18 @@ export class FiltersComponent implements OnInit {
   }
 
   addOption() {
-    this.optionsArray.push(this.fb.group({
-      value: ['']
-    }));
+    const optionsArray = this.createAttributeForm.get('options') as FormArray;
+    optionsArray.push(
+      this.fb.group({
+        valueRu: ['', Validators.required], // Русское значение
+        valueEn: ['', Validators.required]  // Английское значение
+      })
+    );
   }
 
   removeOption(index: number) {
-    this.optionsArray.removeAt(index);
+    const optionsArray = this.createAttributeForm.get('options') as FormArray;
+    optionsArray.removeAt(index);
   }
 
   
@@ -99,20 +105,25 @@ export class FiltersComponent implements OnInit {
   }
 
   createOptions(attributeId: number) {
-
-    
     // Получаем значения из FormArray
     const options = this.optionsArray.value;
-    
+  
     // Фильтруем пустые значения и создаем массив промисов
     const optionRequests = options
-      .filter((option: IOption) => option.value.trim() !== '')
-      .map((option: IOption) => {
-        const optionData: IOptionData = {
+      .filter((option: { valueRu: string; valueEn: string }) => option.valueRu.trim() !== '' && option.valueEn.trim() !== '')
+      .map((option: { valueRu: string; valueEn: string }) => {
+        const optionData = {
           attribute_id: attributeId,
-          value: option.value.trim()
+          value: option.valueRu.trim(), // Основное значение (русский)
+          translations: {
+            ru: { value: option.valueRu.trim() }, // Перевод на русском
+            en: { value: option.valueEn.trim() }  // Перевод на английском
+          }
         };
-        
+  
+        // Логируем данные перед отправкой
+        console.log('Отправка данных опции:', optionData);
+  
         // Возвращаем промис для каждого запроса
         return this.filtersService.createOption(optionData).toPromise();
       });
@@ -133,31 +144,42 @@ export class FiltersComponent implements OnInit {
           this.message = 'Ошибка при создании опций';
           this.isSuccess = false;
         });
+    } else {
+      console.warn('Нет опций для создания.');
     }
   }
+  
   
   // И обновим метод submitAttributeForm
   submitAttributeForm() {
     if (this.createAttributeForm.valid) {
+      const formData = this.createAttributeForm.value;
+  
       const attributeData = {
-        name: this.createAttributeForm.get('name')?.value,
-        data_type: this.createAttributeForm.get('data_type')?.value,
-        is_filterable: this.createAttributeForm.get('is_filterable')?.value
+        name: formData.nameRu,
+        data_type: formData.data_type,
+        is_filterable: formData.is_filterable,
+        translations: {
+          ru: { name: formData.nameRu },
+          en: { name: formData.nameEn }
+        }
       };
-      
-      // Создаем атрибут
+  
+      // Отправляем данные для создания атрибута
       this.filtersService.createAttribute(attributeData).subscribe({
         next: (response) => {
-          console.log('Ответ сервера при создании атрибута:', response);
-          const attributeId = response.attribute_id;
-      
+          console.log('Атрибут создан:', response);
+  
+          const attributeId = response.attribute_id; // Получаем ID атрибута из ответа
+  
           if (!attributeId) {
-            console.error('attribute_id отсутствует в ответе сервера');
+            console.error('ID атрибута отсутствует в ответе сервера');
             this.message = 'Ошибка: сервер не вернул ID атрибута';
             this.isSuccess = false;
             return;
           }
-      
+  
+          // Создаем опции, если они есть
           if (this.isChoiceType && this.optionsArray.length > 0) {
             this.createOptions(attributeId);
           } else {
@@ -168,18 +190,13 @@ export class FiltersComponent implements OnInit {
           }
         },
         error: (err) => {
-          console.error('Ошибка при создании атрибута:', err);
-          this.message = 'Ошибка при создании атрибута';
+          console.error('Ошибка создания атрибута:', err);
+          this.message = 'Ошибка создания атрибута';
           this.isSuccess = false;
-        },
+        }
       });
-      
     }
-  }
-  
-  
-  
-  
+  }     
   
 
   startEditing(attribute: Attribute) {

@@ -1,13 +1,17 @@
-// interfaces/product.interface.ts
-
 export interface ProductCreateData {
   category_id: number;
   name: string;
   description: string;
   price: number;
-  attributes: any;
-  images: File[]; // Массив файлов изображений
+  attributes: Record<number, any>;
+  translations: {
+    ru: { name: string };
+    en: { name: string };
+  };
+  images?: File[]; // Массив файлов
 }
+
+
 
 export interface ProductResponse {
   id: number;

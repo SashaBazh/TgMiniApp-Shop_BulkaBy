@@ -25,20 +25,32 @@
             </div>
 
             <!-- Название продукта -->
+            <!-- Название продукта на русском -->
             <div class="form-group mb-3">
-                <label for="name" class="form-label">Название</label>
-                <input id="name" class="form-control" formControlName="name" placeholder="Введите название продукта"
-                    [ngClass]="{'is-invalid': createProductForm.get('name')?.invalid && createProductForm.get('name')?.touched}" />
-                <div class="invalid-feedback">
-                    Название продукта обязательно
-                </div>
+                <label for="nameRu" class="form-label">Название (Русский)</label>
+                <input id="nameRu" class="form-control" formControlName="nameRu"
+                    placeholder="Введите название продукта на русском" />
             </div>
 
-            <!-- Описание продукта -->
+            <!-- Название продукта на английском -->
             <div class="form-group mb-3">
-                <label for="description" class="form-label">Описание</label>
-                <textarea id="description" class="form-control" formControlName="description"
-                    placeholder="Введите описание продукта"></textarea>
+                <label for="nameEn" class="form-label">Название (Английский)</label>
+                <input id="nameEn" class="form-control" formControlName="nameEn"
+                    placeholder="Введите название продукта на английском" />
+            </div>
+
+            <!-- Описание продукта на русском -->
+            <div class="form-group mb-3">
+                <label for="descriptionRu" class="form-label">Описание (Русский)</label>
+                <textarea id="descriptionRu" class="form-control" formControlName="descriptionRu"
+                    placeholder="Введите описание продукта на русском"></textarea>
+            </div>
+
+            <!-- Описание продукта на английском -->
+            <div class="form-group mb-3">
+                <label for="descriptionEn" class="form-label">Описание (Английский)</label>
+                <textarea id="descriptionEn" class="form-control" formControlName="descriptionEn"
+                    placeholder="Введите описание продукта на английском"></textarea>
             </div>
 
             <!-- Цена продукта -->
@@ -175,7 +187,7 @@
                                 </button>
                                 <button class="btn btn-danger btn-sm" (click)="deleteProduct(product.id)">
                                     Удалить
-                                  </button>                                  
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -208,23 +220,27 @@
                                 <div class="media-container">
                                     <ng-container *ngIf="currentMedia">
                                         <!-- Изображение -->
-                                        <img *ngIf="isImage(currentMedia)" [src]="currentMedia" alt="Media Content" class="slider-media" />
+                                        <img *ngIf="isImage(currentMedia)" [src]="currentMedia" alt="Media Content"
+                                            class="slider-media" />
                                         <!-- Видео -->
-                                        <video *ngIf="isVideo(currentMedia)" [src]="currentMedia" controls class="slider-media"></video>
+                                        <video *ngIf="isVideo(currentMedia)" [src]="currentMedia" controls
+                                            class="slider-media"></video>
                                     </ng-container>
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="edit-image" class="form-label">Загрузить новое изображение</label>
-                                    <input type="file" id="edit-image" class="form-control" (change)="onEditImageSelected($event)" />
+                                    <input type="file" id="edit-image" class="form-control"
+                                        (change)="onEditImageSelected($event)" />
                                 </div>
-                                
+
                                 <!-- Предварительный просмотр нового изображения -->
                                 <div class="image-preview mb-3" *ngIf="editedImagePreview">
                                     <p>Предварительный просмотр нового изображения:</p>
-                                    <img [src]="editedImagePreview" alt="Image Preview" class="img-fluid rounded" style="max-height: 300px;" />
+                                    <img [src]="editedImagePreview" alt="Image Preview" class="img-fluid rounded"
+                                        style="max-height: 300px;" />
                                 </div>
-                                
-                    
+
+
                                 <!-- Навигационные точки -->
                                 <div class="dots">
                                     <button *ngFor="let media of mediaItems; let i = index" class="dot"
@@ -254,29 +270,30 @@
                         </div>
 
                         <!-- Атрибуты -->
-                        <div *ngIf="viewingProduct && viewingProduct.attribute_values && viewingProduct.attribute_values.length > 0">
+                        <div
+                            *ngIf="viewingProduct && viewingProduct.attribute_values && viewingProduct.attribute_values.length > 0">
                             <h5>Атрибуты</h5>
                             <div *ngFor="let attribute of viewingProduct.attribute_values" class="mb-3">
                                 <label>{{ attribute.attribute.name }}</label>
-                        
+
                                 <!-- Выпадающий список для атрибутов с опциями -->
                                 <select *ngIf="attribute.attribute.options && attribute.attribute.options.length > 0"
-                                        [value]="attribute.value"
-                                        (change)="updateAttributeValue(attribute.attribute.id, $event)"
-                                        class="form-control">
+                                    [value]="attribute.value"
+                                    (change)="updateAttributeValue(attribute.attribute.id, $event)"
+                                    class="form-control">
                                     <option value="">Выберите {{ attribute.attribute.name }}</option>
                                     <option *ngFor="let option of attribute.attribute.options" [value]="option.id">
                                         {{ option.title || option.value }}
                                     </option>
                                 </select>
-                        
+
                                 <!-- Поле ввода для атрибутов без опций -->
                                 <input *ngIf="!attribute.attribute.options || attribute.attribute.options.length === 0"
-                                       type="text" class="form-control" [value]="attribute.value"
-                                       (input)="updateAttributeValue(attribute.attribute.id, $event)" />
+                                    type="text" class="form-control" [value]="attribute.value"
+                                    (input)="updateAttributeValue(attribute.attribute.id, $event)" />
                             </div>
                         </div>
-                        
+
 
 
                         <!-- Кнопки -->

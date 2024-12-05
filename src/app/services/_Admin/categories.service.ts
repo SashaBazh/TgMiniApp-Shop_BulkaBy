@@ -20,19 +20,22 @@ export class CategoriesService {
 
   constructor(private http: HttpClient) { }
 
-  createCategory(categoryData: { name: string; description: string; image: File }): Observable<any> {
+  createCategory(categoryData: { name: string; description: string; translations: { ru: { name: string }; en: { name: string } }; image: File }): Observable<any> {
     const formData = new FormData();
-
-    // Правильно формируем данные
+  
+    // Основные данные
     formData.append('category_data', JSON.stringify({
       name: categoryData.name,
       description: categoryData.description,
+      translations: categoryData.translations, // Добавляем переводы
     }));
-    formData.append('image', categoryData.image, categoryData.image.name); // Добавляем имя файла
+  
+    // Изображение
+    formData.append('image', categoryData.image, categoryData.image.name);
 
     // Добавляем заголовки, если необходимо
     const headers = new HttpHeaders({
-      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
+      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '1',
       // Не указываем Content-Type, браузер сам его установит для FormData
     });
 
@@ -51,14 +54,12 @@ export class CategoriesService {
   // Обновление категории
   updateCategory(formData: FormData): Observable<any> {
     const headers = new HttpHeaders({
-      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
+      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '1',
     });
   
     return this.http.put(`${this.apiUrl}/categories`, formData, { headers });
   }
   
-
-
 
 
   // Удаление категории
@@ -88,7 +89,7 @@ export class CategoriesService {
 
   assignAttributesToCategory(categoryId: number, attributeIds: number[]): Observable<any[]> {
     const headers = new HttpHeaders({
-      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
+      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '1',
       'Content-Type': 'application/json',
     });
   

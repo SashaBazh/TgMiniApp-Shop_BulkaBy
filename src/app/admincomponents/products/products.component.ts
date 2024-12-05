@@ -60,11 +60,13 @@ export class ProductsComponent implements OnInit {
   ) {
     this.createProductForm = this.fb.group({
       category_id: ['', Validators.required],
-      name: ['', Validators.required],
-      description: [''],
+      nameRu: ['', Validators.required],
+      nameEn: ['', Validators.required],
+      descriptionRu: [''],
+      descriptionEn: [''],
       price: ['', [Validators.required, Validators.min(0)]],
       attributes: this.fb.group({}) // Dynamic attributes group
-    });
+    });    
 
     // Listen for category changes to fetch attributes and products
     this.createProductForm.get('category_id')?.valueChanges.subscribe(categoryId => {
@@ -243,19 +245,15 @@ export class ProductsComponent implements OnInit {
   submitProductForm() {
     if (this.createProductForm.valid && this.selectedImages.length > 0) {
       const formValue = this.createProductForm.value;
-
+  
       // Prepare attributes for submission
       const attributeValues: Record<number, any> = {};
       const attributesGroup = this.createProductForm.get('attributes') as FormGroup;
-
+  
       this.categoryAttributes.forEach((attr) => {
         const controlName = `attribute_${attr.id}`;
         const value = attributesGroup.get(controlName)?.value;
-
-        if (value !== null && value !== undefined) {
-          attributeValues[attr.id] = value; // Значение true или false передается напрямую
-        }
-
+  
         if (value !== null && value !== undefined) {
           if (attr.options && attr.options.length > 0) {
             // Если это атрибут с опциями, используем выбранный ID опции
@@ -266,35 +264,63 @@ export class ProductsComponent implements OnInit {
           }
         }
       });
-
-      // Отправляем данные на сервер
-      this.productsService
-        .createProduct({
-          ...formValue,
-          images: this.selectedImages, // Обновлено: передаем массив файлов
+  
+      // Prepare translations for submission
+      const translations = {
+        ru: {
+          name: formValue.nameRu,
+          description: formValue.descriptionRu,
+        },
+        en: {
+          name: formValue.nameEn,
+          description: formValue.descriptionEn,
+        }
+      };
+  
+      // Формируем FormData
+      const formData = new FormData();
+      formData.append(
+        'product_data',
+        JSON.stringify({
+          category_id: formValue.category_id,
+          name: formValue.nameEn, // Добавляем поле name (на английском языке)
+          price: formValue.price,
           attributes: attributeValues,
+          translations,
         })
-        .subscribe({
-          next: () => {
-            this.showNotification('Product successfully created');
-            this.createProductForm.reset();
-            this.selectedImages = [];
-            this.imagePreviews = [];
-            if (this.categoryId !== null) {
-              this.loadProducts(this.categoryId);
-            } else {
-              console.error('Category ID is null, cannot load products.');
-            }
-          },
-          error: (error) => {
-            this.showNotification(
-              error.error?.detail || 'Error creating product',
-              false
-            );
-          },
-        });
+      );
+  
+      // Добавляем изображения в FormData
+      this.selectedImages.forEach((file) => {
+        formData.append('files', file, file.name);
+      });
+  
+      // Отправляем данные на сервер
+      this.productsService.createProduct(formData).subscribe({
+        next: () => {
+          this.showNotification('Product successfully created');
+          this.createProductForm.reset();
+          this.selectedImages = [];
+          this.imagePreviews = [];
+          if (this.categoryId !== null) {
+            this.loadProducts(this.categoryId);
+          } else {
+            console.error('Category ID is null, cannot load products.');
+          }
+        },
+        error: (error) => {
+          this.showNotification(
+            error.error?.detail || 'Error creating product',
+            false
+          );
+        },
+      });
+    } else {
+      this.showNotification('Please fill all required fields and upload images', false);
     }
   }
+  
+  
 
   clearCategoryAttributes() {
     const attributesGroup = this.createProductForm.get('attributes') as FormGroup;

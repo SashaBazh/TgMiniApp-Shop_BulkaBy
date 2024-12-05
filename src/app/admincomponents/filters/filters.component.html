@@ -9,9 +9,16 @@
     <form [formGroup]="createAttributeForm" (ngSubmit)="submitAttributeForm()">
       <!-- Название атрибута -->
       <div class="form-group mb-3">
-        <label for="attribute-name" class="form-label">Название атрибута</label>
-        <input id="attribute-name" class="form-control" formControlName="name"
-          placeholder="Введите название атрибута" />
+        <label for="attribute-name-ru" class="form-label">Название атрибута (Русский)</label>
+        <input id="attribute-name-ru" class="form-control" formControlName="nameRu"
+          placeholder="Введите название атрибута на русском" />
+      </div>
+
+      <!-- Название атрибута на английском -->
+      <div class="form-group mb-3">
+        <label for="attribute-name-en" class="form-label">Название атрибута (Английский)</label>
+        <input id="attribute-name-en" class="form-control" formControlName="nameEn"
+          placeholder="Введите название атрибута на английском" />
       </div>
 
       <!-- Тип данных -->
@@ -32,25 +39,19 @@
       <div *ngIf="isChoiceType" class="form-group mb-3" [formGroup]="createAttributeForm">
         <label for="attribute-options" class="form-label">Опции атрибута</label>
         <div formArrayName="options">
-          <div *ngFor="let option of optionsArray.controls; let i = index" class="d-flex mb-2">
+          <div *ngFor="let option of optionsArray.controls; let i = index" class="mb-2">
             <div [formGroupName]="i">
-              <input type="text" class="form-control me-2" formControlName="value" placeholder="Введите опцию" />
+              <label>Опция (Русский)</label>
+              <input type="text" class="form-control mb-1" formControlName="valueRu" placeholder="Введите опцию на русском" />
+              
+              <label>Опция (Английский)</label>
+              <input type="text" class="form-control mb-1" formControlName="valueEn" placeholder="Введите опцию на английском" />
             </div>
-            <button type="button" class="btn btn-danger" (click)="removeOption(i)">Удалить</button>
+            <button type="button" class="btn btn-danger btn-sm mt-1" (click)="removeOption(i)">Удалить</button>
           </div>
         </div>
         <button type="button" class="btn btn-secondary" (click)="addOption()">Добавить опцию</button>
-
-        <!-- Отображение текущего состояния options
-        <div class="mt-3">
-          <strong>Текущие опции:</strong>
-          <pre>{{ optionsArray.value | json }}</pre>
-        </div> -->
       </div>
-
-
-
-
       <!-- Фильтруемый атрибут -->
       <div class="form-group mb-3">
         <label for="attribute-filterable" class="form-label">Можно фильтровать</label>

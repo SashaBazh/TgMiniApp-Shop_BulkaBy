@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
 import { CategoriesService } from '../../services/_Admin/categories.service';
@@ -57,6 +57,7 @@ export class CategoriesComponent implements OnInit {
     this.createCategoryForm = this.fb.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
+      nameEn: ['', Validators.required],
     });
   }
 
@@ -125,28 +126,37 @@ export class CategoriesComponent implements OnInit {
 
   submitCategoryForm() {
     if (this.createCategoryForm.valid && this.selectedImage) {
-      const { name, description } = this.createCategoryForm.value;
-      const image = this.selectedImage;
+        const { name, nameEn, description } = this.createCategoryForm.value;
 
-      this.categoriesService.createCategory({ name, description, image }).subscribe({
-        next: () => {
-          this.showNotification('Категория успешно создана');
-          this.createCategoryForm.reset();
-          this.selectedImage = null;
-          this.imagePreview = null;
-          this.loadCategories();
-        },
-        error: (error) => {
-          this.showNotification(
-            error.error?.detail || 'Произошла ошибка при создании категории',
-            false
-          );
-        },
-      });
+        // Формируем объект с фиксированными языками
+        const categoryData = {
+            name,
+            description,
+            translations: {
+                ru: { name },        // Название на русском
+                en: { name: nameEn } // Название на английском
+            },
+            image: this.selectedImage,
+        };
+
+        // Отправляем данные на сервер
+        this.categoriesService.createCategory(categoryData).subscribe({
+            next: () => {
+                this.showNotification('Категория успешно создана');
+                this.createCategoryForm.reset();
+                this.selectedImage = null;
+                this.imagePreview = null;
+            },
+            error: (error) => {
+                this.showNotification('Ошибка при создании категории', false);
+            },
+        });
     } else {
-      this.showNotification('Пожалуйста, заполните все поля и выберите изображение', false);
+        this.showNotification('Пожалуйста, заполните все обязательные поля', false);
     }
-  }
+}
+
+   
 
   startEditing(category: ProductCategory) {
     this.editingCategoryId = category.id;
@@ -189,9 +199,13 @@ export class CategoriesComponent implements OnInit {
     // Добавляем основные данные категории
     formData.append('category_data', JSON.stringify({
       id: this.editingCategoryId,
-      name: this.editedCategory.name,
+      name: this.editedCategory.name, // Используется для русского
       description: this.editedCategory.description,
-    }));
+      translations: {
+          ru: { name: this.editedCategory.name },
+          // en: { name: this.editedCategory.nameEn } // Поле для английского
+      }
+  }));
   
     // Добавляем изображение, если оно выбрано
     if (this.selectedImage) {
@@ -202,6 +216,7 @@ export class CategoriesComponent implements OnInit {
     this.categoriesService.updateCategory(formData).subscribe({
       next: () => {
         console.log('Категория успешно обновлена');
+
   
         // Отправка запросов для каждого атрибута
         this.categoriesService.assignAttributesToCategory(this.editingCategoryId!, this.selectedAttributes).subscribe({
