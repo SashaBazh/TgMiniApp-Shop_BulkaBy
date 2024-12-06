@@ -8,37 +8,47 @@ import { TranslateModule } from '@ngx-translate/core';
   standalone: true,
   imports: [RouterOutlet, TranslateModule],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit {
   constructor(private telegramService: TelegramService) {}
 
   ngOnInit(): void {
-    // Инициализируем приложение
     if (this.telegramService.isTelegramWebAppAvailable()) {
-      this.telegramService.initializeApp();
-      alert('Telegram WebApp доступен. Приложение инициализировано.');
-    } else {
-      alert('Telegram WebApp недоступен.');
-    }
+      const tgUser = this.telegramService.getUser();
 
-    const telegramInitData = (window as any).Telegram?.WebApp?.initData || '';
-    alert(`Telegram Init Data: ${telegramInitData}`);
+      if (tgUser) {
+        // Подготовим данные для регистрации
+        const registerData = {
+          telegram_id: tgUser.id,
+          name:
+            tgUser.first_name + (tgUser.last_name ? ' ' + tgUser.last_name : ''),
+          username: tgUser.username,
+          lang: 'ru', // Язык по умолчанию
+          points: 0, // Очки по умолчанию
+        };
 
-    if (telegramInitData) {
-      this.telegramService.authenticateUser(telegramInitData).subscribe({
-        next: (response) => {
-          alert('Пользователь успешно авторизован. Ответ сервера: ' + JSON.stringify(response));
-          console.log('Пользователь успешно авторизован:', response);
-        },
-        error: (error) => {
-          alert('Ошибка авторизации: ' + JSON.stringify(error));
-          console.error('Ошибка авторизации:', error);
-        },
-      });
+        this.telegramService.registerUser(registerData).subscribe({
+          next: (res) => {
+            // Пользователь успешно зарегистрирован
+          },
+          error: (err) => {
+            if (
+              err.status === 400 &&
+              err.error?.detail ===
+                'User with this telegram ID already exists'
+            ) {
+              // Пользователь уже зарегистрирован
+            } else {
+              // Ошибка при регистрации пользователя
+            }
+          },
+        });
+      } else {
+        // Не удалось получить данные пользователя Telegram
+      }
     } else {
-      alert('Отсутствуют данные Telegram WebApp для авторизации.');
-      console.error('Отсутствуют данные Telegram WebApp для авторизации.');
+      // Telegram WebApp недоступен
     }
   }
 }

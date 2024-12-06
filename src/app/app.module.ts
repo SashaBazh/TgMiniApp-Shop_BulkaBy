@@ -1,20 +1,18 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS, provideHttpClient, withFetch } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { routes } from './app.routes'; // Ваши маршруты
 import { AuthInterceptor } from './services/auth.interceptor';
 
-// Фабрика загрузчика переводов
-export function HttpLoaderFactory(http: HttpClient) {
+export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
 }
 
 @NgModule({
   declarations: [
-    // Ваши компоненты
   ],
   imports: [
     BrowserModule,
@@ -28,6 +26,13 @@ export function HttpLoaderFactory(http: HttpClient) {
       },
       defaultLanguage: 'ru', // Установить язык по умолчанию
     }),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    })
   ],
   providers: [
     {
@@ -35,6 +40,7 @@ export function HttpLoaderFactory(http: HttpClient) {
       useClass: AuthInterceptor,
       multi: true,
     },
+    provideHttpClient(withFetch())
   ],
   bootstrap: [], // Указан AppComponent как корневой
 })

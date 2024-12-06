@@ -28,7 +28,7 @@ export class OptionsComponent implements OnInit {
   birthday: string | null = null; // Подгруженная дата рождения пользователя
 
   // Список разрешённых username
-  private allowedAdmins: string[] = ['admin_user1', 'superadmin', 'john_doe'];
+  private allowedAdmins: string[] = ['admin_user1', 'Sasha', 'Sanyokfff'];
 
   constructor(
     public optionsService: OptionsService,

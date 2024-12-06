@@ -1,30 +1,52 @@
-import { Inject, Injectable } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
+import { DOCUMENT, isPlatformBrowser } from '@angular/common';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
 import { environment } from '../../enviroments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TelegramService {
   private tg: any;
-  private apiUrl = `${environment.apiUrl}/auth/auth`;
 
-  constructor(@Inject(DOCUMENT) private _document: Document, private http: HttpClient) {
+  constructor(
+    @Inject(DOCUMENT) private _document: Document,
+    @Inject(PLATFORM_ID) private platformId: object,
+    private http: HttpClient
+  ) {
+    // Проверяем, выполняется ли код в браузере
+    const isBrowser = isPlatformBrowser(this.platformId);
+    if (!isBrowser) {
+      console.warn('Код выполняется не в браузере');
+      return;
+    }
+
+    console.log('Код выполняется в браузере');
+
     const windowObj = this._document.defaultView;
-    if (typeof window !== 'undefined' && windowObj && windowObj.Telegram && windowObj.Telegram.WebApp) {
-      this.tg = windowObj.Telegram.WebApp;
+    if (!windowObj) {
+      console.warn('windowObj отсутствует');
+      return;
     }
-  }
 
-  showAlert(message: string, callback?: () => void): void {
-    if (this.tg?.showAlert) {
-      this.tg.showAlert(message, callback);
-    } else {
-      console.warn('Telegram showAlert is not available. Message:', message);
-      if (callback) callback();
+    console.log('windowObj существует');
+
+    if (!windowObj.Telegram) {
+      console.warn('windowObj.Telegram отсутствует');
+      return;
     }
+
+    console.log('windowObj.Telegram существует');
+
+    if (!windowObj.Telegram.WebApp) {
+      console.warn('windowObj.Telegram.WebApp отсутствует');
+      return;
+    }
+
+    console.log('windowObj.Telegram.WebApp существует, инициализируем this.tg');
+    this.tg = windowObj.Telegram.WebApp;
+    console.log('this.tg успешно инициализирован');
   }
 
   isTelegramWebAppAvailable(): boolean {
@@ -32,14 +54,36 @@ export class TelegramService {
   }
 
   initializeApp(): void {
-    if (this.tg) {
-      this.tg.expand();
-      this.tg.enableClosingConfirmation();
-      this.tg.setViewportSettings({ rotate: false });
-      this.tg.ready();
-    } else {
-      console.warn('Telegram WebApp is not available for initialization.');
+    console.log('Инициализация приложения начата');
+
+    if (!this.tg) {
+      console.warn('Ошибка: this.tg равен undefined');
+      return;
     }
+
+    try {
+      console.log('Telegram WebApp объект доступен, начинаем настройку');
+      
+      console.log('Вызов tg.expand()');
+      this.tg.expand();
+      console.log('tg.expand() выполнен успешно');
+      
+      console.log('Вызов tg.enableClosingConfirmation()');
+      this.tg.enableClosingConfirmation();
+      console.log('tg.enableClosingConfirmation() выполнен успешно');
+      
+      console.log('Вызов tg.setViewportSettings({ rotate: false })');
+      this.tg.setViewportSettings({ rotate: false });
+      console.log('tg.setViewportSettings выполнен успешно');
+      
+      console.log('Вызов tg.ready()');
+      this.tg.ready();
+      console.log('tg.ready() выполнен успешно');
+    } catch (error) {
+      console.error('Ошибка при настройке Telegram WebApp: ' + JSON.stringify(error));
+    }
+
+    console.log('Инициализация приложения завершена');
   }
 
   expandApp() {
@@ -56,7 +100,23 @@ export class TelegramService {
     return this.tg?.initData || null;
   }
 
-  authenticateUser(telegramInitData: string): Observable<any> {
-    return this.http.post(`${this.apiUrl}`, {});
+  registerUser(data: {
+    telegram_id: number;
+    name: string;
+    username?: string;
+    lang?: string;
+    points?: number;
+    image?: string;
+    birthday?: string;
+    referrer_id?: number;
+  }): Observable<any> {
+    const url = `${environment.apiUrl}/auth/register`;
+    const headers = {
+      'Content-Type': 'application/json',
+      'api-key': '2750562d-a939-4eff-8b3a-d214d1afb794',
+    };
+  
+    return this.http.post(url, data, { headers });
   }
+  
 }
