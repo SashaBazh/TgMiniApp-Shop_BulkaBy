@@ -12,14 +12,14 @@ import { SlideImage } from '../../../interfaces/_Home/image-slider.interface';
 export class ImagesSlidersComponent {
   images: SlideImage[] = [
     {
-      url: '../../../../assets/image-slider/baner2.png',
+      url: '../../../../assets/image-slider/baner02.jpg',
       alt: 'Highway in mountains'
     },
   ];
 
   secondImages: SlideImage[] = [
     {
-      url: '../../../../assets/image-slider/baner3.png',
+      url: '../../../../assets/image-slider/baner03.jpg',
       alt: 'Highway in mountains'
     },
   ];

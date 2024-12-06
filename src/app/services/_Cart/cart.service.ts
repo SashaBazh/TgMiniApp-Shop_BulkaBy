@@ -8,7 +8,7 @@ import { AddProduct, CartResponse } from '../../interfaces/_Cart/cart.interface'
   providedIn: 'root',
 })
 export class CartService {
-  private apiUrl = `${environment.apiUrl}/cart`;
+  private apiUrl = `${environment.apiUrl}/cart/`;
 
   constructor(private http: HttpClient) {}
 

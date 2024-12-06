@@ -124,37 +124,38 @@ export class ProductFullPageComponent {
 
   addToCart() {
     if (this.productId !== null) {
-      console.log(`Добавляем товар с ID ${this.productId} в корзину`);
+      // alert(`Добавляем товар с ID ${this.productId} в корзину`);
       this.cartService.addItemToCart(this.productId, 1).subscribe({
         next: (data) => {
-          console.log('Товар успешно добавлен в корзину', data);
+          // alert('Товар успешно добавлен в корзину');
           this.router.navigate(['/catalog']);
         },
         error: (err) => {
-          console.error('Ошибка при добавлении товара в корзину:', err);
+          // alert('Ошибка при добавлении товара в корзину');
         },
       });
     } else {
-      console.error('ID товара отсутствует');
+      // alert('ID товара отсутствует');
     }
   }
-
+  
   addToCartFast() {
     if (this.productId !== null) {
-      console.log(`Добавляем товар с ID ${this.productId} в корзину`);
+      alert(`Добавляем товар с ID ${this.productId} в корзину`);
       this.cartService.addItemToCart(this.productId, 1).subscribe({
         next: (data) => {
-          console.log('Товар успешно добавлен в корзину', data);
+          // alert('Товар успешно добавлен в корзину');
           this.router.navigate(['/cart']);
         },
         error: (err) => {
-          console.error('Ошибка при добавлении товара в корзину:', err);
+          // alert('Ошибка при добавлении товара в корзину');
         },
       });
     } else {
-      console.error('ID товара отсутствует');
+      // alert('ID товара отсутствует');
     }
   }
+  
 
 
 

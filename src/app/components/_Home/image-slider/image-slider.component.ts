@@ -12,7 +12,7 @@ import { SlideImage } from '../../../interfaces/_Home/image-slider.interface';
 export class ImageSliderComponent implements OnInit, OnDestroy {
   images: SlideImage[] = [
     {
-      url: '../../../../assets/image-slider/baner1.png',
+      url: '../../../../assets/image-slider/baner01.jpg',
       alt: 'Highway in mountains'
     }
 
