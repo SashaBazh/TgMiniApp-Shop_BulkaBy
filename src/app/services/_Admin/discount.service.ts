@@ -12,19 +12,31 @@ export class DiscountService {
 
   constructor(private http: HttpClient) {}
 
+  // Метод для получения заголовков Telegram
+  private getTelegramHeaders(): HttpHeaders {
+    return new HttpHeaders({
+      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '1',
+      'Content-Type': 'application/json',
+    });
+  }
+
   getDiscounts(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/`);
+    const headers = this.getTelegramHeaders();
+    return this.http.get<any[]>(`${this.apiUrl}/`, { headers });
   }
 
   createDiscount(discountData: any): Observable<any> {
-    return this.http.post(`${this.apiUrl}`, discountData);
+    const headers = this.getTelegramHeaders();
+    return this.http.post(`${this.apiUrl}`, discountData, { headers });
   }
 
   updateDiscount(discountId: number, discountData: any): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${discountId}`, discountData);
+    const headers = this.getTelegramHeaders();
+    return this.http.put(`${this.apiUrl}/${discountId}`, discountData, { headers });
   }
 
   deleteDiscount(discountId: number): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${discountId}`);
+    const headers = this.getTelegramHeaders();
+    return this.http.delete(`${this.apiUrl}/${discountId}`, { headers });
   }
 }
