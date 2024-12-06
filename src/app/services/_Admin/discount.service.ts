@@ -12,7 +12,6 @@ export class DiscountService {
 
   constructor(private http: HttpClient) {}
 
-  // Метод для получения заголовков Telegram
   private getTelegramHeaders(): HttpHeaders {
     return new HttpHeaders({
       'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '1',

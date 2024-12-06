@@ -9,7 +9,9 @@ import { environment } from '../../enviroments/environment';
 })
 export class PaymentService {
   private apiUrl = `${environment.apiUrl}/payment`;
-  
+
+
+
   constructor(private http: HttpClient) {}
 
   createPayment(paymentRequest: CreatePaymentRequest): Observable<PaymentInitializeResponse> {

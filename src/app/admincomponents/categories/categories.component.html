@@ -75,7 +75,7 @@
                   <!-- Поле для редактирования названия -->
                   <div class="mb-3">
                     <label class="form-label">Название</label>
-                    <input type="text" class="form-control" [(ngModel)]="editedCategory.name" name="name"
+                    <input type="text" class="form-control" [(ngModel)]="editedCategory.name" name="name" readonly
                       placeholder="Название" required />
                   </div>
 
@@ -89,7 +89,7 @@
                   <!-- Поле для редактирования описания -->
                   <div class="mb-3">
                     <label class="form-label">Описание</label>
-                    <textarea class="form-control" [(ngModel)]="editedCategory.description" name="description"
+                    <textarea class="form-control" [(ngModel)]="editedCategory.description" name="description" readonly
                       placeholder="Описание" required></textarea>
                   </div>
 

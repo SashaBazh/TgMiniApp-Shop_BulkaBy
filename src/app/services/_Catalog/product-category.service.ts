@@ -15,4 +15,5 @@ export class ProductCategoryService {
   getCategories(): Observable<ProductCategory[]> {
     return this.http.get<ProductCategory[]>(`${this.apiUrl}/category`);
   }
+  
 }

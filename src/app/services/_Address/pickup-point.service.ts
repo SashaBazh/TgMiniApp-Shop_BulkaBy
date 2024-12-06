@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http'; 
+import { HttpClient, HttpHeaders } from '@angular/common/http'; 
 import { Observable } from 'rxjs';
 import { PickupPoint } from '../../interfaces/_Address/pickup-point.interface';
 import { environment } from '../../enviroments/environment';

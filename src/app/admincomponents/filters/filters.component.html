@@ -87,7 +87,7 @@
     <form [formGroup]="editAttributeForm" (ngSubmit)="updateAttribute()">
       <div class="form-group mb-3">
         <label for="edit-name" class="form-label">Название атрибута</label>
-        <input id="edit-name" class="form-control" formControlName="name" />
+        <input id="edit-name" class="form-control" formControlName="name" readonly />
       </div>
       <div class="form-group mb-3">
         <label for="edit-type" class="form-label">Тип данных</label>

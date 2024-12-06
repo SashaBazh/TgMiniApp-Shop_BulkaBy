@@ -2,7 +2,7 @@
 
 <div class="pickup-point" [ngClass]="{ 'selected': pickupPoint.selected }">
     <div class="pickup-point-info">
-        <div class="pickup-point-name">{{ pickupPoint.name }}</div>
+        <div class="pickup-point-name">{{ pickupPoint.address }}</div>
         <div class="pickup-point-rating">
             <span class="rating-value">{{ pickupPoint.rating.toFixed(1) }}</span>
             <ng-container *ngFor="let offset of starOffsets; let i = index">
