@@ -17,6 +17,28 @@ export class AppComponent implements OnInit {
     // Инициализируем приложение
     if (this.telegramService.isTelegramWebAppAvailable()) {
       this.telegramService.initializeApp();
+      alert('Telegram WebApp доступен. Приложение инициализировано.');
+    } else {
+      alert('Telegram WebApp недоступен.');
+    }
+
+    const telegramInitData = (window as any).Telegram?.WebApp?.initData || '';
+    alert(`Telegram Init Data: ${telegramInitData}`);
+
+    if (telegramInitData) {
+      this.telegramService.authenticateUser(telegramInitData).subscribe({
+        next: (response) => {
+          alert('Пользователь успешно авторизован. Ответ сервера: ' + JSON.stringify(response));
+          console.log('Пользователь успешно авторизован:', response);
+        },
+        error: (error) => {
+          alert('Ошибка авторизации: ' + JSON.stringify(error));
+          console.error('Ошибка авторизации:', error);
+        },
+      });
+    } else {
+      alert('Отсутствуют данные Telegram WebApp для авторизации.');
+      console.error('Отсутствуют данные Telegram WebApp для авторизации.');
     }
   }
 }

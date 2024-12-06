@@ -32,5 +32,10 @@
     "ADD_BIRTH_DATE": "Add Birth Date",
     "ADD_BIRTH_DATE_DESCRIPTION": "Add your birth date so we can offer personalized recommendations and discounts.",
     "CONTACT_MANAGER_DESCRIPTION": "Write to our manager to ask questions, clarify order details, or get advice.",
-    "PAYMENTMETHOD": "Payment Method"
+    "PAYMENTMETHOD": "Payment Method",
+    "CHANGE_BIRTH_DATE": "Change",
+    "IS_AVALIBLE": "In stock",
+    "BUY_NOW": "Buy Now",
+    "ADD_TO_CART": "Add to Cart",
+    "CONTACT_MANAGER_BUTTON": "Contact Manager"
 }

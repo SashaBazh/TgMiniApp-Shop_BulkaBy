@@ -5,7 +5,7 @@
     <div class="products-row">
       <app-product-card-recomendation 
         *ngFor="let product of recommendedProducts" 
-        [product]="product">
+        [product]="product" (click)="openProduct(product.id)">
       </app-product-card-recomendation>
     </div>
   </div>

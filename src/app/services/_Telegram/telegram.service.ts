@@ -1,13 +1,17 @@
 import { Inject, Injectable } from '@angular/core';
 import { DOCUMENT } from '@angular/common';
+import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from '../../enviroments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TelegramService {
   private tg: any;
+  private apiUrl = `${environment.apiUrl}/auth/auth`;
 
-  constructor(@Inject(DOCUMENT) private _document: Document) {
+  constructor(@Inject(DOCUMENT) private _document: Document, private http: HttpClient) {
     // Проверяем, доступен ли объект window
     const windowObj = this._document.defaultView;
     if (typeof window !== 'undefined' && windowObj && windowObj.Telegram && windowObj.Telegram.WebApp) {
@@ -58,6 +62,18 @@ export class TelegramService {
       console.warn('Telegram user data is not available.');
       return null;
     }
+  }
+
+  getTelegramInitData(): string | null {
+    return this.tg?.initData || null;
+  }
+
+  authenticateUser(telegramInitData: string): Observable<any> {
+    const headers = new HttpHeaders({
+      'X-Telegram-Init-Data': telegramInitData,
+    });
+
+    return this.http.post(`${this.apiUrl}`, {}, { headers });
   }
   
 }

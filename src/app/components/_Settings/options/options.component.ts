@@ -36,9 +36,10 @@ export class OptionsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log('ngOnInit вызван');
     this.checkAdminAccess();
     this.loadBirthday(); // Подгружаем дату рождения
-  }
+  }  
 
   get language(): string {
     return this.optionsService.language;
@@ -49,18 +50,24 @@ export class OptionsComponent implements OnInit {
       next: (profile) => {
         // Устанавливаем дату рождения, если она есть
         this.birthday = profile.birthday
-          ? new Date(profile.birthday).toISOString().split('T')[0]
-          : null;
+        ? profile.birthday.substring(0, 10) // Оставляем первые 10 символов
+        : null;
 
+          console.log('Дата рождения из профиля:', this.birthday);
+  
+        // Сохраняем дату рождения в OptionsService
         if (this.birthday) {
-          this.optionsService.setBirthDate(this.birthday); // Сохраняем локально
+          this.optionsService.setBirthDate(this.birthday);
         }
+  
+        console.log('Дата рождения установлена:', this.birthday);
       },
       error: (error) => {
         console.error('Ошибка при загрузке даты рождения:', error);
       },
     });
   }
+  
 
   checkAdminAccess(): void {
     this.profileService.getUserProfile().subscribe({
@@ -78,7 +85,7 @@ export class OptionsComponent implements OnInit {
     this.optionsService.toggleLanguage();
     setTimeout(() => {
       window.location.reload();
-    }, 100);
+    });
   }
 
   toggleCurrency(): void {
@@ -95,14 +102,14 @@ export class OptionsComponent implements OnInit {
 
   saveDate(): void {
     if (this.selectedDate) {
-      // Преобразуем дату в формат `YYYY-MM-DD HH:MM:SS.ssssss`
-      const formattedDate = this.formatDateForServer(this.selectedDate);
+      // Преобразуем дату в короткий формат `YYYY-MM-DD`
+      const formattedDate = this.selectedDate.substring(0, 10); // Берём только первые 10 символов
   
       this.optionsService.updateBirthDate(formattedDate).subscribe({
         next: (response) => {
           console.log('Дата рождения обновлена успешно:', response);
           this.optionsService.setBirthDate(formattedDate); // Сохраняем локально
-          this.birthday = formattedDate; // Обновляем отображаемую дату
+          this.birthday = formattedDate; // Обновляем отображаемую дату в формате `YYYY-MM-DD`
           this.closeDatePicker();
         },
         error: (error) => {
@@ -113,12 +120,6 @@ export class OptionsComponent implements OnInit {
     } else {
       console.error('Дата не выбрана');
     }
-  }
-  
-  private formatDateForServer(date: string): string {
-    const now = new Date();
-    const selectedDate = new Date(date);
-    return `${selectedDate.toISOString().split('T')[0]} ${now.toTimeString().split(' ')[0]}.${now.getMilliseconds().toString().padStart(6, '0')}`;
   }  
   
 

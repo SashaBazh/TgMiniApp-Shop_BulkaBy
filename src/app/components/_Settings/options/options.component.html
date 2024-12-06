@@ -5,8 +5,11 @@
   </div>
   <div class="option-item" (click)="openDatePicker()">
     <span class="option-title">{{ 'BIRTH_DATE' | translate }}</span>
-    <span class="right-text">{{ birthday || ('CHOOSE_DATE' | translate) }}</span>
-  </div>
+    <span class="right-text">
+      {{ birthday || ('CHOOSE_DATE' | translate) }}
+    </span>
+  </div>  
+
   <div class="option-item" (click)="contactManager()">
     <span class="option-title">{{ 'CONTACT_MANAGER' | translate }}</span>
   </div>

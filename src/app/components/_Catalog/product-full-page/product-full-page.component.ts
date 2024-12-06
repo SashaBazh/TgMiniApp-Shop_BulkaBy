@@ -5,11 +5,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ImageStreamService } from '../../../services/_Image/image-stream.service';
 import { ProductService } from '../../../services/_Product/product-service.service';
 import { CartService } from '../../../services/_Cart/cart.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-product-full-page',
   standalone: true,
-  imports: [CommonModule, RecomendationsComponent],
+  imports: [CommonModule, RecomendationsComponent, TranslateModule],
   templateUrl: './product-full-page.component.html',
   styleUrls: ['./product-full-page.component.css'],
 })
@@ -29,7 +30,8 @@ export class ProductFullPageComponent {
     private productService: ProductService,
     public imageService: ImageStreamService,
     private cartService: CartService,
-    private router: Router
+    private router: Router,
+    private translate: TranslateService // Инжектируем TranslateService
   ) {}
 
   ngOnInit() {
@@ -54,20 +56,24 @@ export class ProductFullPageComponent {
 
   prepareAttributes() {
     if (!this.product) return;
-
+  
     // Transform attributes from attribute_values
     const allAttributes = this.product.attribute_values.map((attr: any) => ({
       name: attr.attribute.name,
-      value: attr.value
+      value: attr.value,
     }));
-
+  
     // Split into main and extra attributes
     this.mainAttributes = allAttributes.slice(0, 3);
     this.extraAttributes = allAttributes.slice(3);
-
+  
+    // Определяем текущий язык
+    const descriptionLabel =
+      this.translate.currentLang === 'ru' ? 'Описание' : 'Description';
+  
     // Add description to extra attributes
     if (this.product.description) {
-      this.extraAttributes.unshift({ name: 'Описание', value: this.product.description });
+      this.extraAttributes.unshift({ name: descriptionLabel, value: this.product.description });
     }
   }
 

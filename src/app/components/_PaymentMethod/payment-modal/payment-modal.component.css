@@ -1,88 +1,98 @@
 .payment-modal-container {
-    max-width: 500px;
-    margin: 50px auto;
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    font-family: Arial, sans-serif;
-  }
-  
-  .payment-modal-container h2 {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    text-align: center;
-    color: #333;
-  }
-  
-  .payment-modal-container form {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  .payment-modal-container label {
-    font-weight: bold;
-    margin-bottom: 5px;
-    display: block;
-    color: #555;
-  }
-  
-  .payment-modal-container input {
-    width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    outline: none;
-    box-sizing: border-box;
-  }
-  
-  .payment-modal-container input:focus {
-    border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
-  }
-  
-  .payment-modal-container button {
-    padding: 10px 15px;
-    font-size: 16px;
-    font-weight: bold;
-    color: #fff;
-    background-color: #007bff;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .payment-modal-container button[type="submit"] {
-    background-color: #28a745;
-  }
-  
-  .payment-modal-container button[type="button"] {
-    background-color: #dc3545;
-  }
-  
-  .payment-modal-container button:hover {
-    background-color: #0056b3;
-  }
-  
-  .payment-modal-container button[type="submit"]:hover {
-    background-color: #218838;
-  }
-  
-  .payment-modal-container button[type="button"]:hover {
-    background-color: #c82333;
-  }
-  
-  .payment-modal-container div {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .payment-modal-container div:last-child {
-    display: flex;
-    justify-content: space-between;
-  }
-  
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: #E9DABC; /* Цвет фона */
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: 'Montserrat', sans-serif;
+}
+
+.payment-modal-container h2 {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.payment-modal-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.payment-modal-container fieldset {
+  border: 1px solid #D4DCFF;
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 16px;
+  background-color: #fff; /* Белый фон для полей */
+}
+
+.payment-modal-container legend {
+  font-size: 18px;
+  font-weight: 500;
+  color: #4A67A7;
+  padding: 0 10px;
+}
+
+.payment-modal-container label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.payment-modal-container input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #D4DCFF;
+  border-radius: 8px;
+  font-size: 14px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+  background-color: #f9f9f9;
+  transition: border-color 0.3s;
+}
+
+.payment-modal-container input:focus {
+  border-color: #4A67A7;
+  outline: none;
+}
+
+.payment-modal-container button {
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.payment-modal-container button[type="submit"] {
+  background-color: #4A67A7;
+  color: #fff;
+}
+
+.payment-modal-container button[type="submit"]:hover {
+  background-color: #3a5590;
+}
+
+.payment-modal-container button[type="button"] {
+  background-color: #E9DABC;
+  color: #4A67A7;
+}
+
+.payment-modal-container button[type="button"]:hover {
+  background-color: #d4dcff;
+  color: #333;
+}
+
+.payment-modal-container div {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
