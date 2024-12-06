@@ -1,7 +1,5 @@
-// order.service.ts
-
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http'; 
+import { HttpClient } from '@angular/common/http'; 
 import { Observable } from 'rxjs';
 import { OrderCreateRequest, OrderResponse } from '../../interfaces/_Order/order.interface';
 import { environment } from '../../enviroments/environment';
@@ -15,11 +13,6 @@ export class OrderService {
   constructor(private http: HttpClient) { }
 
   createOrder(orderData: OrderCreateRequest): Observable<OrderResponse> {
-    const headers = new HttpHeaders({
-      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
-      'Content-Type': 'application/json',
-    });
-
-    return this.http.post<OrderResponse>(`${this.apiUrl}/order`, orderData, { headers });
+    return this.http.post<OrderResponse>(`${this.apiUrl}/order`, orderData);
   }
 }
