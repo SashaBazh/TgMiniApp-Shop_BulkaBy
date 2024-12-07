@@ -7,16 +7,16 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./pages/home/home.component').then((m) => m.HomeComponent),
   },
-  { 
-    path: 'catalog', 
-    loadComponent: () => 
-      import('./pages/catalog/catalog.component').then((m) => m.CatalogComponent), 
+  {
+    path: 'catalog',
+    loadComponent: () =>
+      import('./pages/catalog/catalog.component').then((m) => m.CatalogComponent),
   },
   {
     path: 'catalog/:category',
     loadComponent: () =>
       import('./pages/productsincatalog/productsincatalog.component').then((m) => m.ProductsincatalogComponent),
-  },  
+  },
   {
     path: 'catalog/:category/:id',
     loadComponent: () =>
@@ -61,17 +61,25 @@ export const routes: Routes = [
         (m) => m.PaymentModalComponent
       ),
   },
+  {
+    path: 'payment-link',
+    loadComponent: () =>
+      import('./components/_PaymentMethod/payment-link/payment-link.component').then(
+        (m) => m.PaymentLinkComponent
+      ),
+  },
   
 
 
 
-   // Admin panel routes
-   {
+
+  // Admin panel routes
+  {
     path: 'admin',
     loadComponent: () =>
       import('./pages/_Admin/admin-page/admin-page.component').then((m) => m.AdminPageComponent),
   },
-   {
+  {
     path: 'admin/categories',
     loadComponent: () =>
       import('./admincomponents/categories/categories.component').then((m) => m.CategoriesComponent),

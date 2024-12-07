@@ -104,17 +104,21 @@ export class PaymentModalComponent implements OnInit {
     this.paymentData.email = this.paymentData.buyer.email;
 
     console.log('Отправка данных для оплаты:', this.paymentData);
-
     this.paymentService.createPayment(this.paymentData).subscribe({
       next: (response) => {
         console.log('Ответ сервера:', response);
 
         if (response.payment_page_url) {
-          window.location.href = response.payment_page_url;
-        }
-        else {
+          this.router.navigate(['/payment-link'], { 
+            queryParams: { 
+              url: response.payment_page_url,
+              orderId: this.paymentData.order_id // Передаем orderId
+            } 
+          });
+        } else {
           console.error('Ошибка: Ссылка на оплату отсутствует.');
         }
+               
       },
       error: (error) => {
         console.error('Ошибка при создании платежа:', error);

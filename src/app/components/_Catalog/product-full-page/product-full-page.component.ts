@@ -141,7 +141,7 @@ export class ProductFullPageComponent {
   
   addToCartFast() {
     if (this.productId !== null) {
-      alert(`Добавляем товар с ID ${this.productId} в корзину`);
+      // alert(`Добавляем товар с ID ${this.productId} в корзину`);
       this.cartService.addItemToCart(this.productId, 1).subscribe({
         next: (data) => {
           // alert('Товар успешно добавлен в корзину');

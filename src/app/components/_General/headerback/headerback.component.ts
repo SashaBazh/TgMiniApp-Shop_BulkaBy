@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { Location } from '@angular/common';
 
 @Component({
@@ -8,14 +8,25 @@ import { Location } from '@angular/common';
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './headerback.component.html',
-  styleUrl: './headerback.component.css'
+  styleUrls: ['./headerback.component.css']
 })
 export class HeaderbackComponent {
   @Input() pageTitle: string = 'Главная';
 
-  constructor(private location: Location) { }
+  constructor(private location: Location, private router: Router) {}
 
   goBack() {
-    this.location.back();
+    const currentUrl = this.router.url; // Получаем текущий URL
+
+    if (currentUrl.startsWith('/cart/address/payment')) {
+      // Перенаправляем на /cart/address, если URL начинается с /cart/address/payment
+      this.router.navigate(['/cart/address']);
+    } else if (currentUrl === '/cart/address') {
+      // Перенаправляем на /cart, если URL равен /cart/address
+      this.router.navigate(['/cart']);
+    } else {
+      // Выполняем обычный возврат назад
+      this.location.back();
+    }
   }
 }

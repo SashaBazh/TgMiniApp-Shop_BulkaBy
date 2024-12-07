@@ -1,8 +1,15 @@
-<!-- pickup-point.component.html -->
-
 <div class="pickup-point" [ngClass]="{ 'selected': pickupPoint.selected }">
     <div class="pickup-point-info">
-        <div class="pickup-point-name">{{ pickupPoint.address }}</div>
+        <div class="pickup-point-name">
+            <a [href]="pickupPoint.address" target="_blank" rel="noopener noreferrer" class="link-black">
+                {{ pickupPoint.name }}
+            </a>
+        </div>  
+        <div class="pickup-point-name">
+            <a [href]="pickupPoint.address" target="_blank" rel="noopener noreferrer" class="link-black">
+                Ermenek Mh. Kardeşkentler Sk. No: 51B/107 
+            </a>
+        </div>
         <div class="pickup-point-rating">
             <span class="rating-value">{{ pickupPoint.rating.toFixed(1) }}</span>
             <ng-container *ngFor="let offset of starOffsets; let i = index">
