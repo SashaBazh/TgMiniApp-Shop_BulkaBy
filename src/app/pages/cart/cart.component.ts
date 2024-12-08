@@ -73,6 +73,7 @@ export class CartComponent implements OnInit {
       if (item) {
         item.quantity = event.quantity; // Обновляем количество локально
         this.updateTotalPrice(); // Пересчитываем итоговую цену
+        this.loadCart();
       }
     }
   }

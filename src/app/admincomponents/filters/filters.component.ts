@@ -6,17 +6,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { Attribute } from '../../interfaces/_Admin/attribute.interface';
 import { firstValueFrom } from 'rxjs';
 
-
-interface IOption {
-  value: string;
-}
-
-interface IOptionData {
-  attribute_id: number;
-  value: string;
-}
-
-
 @Component({
   selector: 'app-filters',
   standalone: true,
@@ -158,11 +147,11 @@ export class FiltersComponent implements OnInit {
       const attributeData = {
         name: formData.nameRu,
         data_type: formData.data_type,
-        is_filterable: formData.is_filterable,
+        is_filterable: formData.is_filterable === null ? false : formData.is_filterable, // Устанавливаем false, если значение null
         translations: {
           ru: { name: formData.nameRu },
-          en: { name: formData.nameEn }
-        }
+          en: { name: formData.nameEn },
+        },
       };
   
       // Отправляем данные для создания атрибута

@@ -1,13 +1,3 @@
-.product-full-page {
-  max-height: 100vh;
-  /* Устанавливаем максимальную высоту на всю высоту экрана */
-  overflow-y: auto;
-  /* Включаем вертикальную прокрутку */
-  /* Добавляем внутренние отступы */
-  box-sizing: border-box;
-  /* Учитываем отступы в общей ширине */
-}
-
 .product-info {
   margin-top: 16px;
   text-align: center;

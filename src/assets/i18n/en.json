@@ -37,5 +37,7 @@
     "IS_AVALIBLE": "In stock",
     "BUY_NOW": "Buy Now",
     "ADD_TO_CART": "Add to Cart",
-    "CONTACT_MANAGER_BUTTON": "Contact Manager"
+    "CONTACT_MANAGER_BUTTON": "Contact Manager",
+    "MY_PURCHASES": "Purchased items",
+    "ORDERS": "Items"
 }

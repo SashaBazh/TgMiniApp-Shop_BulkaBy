@@ -12,9 +12,17 @@ export class CategoryService {
 
   constructor(private http: HttpClient) { }
 
-  getCategoryAttributes(categoryId: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/category/${categoryId}/attributes`);
+  getCategoryAttributes(categoryId: number, filterable: boolean = true): Observable<any[]> {
+    const params = { filterable: filterable.toString() };
+    console.log('Отправляем запрос с параметрами:', {
+      url: `${this.apiUrl}/category/${categoryId}/attributes`,
+      params,
+    }); // Логируем URL и параметры
+  
+    return this.http.get<any[]>(`${this.apiUrl}/category/${categoryId}/attributes`, { params });
   }
+  
+  
 
   getCategories(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/category`);

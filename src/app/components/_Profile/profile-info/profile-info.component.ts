@@ -4,6 +4,7 @@ import { TelegramService } from '../../../services/_Telegram/telegram.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { ProfileService } from '../../../services/_Profile/profile.service';
 import { UserProfileResponse } from '../../../interfaces/_Profile/friend.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile-info',
@@ -24,7 +25,8 @@ export class ProfileInfoComponent implements OnInit {
 
   constructor(
     private profileService: ProfileService,
-    private telegramService: TelegramService
+    private telegramService: TelegramService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -79,6 +81,10 @@ export class ProfileInfoComponent implements OnInit {
       default:
         return '';
     }
+  }
+
+  navigateToPurchases(): void {
+    this.router.navigate(['profile/my-purchases']);
   }
   
 

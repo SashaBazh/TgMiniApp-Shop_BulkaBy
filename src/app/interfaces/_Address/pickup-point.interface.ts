@@ -6,4 +6,5 @@ export interface PickupPoint {
   address: string;
   rating: number;
   selected?: boolean;
+  link?: string;
 }

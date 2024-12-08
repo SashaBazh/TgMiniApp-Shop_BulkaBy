@@ -58,13 +58,13 @@ export class ProductsComponent implements OnInit {
     });
   }
 
-  private loadFilters() {
+  private loadFilters(filterable: boolean = true) {
     if (this.categoryId === null) return;
-
-    this.categoryAttributesService.getCategoryAttributes(this.categoryId).subscribe({
+  
+    this.categoryAttributesService.getCategoryAttributes(this.categoryId, filterable).subscribe({
       next: (data) => {
         this.filters = data.map((attribute: any) => ({
-          id: attribute.id,  // Сохраняем ID атрибута
+          id: attribute.id, // Сохраняем ID атрибута
           name: attribute.name,
           options: attribute.options || [],
         }));
@@ -74,6 +74,7 @@ export class ProductsComponent implements OnInit {
       },
     });
   }
+  
 
 
   private loadProducts(categoryId: number, search?: string) {

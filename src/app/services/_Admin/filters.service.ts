@@ -26,9 +26,10 @@ export class FiltersService {
       ...attributeData,
       data_type: attributeData.data_type.toLowerCase(),
     };
-
+  
     return this.http.post(`${this.apiUrl}/attributes`, formattedData, { headers: this.getHeaders() });
   }
+  
 
   createOption(optionData: { attribute_id: number; value: string; translations: { [key: string]: { value: string } } }): Observable<any> {
     return this.http.post(`${this.apiUrl}/attribute/option`, optionData, { headers: this.getHeaders() });

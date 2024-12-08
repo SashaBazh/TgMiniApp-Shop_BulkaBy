@@ -37,5 +37,7 @@
     "IS_AVALIBLE": "Есть в наличии",
     "BUY_NOW": "Купить сейчас",
     "ADD_TO_CART": "В корзину",
-    "CONTACT_MANAGER_BUTTON": "Связаться с менеджером"
+    "CONTACT_MANAGER_BUTTON": "Связаться с менеджером",
+    "MY_PURCHASES": "Купленные товары",
+    "ORDERS": "Товары"
 }

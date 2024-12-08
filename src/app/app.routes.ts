@@ -68,6 +68,12 @@ export const routes: Routes = [
         (m) => m.PaymentLinkComponent
       ),
   },
+  {
+    path: 'profile/my-purchases',
+    loadComponent: () =>
+      import('./pages/purchases/purchases.component').then((m) => m.PurchasesComponent
+      ),
+  },
   
 
 

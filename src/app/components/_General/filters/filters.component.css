@@ -1,14 +1,11 @@
 .dynamic-list {
-  display: flex;
-  overflow-x: auto; /* Горизонтальный скроллинг */
-  overflow-y: visible; /* Разрешаем вертикальное перекрытие */
-  gap: 8px;
+  position: relative;
+  max-height: 100vh; /* Ограничиваем высоту окна */
+  overflow-y: auto; /* Разрешаем вертикальный скроллинг */
+  overflow-x: hidden; /* Отключаем горизонтальный скроллинг */
   padding-bottom: 150px;
-  scrollbar-width: none; /* Убираем скроллбар в Firefox */
-  -ms-overflow-style: none; /* Убираем скроллбар в IE10+ */
-  position: relative; /* Для позиционирования дочерних элементов */
-  z-index: 1; /* Устанавливаем контекст наложения */
 }
+
 
 .dynamic-list::-webkit-scrollbar {
   display: none; /* Убираем скроллбар в Chrome */
