@@ -47,7 +47,7 @@
 
 .payment-iframe {
     width: 100vw; /* Полная ширина экрана */
-    height: 100vh; /* Полная высота экрана */
+    height: 1300px; /* Полная высота экрана */
     border: none; /* Убираем рамку */
     overflow: hidden; /* Отключаем прокрутку внутри iframe */
 }

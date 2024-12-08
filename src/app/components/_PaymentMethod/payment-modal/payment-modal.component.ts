@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PaymentService } from '../../../services/_Payment/payment.service';
+import { SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-payment-modal',
@@ -49,6 +50,9 @@ export class PaymentModalComponent implements OnInit {
     },
   };
 
+  isCoinpayments = false;
+  paymentUrl: SafeResourceUrl | null = null;
+
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
@@ -59,6 +63,9 @@ export class PaymentModalComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParamMap.subscribe((params) => {
       const orderId = params.get('orderId');
+      const paymentType = params.get('payment_type');
+      const currency = params.get('currency');
+
       if (orderId) {
         this.paymentData.order_id = Number(orderId);
         this.paymentData.buyer.id = `${orderId}`;
@@ -66,14 +73,23 @@ export class PaymentModalComponent implements OnInit {
       } else {
         console.error('Не удалось получить идентификатор заказа из маршрута.');
       }
+
+      if (paymentType === 'coinpayments' && currency) {
+        // Для coinpayments оставляем только email
+        this.isCoinpayments = true;
+        this.paymentData.payment_type = 'coinpayments';
+        this.paymentData.currency = currency;
+        // Очищаем лишние поля, если хотите
+        // Можно просто их игнорировать при сабмите
+      } else {
+        // Обычный сценарий iyzipay, если таковой есть
+      }
     });
 
-    // Устанавливаем даты регистрации и последнего входа
+    // Устанавливаем даты и IP, если нужно
     const currentDate = this.formatDateToIyzico(new Date());
     this.paymentData.buyer.registration_date = currentDate;
     this.paymentData.buyer.last_login_date = currentDate;
-
-    // Получение текущего IP-адреса
     this.fetchIpAddress();
   }
 
@@ -99,32 +115,63 @@ export class PaymentModalComponent implements OnInit {
       console.error('Ошибка: Идентификатор заказа не задан!');
       return;
     }
-
-    // Копируем email из buyer в верхний уровень
-    this.paymentData.email = this.paymentData.buyer.email;
-
-    console.log('Отправка данных для оплаты:', this.paymentData);
+  
+    // Для CoinPayments
+    if (this.isCoinpayments) {
+      const paymentRequest = {
+        order_id: this.paymentData.order_id,
+        currency: this.paymentData.currency,
+        payment_type: 'coinpayments',
+        email: this.paymentData.email, // Берем email с верхнего уровня
+      };
+  
+      console.log('[PaymentModalComponent] Отправка запроса для CoinPayments:', paymentRequest);
+  
+      this.paymentService.createPayment(paymentRequest).subscribe({
+        next: (response) => {
+          console.log('Ответ сервера для CoinPayments:', response);
+  
+          if (response.payment_url) {
+            // Открываем ссылку в новой вкладке
+            window.location.href = response.payment_url;
+          } else {
+            console.error('Ошибка: Ссылка на оплату отсутствует.');
+          }
+        },
+        error: (error) => {
+          console.error('Ошибка при создании платежа для CoinPayments:', error);
+        },
+      });
+  
+      return; // Прекращаем выполнение, так как обработали CoinPayments
+    }
+  
+    // Для Iyzico
+    this.paymentData.email = this.paymentData.buyer.email; // Копируем email из buyer в верхний уровень
+    console.log('[PaymentModalComponent] Отправка данных для Iyzico:', this.paymentData);
+  
     this.paymentService.createPayment(this.paymentData).subscribe({
       next: (response) => {
-        console.log('Ответ сервера:', response);
-
+        console.log('Ответ сервера для Iyzico:', response);
+  
         if (response.payment_page_url) {
-          this.router.navigate(['/payment-link'], { 
-            queryParams: { 
+          // Перенаправляем на компонент payment-link
+          this.router.navigate(['/payment-link'], {
+            queryParams: {
               url: response.payment_page_url,
-              orderId: this.paymentData.order_id // Передаем orderId
-            } 
+              orderId: this.paymentData.order_id,
+            },
           });
         } else {
           console.error('Ошибка: Ссылка на оплату отсутствует.');
         }
-               
       },
       error: (error) => {
-        console.error('Ошибка при создании платежа:', error);
+        console.error('Ошибка при создании платежа для Iyzico:', error);
       },
     });
   }
+  
 
   private formatDateToIyzico(date: Date): string {
     const year = date.getFullYear();

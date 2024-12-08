@@ -1,7 +1,7 @@
 <div class="payment-modal-container">
     <h2>Заполните данные для оплаты</h2>
     <form (ngSubmit)="submitPayment()">
-        <fieldset>
+        <fieldset *ngIf="!isCoinpayments; else coinpaymentsForm">
             <legend>Информация о покупателе</legend>
             <div>
                 <label for="buyer-id">ID заказа:</label>
@@ -51,7 +51,20 @@
                 <input id="buyer-ip" name="buyer-ip" [value]="paymentData.buyer.ip" readonly />
             </div>
         </fieldset>
-        <fieldset>
+
+        <ng-template #coinpaymentsForm>
+            <!-- Для coinpayments показываем только email -->
+            <fieldset>
+                <legend>Введите Email для оплаты</legend>
+                <div>
+                    <label for="buyer-email">Email:</label>
+                    <input id="buyer-email" name="buyer-email" [(ngModel)]="paymentData.email" type="email" required />
+                </div>
+            </fieldset>
+        </ng-template>
+
+
+        <fieldset *ngIf="!isCoinpayments">
             <fieldset>
                 <legend>Адрес доставки</legend>
                 <div>
@@ -80,6 +93,8 @@
                         required />
                 </div>
             </fieldset>
+
+
             <fieldset>
                 <legend>Адрес для счета</legend>
                 <div>

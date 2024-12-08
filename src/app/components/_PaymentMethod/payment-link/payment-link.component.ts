@@ -31,15 +31,16 @@ export class PaymentLinkComponent implements OnInit {
       // Обрабатываем небезопасный URL
       this.safePaymentUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.paymentUrl);
     }
+
+    console.log('Полученная ссылка для iframe:', this.paymentUrl);
+    console.log('Безопасный URL для iframe:', this.safePaymentUrl);
+
   }
 
   goBack(): void {
-    // Возвращаемся на страницу modal с тем же orderId
-    // Путь: /cart/address/payment/modal?orderId=17
     if (this.orderId) {
       this.router.navigate(['/cart/address/payment/modal'], { queryParams: { orderId: this.orderId } });
     } else {
-      // Если orderId отсутствует, можно задать логику по умолчанию:
       this.router.navigate(['/cart/address/payment']);
     }
   }

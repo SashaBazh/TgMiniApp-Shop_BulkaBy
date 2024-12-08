@@ -46,48 +46,35 @@ export class PaymentMethodComponent implements OnInit {
 
   handleNetworkClick(network: string): void {
     console.log(`Нажата кнопка: ${network}`);
-    this.selectNetwork(network, 'coinpayments');
-  }
-
-  selectNetwork(network: string, paymentType: string): void {
+  
     if (!this.orderId) {
-      console.error('[PaymentMethodComponent] Ошибка: orderId не может быть null.');
+      console.error('orderId отсутствует.');
       return;
     }
-
-    const paymentRequest = {
-      order_id: this.orderId, // Здесь гарантированно number
-      currency: network,
-      payment_type: paymentType, // Добавлено поле payment_type
-      email: 'nelox001@gmail.com',
-    };
-
-    console.log('[PaymentMethodComponent] Отправка запроса:', paymentRequest);
-
-    this.paymentService.createPayment(paymentRequest).subscribe({
-      next: (response: PaymentInitializeResponse) => {
-        if (response.payment_url) {
-          console.log('[PaymentMethodComponent] Перенаправление на:', response.payment_url);
-          window.location.href = response.payment_url;
-        } else {
-          console.error('[PaymentMethodComponent] Ошибка: Ссылка на оплату отсутствует.');
-        }
-      },
-      error: (err) => {
-        console.error('[PaymentMethodComponent] Ошибка при создании платежа:', err);
+  
+    // Для CoinPayments переходим на PaymentModal с параметрами
+    this.router.navigate(['/cart/address/payment/modal'], {
+      queryParams: {
+        orderId: this.orderId,
+        payment_type: 'coinpayments',
+        currency: network,
       },
     });
   }
-
+  
   handlePaymentMethodClick(paymentMethod: string): void {
     console.log(`[PaymentMethodComponent] Обработка метода оплаты: ${paymentMethod}`);
+  
     if (paymentMethod === 'iyzipay') {
-      // Переход на новый маршрут, с добавлением параметра queryParams
+      // Для Iyzico переходим на PaymentModal с параметрами
       this.router.navigate(['/cart/address/payment/modal'], {
-        queryParams: { orderId: this.orderId },
+        queryParams: {
+          orderId: this.orderId,
+          payment_type: 'iyzipay',
+        },
       });
     } else {
       console.error('[PaymentMethodComponent] Ошибка: Неподдерживаемый метод оплаты.');
     }
-  }
+  }  
 }
