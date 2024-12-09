@@ -21,6 +21,7 @@ import { Attribute, AttributeResponse } from '../../interfaces/_Admin/attribute.
 export class CategoriesComponent implements OnInit {
   createCategoryForm: FormGroup;
   categories: ProductCategory[] = [];
+  originalImage: string | null = null;
 
   // Новые свойства для работы с атрибутами
   availableAttributes: AttributeResponse[] = [];
@@ -165,9 +166,13 @@ export class CategoriesComponent implements OnInit {
       description: category.description || '',
       image: null,
     };
+  
+    // Сохраняем исходное изображение
+    this.originalImage = category.image ? category.image : null;
+  
     this.editImagePreview = category.image
-      ? this.imageService.getImageUrl(category.image) // Устанавливаем URL текущего изображения
-      : 'assets/default-image.png'; // Изображение по умолчанию
+      ? this.imageService.getImageUrl(category.image)
+      : 'assets/default-image.png';
   
     // Загрузка атрибутов, связанных с категорией
     this.categoriesService.getCategoryAttributes(category.id).subscribe({
@@ -193,9 +198,9 @@ export class CategoriesComponent implements OnInit {
     if (!this.editedCategory || !this.editingCategoryId) {
       return;
     }
-
+  
     const formData = new FormData();
-
+  
     // Добавляем основные данные категории
     formData.append('category_data', JSON.stringify({
       id: this.editingCategoryId,
@@ -205,44 +210,54 @@ export class CategoriesComponent implements OnInit {
         ru: { name: this.editedCategory.name },
       },
     }));
-
-    // Если выбрано новое изображение, добавляем его, иначе используем текущее
+  
     if (this.selectedImage) {
+      // Если выбрано новое изображение, добавляем его
       formData.append('image', this.selectedImage, this.selectedImage.name);
-    } 
-    // Если изображение не выбрано, добавляем текущий URL
-    else if (this.editImagePreview && typeof this.editImagePreview === 'string') {
-      formData.append('current_image', this.editImagePreview); // Используем поле `current_image` для указания текущего изображения
+    } else if (this.originalImage) {
+      // Если изображение не выбрано, загружаем файл из URL текущего изображения
+      this.fetchImageFile(this.originalImage).then((file) => {
+        formData.append('image', file, 'current-image.jpg');
+  
+        // Отправляем данные
+        this.sendCategoryUpdate(formData);
+      }).catch((error) => {
+        console.error('Ошибка при загрузке файла из URL:', error);
+        this.showNotification('Ошибка при обновлении категории.', false);
+      });
+      return;
     }
+  
+    // Если новое изображение не выбрано и текущего URL нет, отправляем сразу
+    this.sendCategoryUpdate(formData);
+  }  
 
-    // Сохранение изменений категории
+  private sendCategoryUpdate(formData: FormData) {
     this.categoriesService.updateCategory(formData).subscribe({
       next: () => {
         this.showNotification('Категория успешно обновлена');
-
-        // Сохранение атрибутов
-        this.categoriesService.assignAttributesToCategory(this.editingCategoryId!, this.selectedAttributes).subscribe({
-          next: (responses) => {
-            console.log('Атрибуты успешно добавлены для категории:', responses);
-            this.showNotification('Категория и атрибуты успешно обновлены');
-            this.loadCategories(); // Перезагружаем список категорий
-            this.cancelEditing();
-          },
-          error: (error) => {
-            this.showNotification(
-              error.error?.detail || 'Произошла ошибка при назначении атрибутов категории',
-              false
-            );
-            console.error('Ошибка при назначении атрибутов:', error);
-          },
-        });
+        this.loadCategories();
+        this.cancelEditing();
       },
       error: (err) => {
         console.error('Ошибка при обновлении категории:', err);
-        this.showNotification('Ошибка при обновлении категории', false);
+        this.showNotification('Ошибка при обновлении категории.', false);
       },
     });
   }
+  
+  
+
+  private async fetchImageFile(url: string): Promise<File> {
+    const response = await fetch(url);
+    const blob = await response.blob();
+    const fileName = url.split('/').pop() || 'image.jpg'; // Извлекаем имя файла из URL
+    return new File([blob], fileName, { type: blob.type });
+  }
+  
+  
+  
+  
 
 
 
