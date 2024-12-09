@@ -64,7 +64,7 @@ export class CategoriesComponent implements OnInit {
   ngOnInit(): void {
     this.loadCategories();
     this.loadAllAttributes(); // Загрузка всех атрибутов при инициализации
-  }  
+  }
 
   loadAvailableAttributes(categoryId: number): void {
     if (!categoryId) {
@@ -126,37 +126,37 @@ export class CategoriesComponent implements OnInit {
 
   submitCategoryForm() {
     if (this.createCategoryForm.valid && this.selectedImage) {
-        const { name, nameEn, description } = this.createCategoryForm.value;
+      const { name, nameEn, description } = this.createCategoryForm.value;
 
-        // Формируем объект с фиксированными языками
-        const categoryData = {
-            name,
-            description,
-            translations: {
-                ru: { name },        // Название на русском
-                en: { name: nameEn } // Название на английском
-            },
-            image: this.selectedImage,
-        };
+      // Формируем объект с фиксированными языками
+      const categoryData = {
+        name,
+        description,
+        translations: {
+          ru: { name },        // Название на русском
+          en: { name: nameEn } // Название на английском
+        },
+        image: this.selectedImage,
+      };
 
-        // Отправляем данные на сервер
-        this.categoriesService.createCategory(categoryData).subscribe({
-            next: () => {
-                this.showNotification('Категория успешно создана');
-                this.createCategoryForm.reset();
-                this.selectedImage = null;
-                this.imagePreview = null;
-            },
-            error: (error) => {
-                this.showNotification('Ошибка при создании категории', false);
-            },
-        });
+      // Отправляем данные на сервер
+      this.categoriesService.createCategory(categoryData).subscribe({
+        next: () => {
+          this.showNotification('Категория успешно создана');
+          this.createCategoryForm.reset();
+          this.selectedImage = null;
+          this.imagePreview = null;
+        },
+        error: (error) => {
+          this.showNotification('Ошибка при создании категории', false);
+        },
+      });
     } else {
-        this.showNotification('Пожалуйста, заполните все обязательные поля', false);
+      this.showNotification('Пожалуйста, заполните все обязательные поля', false);
     }
-}
+  }
 
-   
+
 
   startEditing(category: ProductCategory) {
     this.editingCategoryId = category.id;
@@ -166,8 +166,8 @@ export class CategoriesComponent implements OnInit {
       image: null,
     };
     this.editImagePreview = category.image
-      ? this.imageService.getImageUrl(category.image)
-      : 'assets/default-image.png';
+      ? this.imageService.getImageUrl(category.image) // Устанавливаем URL текущего изображения
+      : 'assets/default-image.png'; // Изображение по умолчанию
   
     // Загрузка атрибутов, связанных с категорией
     this.categoriesService.getCategoryAttributes(category.id).subscribe({
@@ -180,8 +180,8 @@ export class CategoriesComponent implements OnInit {
         console.error(err);
       },
     });
-  }
-  
+  }  
+
 
   cancelEditing() {
     this.editingCategoryId = null;
@@ -193,32 +193,34 @@ export class CategoriesComponent implements OnInit {
     if (!this.editedCategory || !this.editingCategoryId) {
       return;
     }
-  
+
     const formData = new FormData();
-  
+
     // Добавляем основные данные категории
     formData.append('category_data', JSON.stringify({
       id: this.editingCategoryId,
-      name: this.editedCategory.name, // Используется для русского
+      name: this.editedCategory.name,
       description: this.editedCategory.description,
       translations: {
-          ru: { name: this.editedCategory.name },
-          // en: { name: this.editedCategory.nameEn } // Поле для английского
-      }
-  }));
-  
-    // Добавляем изображение, если оно выбрано
+        ru: { name: this.editedCategory.name },
+      },
+    }));
+
+    // Если выбрано новое изображение, добавляем его, иначе используем текущее
     if (this.selectedImage) {
       formData.append('image', this.selectedImage, this.selectedImage.name);
+    } 
+    // Если изображение не выбрано, добавляем текущий URL
+    else if (this.editImagePreview && typeof this.editImagePreview === 'string') {
+      formData.append('current_image', this.editImagePreview); // Используем поле `current_image` для указания текущего изображения
     }
-  
+
     // Сохранение изменений категории
     this.categoriesService.updateCategory(formData).subscribe({
       next: () => {
-        console.log('Категория успешно обновлена');
+        this.showNotification('Категория успешно обновлена');
 
-  
-        // Отправка запросов для каждого атрибута
+        // Сохранение атрибутов
         this.categoriesService.assignAttributesToCategory(this.editingCategoryId!, this.selectedAttributes).subscribe({
           next: (responses) => {
             console.log('Атрибуты успешно добавлены для категории:', responses);
@@ -241,17 +243,18 @@ export class CategoriesComponent implements OnInit {
       },
     });
   }
-  
-  
-  
-  
-  
+
+
+
+
+
+
 
   onEditImageSelected(event: Event) {
     const file = (event.target as HTMLInputElement).files?.[0];
     if (file) {
       this.selectedImage = file; // Сохраняем файл изображения
-  
+
       // Генерируем превью изображения
       const reader = new FileReader();
       reader.onload = () => {
@@ -260,9 +263,9 @@ export class CategoriesComponent implements OnInit {
       reader.readAsDataURL(file);
     }
   }
-  
-  
-  
+
+
+
 
   assignAttributesToCategory(categoryId: number) {
     this.categoriesService.assignAttributesToCategory(categoryId, this.selectedAttributes).subscribe({
@@ -279,8 +282,8 @@ export class CategoriesComponent implements OnInit {
       },
     });
   }
-  
-  
+
+
 
   deleteCategory(categoryId: number) {
     const confirmDelete = confirm('Вы уверены, что хотите удалить эту категорию?');
@@ -304,14 +307,14 @@ export class CategoriesComponent implements OnInit {
   onAttributeCheckboxChange(event: Event) {
     const checkbox = event.target as HTMLInputElement;
     const attributeId = parseInt(checkbox.value, 10);
-  
+
     if (checkbox.checked) {
       this.selectedAttributes.push(attributeId);
     } else {
       this.selectedAttributes = this.selectedAttributes.filter(id => id !== attributeId);
     }
   }
-  
+
 
   // Загрузка всех доступных атрибутов
   loadAllAttributes(): void {

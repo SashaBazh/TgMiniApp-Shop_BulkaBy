@@ -1,11 +1,14 @@
 .dynamic-list {
-  position: relative;
-  max-height: 100vh; /* Ограничиваем высоту окна */
-  overflow-y: auto; /* Разрешаем вертикальный скроллинг */
-  overflow-x: hidden; /* Отключаем горизонтальный скроллинг */
+  display: flex;
+  overflow-x: auto; /* Горизонтальный скроллинг */
+  overflow-y: visible; /* Разрешаем вертикальное перекрытие */
+  gap: 8px;
   padding-bottom: 150px;
+  scrollbar-width: none; /* Убираем скроллбар в Firefox */
+  -ms-overflow-style: none; /* Убираем скроллбар в IE10+ */
+  position: relative; /* Для позиционирования дочерних элементов */
+  z-index: 1; /* Устанавливаем контекст наложения */
 }
-
 
 .dynamic-list::-webkit-scrollbar {
   display: none; /* Убираем скроллбар в Chrome */
@@ -65,7 +68,7 @@
   position: absolute; /* Абсолютное позиционирование */
   top: 100%; /* Расположить ниже заголовка */
   left: 0;
-  width: 90%; /* Чтобы совпадало с шириной родителя */
+  width: 100%; /* Чтобы совпадало с шириной родителя */
   background-color: #ffffff; /* Белый фон для видимости */
   border: 1px solid #d1d5f0; /* Лёгкая граница */
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Тень для улучшения визуала */
@@ -73,7 +76,28 @@
   z-index: 1000; /* Увеличиваем z-index для отображения поверх */
   padding: 8px; /* Отступы внутри */
   animation: fade-in 0.3s ease forwards; /* Анимация появления */
-  overflow: hidden; /* Убираем выходящие части */
+  overflow-y: auto; /* Вертикальный скроллинг */
+  max-height: 300px; /* Максимальная высота окна */
+  overflow-x: hidden; /* Убираем горизонтальный скроллинг */
+  height: 150px;
+}
+
+.item-options::-webkit-scrollbar {
+  width: 8px; /* Ширина полосы прокрутки */
+}
+
+.item-options::-webkit-scrollbar-thumb {
+  background-color: #c4c4c4; /* Цвет бегунка */
+  border-radius: 4px; /* Радиус бегунка */
+}
+
+.item-options::-webkit-scrollbar-thumb:hover {
+  background-color: #a8a8a8; /* Цвет бегунка при наведении */
+}
+
+.item-options::-webkit-scrollbar-track {
+  background-color: #f0f0f0; /* Цвет фона полосы прокрутки */
+  border-radius: 4px;
 }
 
 @keyframes fade-in {
