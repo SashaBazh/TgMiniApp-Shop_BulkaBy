@@ -24,7 +24,8 @@ export class AdminPageComponent {
     CATEGORIES: 'categories',
     PRODUCTS: 'products',
     FILTERS: 'filters',
-    SALES: 'sales', // Добавлено
+    SALES: 'sales', 
+    BANNERS: 'banners'// Добавлено
   };
 
   // Track the current active tab

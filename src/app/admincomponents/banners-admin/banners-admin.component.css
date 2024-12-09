@@ -1,0 +1,30 @@
+.banners-admin {
+    padding: 20px;
+  }
+  
+  .banner-form {
+    margin-bottom: 20px;
+  }
+  
+  .banner-form img {
+    max-width: 100%;
+    height: auto;
+  }
+  
+  .banners-list ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .banners-list li {
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 5px;
+  }
+  
+  .banners-list img {
+    max-width: 100px;
+    height: auto;
+  }
+  

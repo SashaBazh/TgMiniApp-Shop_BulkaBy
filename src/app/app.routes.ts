@@ -100,5 +100,11 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./admincomponents/filters/filters.component').then((m) => m.FiltersComponent),
   },
+  {
+    path: 'admin/banners',
+    loadComponent: () =>
+      import('./admincomponents/banners-admin/banners-admin.component').then((m) => m.BannersAdminComponent),
+  },
+  
   // { path: '**', redirectTo: '/home' },
 ];

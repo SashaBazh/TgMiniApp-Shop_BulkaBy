@@ -1,0 +1,40 @@
+<div class="banners-admin">
+    <h1>Manage Banners</h1>
+  
+    <div class="banner-form">
+      <h2>{{ selectedBanner ? 'Edit Banner' : 'Create Banner' }}</h2>
+      <form [formGroup]="bannerForm">
+        <div>
+          <label for="link">Link</label>
+          <input id="link" formControlName="link" type="text" />
+        </div>
+        <div>
+          <label for="category">Category</label>
+          <input id="category" formControlName="category" type="text" required />
+        </div>
+        <div>
+          <label for="image">Image</label>
+          <input id="image" type="file" (change)="onImageSelected($event)" />
+        </div>
+        <div *ngIf="imagePreview">
+          <p>Image Preview:</p>
+          <img [src]="imagePreview" alt="Image Preview" />
+        </div>
+        <button (click)="selectedBanner ? updateBanner() : createBanner()" type="button">
+          {{ selectedBanner ? 'Update' : 'Create' }} Banner
+        </button>
+      </form>
+    </div>
+  
+    <div class="banners-list">
+      <h2>Existing Banners</h2>
+      <ul>
+        <li *ngFor="let banner of banners">
+          <p>{{ banner.category }} - {{ banner.link }}</p>
+          <img [src]="banner.image" alt="Banner Image" />
+          <button (click)="editBanner(banner)">Edit</button>
+          <button (click)="deleteBanner(banner)">Delete</button>
+        </li>
+      </ul>
+    </div>
+  </div>

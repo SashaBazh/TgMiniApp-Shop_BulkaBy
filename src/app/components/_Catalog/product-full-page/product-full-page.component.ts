@@ -20,6 +20,7 @@ export class ProductFullPageComponent {
   mainAttributes: { name: string; value: any }[] = [];
   extraAttributes: { name: string; value: any }[] = [];
   showDetails = false;
+  showMoreInfo: boolean = false;
 
   // Media variables
   mediaItems: string[] = [];
@@ -168,4 +169,8 @@ export class ProductFullPageComponent {
   setIndex(index: number) {
     this.currentIndex = index;
   }
+
+    toggleExpandableInfo() {
+        this.showMoreInfo = !this.showMoreInfo;
+    }
 }

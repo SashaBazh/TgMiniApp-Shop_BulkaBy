@@ -29,6 +29,13 @@
     >
       Sales
     </button>
+    <button 
+      class="tab-button" 
+      [class.active]="currentTab === ActiveTab.BANNERS"
+      (click)="setActiveTab(ActiveTab.BANNERS)"
+    >
+      Banners
+    </button>
   </div>
 
   <!-- Tab Content -->
