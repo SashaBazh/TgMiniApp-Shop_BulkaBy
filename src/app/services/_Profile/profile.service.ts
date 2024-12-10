@@ -10,22 +10,18 @@ import { UserProfileResponse } from '../../interfaces/_Profile/friend.interface'
 export class ProfileService {
   private apiUrl = `${environment.apiUrl}/user`;
 
+  private headers = new HttpHeaders({
+    'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
+  });
+
   constructor(private http: HttpClient) {}
-  
+
   getUserProfile(): Observable<UserProfileResponse> {
-    const headers = new HttpHeaders({
-      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
-    });
-  
-    return this.http.get<UserProfileResponse>(`${this.apiUrl}/profile`, { headers })
+    return this.http.get<UserProfileResponse>(`${this.apiUrl}/profile`, { headers: this.headers });
   }
 
   checkIfAdmin(): Observable<{ is_admin: boolean }> {
-    const headers = new HttpHeaders({
-      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
-    });
-  
-    return this.http.get<{ is_admin: boolean }>(`${this.apiUrl}/is-admin`, { headers });
+    return this.http.get<{ is_admin: boolean }>(`${this.apiUrl}/is-admin`, { headers: this.headers });
   }
   
 }

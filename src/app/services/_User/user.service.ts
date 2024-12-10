@@ -17,7 +17,6 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   registerUser(data: RegisterUser): Observable<any> {
-    // Убедимся, что заголовок `Content-Type` указан
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       'api-key': 'eee3f863-ce17-42e2-a9ae-15d3ee832705'
