@@ -13,7 +13,7 @@ export class FiltersService {
 
   private getHeaders(): HttpHeaders {
     return new HttpHeaders({
-      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '1',
+      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
     });
   }
 
@@ -29,7 +29,6 @@ export class FiltersService {
   
     return this.http.post(`${this.apiUrl}/attributes`, formattedData, { headers: this.getHeaders() });
   }
-  
 
   createOption(optionData: { attribute_id: number; value: string; translations: { [key: string]: { value: string } } }): Observable<any> {
     return this.http.post(`${this.apiUrl}/attribute/option`, optionData, { headers: this.getHeaders() });
@@ -46,4 +45,5 @@ export class FiltersService {
   deleteAttributeOption(optionId: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/attribute/option/${optionId}`, { headers: this.getHeaders() });
   }
+
 }
