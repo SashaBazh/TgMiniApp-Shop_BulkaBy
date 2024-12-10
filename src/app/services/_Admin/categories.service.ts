@@ -42,7 +42,7 @@ export class CategoriesService {
     }));
     formData.append('image', categoryData.image, categoryData.image.name);
 
-    return this.http.post(`${this.apiUrl}/categories`, formData, { headers: this.getTelegramHeaders('multipart/form-data') });
+    return this.http.post(`${this.apiUrl}/categories`, formData, { headers: this.getTelegramHeaders() });
   }
 
   assignAttributesToCategory(categoryId: number, attributeIds: number[]): Observable<any[]> {
@@ -57,7 +57,7 @@ export class CategoriesService {
   }
 
   updateCategory(formData: FormData): Observable<any> {
-    return this.http.put(`${this.apiUrl}/categories`, formData, { headers: this.getTelegramHeaders('multipart/form-data') });
+    return this.http.put(`${this.apiUrl}/categories`, formData, { headers: this.getTelegramHeaders() });
   }
 
   deleteCategory(categoryId: number): Observable<any> {
