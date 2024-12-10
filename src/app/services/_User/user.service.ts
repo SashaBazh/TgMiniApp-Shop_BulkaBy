@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { environment } from '../../enviroments/environment';
 
 export interface RegisterUser {
   telegram_id: number;
@@ -17,15 +18,13 @@ export interface RegisterUser {
   providedIn: 'root'
 })
 export class UserService {
-  private apiUrl = 'https://your-backend-url.com/register';
+  private apiUrl = `${environment.apiUrl}/auth/register`;
 
   constructor(private http: HttpClient) {}
 
   registerUser(data: RegisterUser): Observable<any> {
-    // Если требуется авторизация, добавьте её в headers
     const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      // например: 'Authorization': 'Bearer <your_token>'
+      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
     });
 
     return this.http.post(this.apiUrl, data, { headers });
