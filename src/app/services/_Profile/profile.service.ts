@@ -20,8 +20,8 @@ export class ProfileService {
     return this.http.get<UserProfileResponse>(`${this.apiUrl}/profile`, { headers: this.headers });
   }
 
-  checkIfAdmin(): Observable<{ is_admin: boolean }> {
-    return this.http.get<{ is_admin: boolean }>(`${this.apiUrl}/is-admin`, { headers: this.headers });
-  }
+  checkIfAdmin(): Observable<boolean> {
+    return this.http.get<boolean>(`${this.apiUrl}/is-admin`, { headers: this.headers });
+  }  
   
 }
