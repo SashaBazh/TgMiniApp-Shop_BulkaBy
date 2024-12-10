@@ -17,7 +17,7 @@ import { ImageStreamService } from '../../../services/_Image/image-stream.servic
 export class CataloggeneralComponent implements OnInit {
   @Input() displayCount?: number;
   categories: ProductCategory[] = [];
-  isLoading = false;
+  isLoading = true;
   error: string | null = null;
 
   constructor(
@@ -31,26 +31,26 @@ export class CataloggeneralComponent implements OnInit {
   }
 
   private loadCategories() {
-    this.productCategoryService.getCategories()
-      .subscribe({
-        next: (categories) => {
-          if (categories && categories.length) {
-            this.categories = (this.displayCount ? categories.slice(0, this.displayCount) : categories)
-              .map(category => ({
-                ...category,
-                image: category.image ? this.imageService.getImageUrl(category.image) : 'assets/default-image.png'
-              }));
-          } else {
-            this.categories = [];
-          }
-        },
-        error: (error) => {
-          this.error = error.message || 'Не удалось загрузить данные.';
+    this.productCategoryService.getCategories().subscribe({
+      next: (categories) => {
+        this.isLoading = false;
+        if (categories && categories.length) {
+          this.categories = (this.displayCount ? categories.slice(0, this.displayCount) : categories).map((category) => ({
+            ...category,
+            image: category.image ? this.imageService.getImageUrl(category.image) : 'assets/default-image.png',
+          }));
+        } else {
+          this.categories = [];
         }
-      });
+      },
+      error: (error) => {
+        this.isLoading = false;
+        this.error = error.message || 'Не удалось загрузить данные.';
+      },
+    });
   }
   
   navigateToCategory(categoryId: number) {
-    this.router.navigate(['/catalog', categoryId]); // Передаем ID категории
+    this.router.navigate(['/catalog', categoryId]);
   }  
 }

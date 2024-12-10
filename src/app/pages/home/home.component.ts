@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavigationComponent } from '../../components/_General/navigation/navigation.component';
 import { HeaderComponent } from '../../components/_General/header/header.component';
 import { ImageSliderComponent } from '../../components/_Home/image-slider/image-slider.component';
