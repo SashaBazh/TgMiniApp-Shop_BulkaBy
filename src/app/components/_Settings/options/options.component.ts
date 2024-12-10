@@ -27,9 +27,6 @@ export class OptionsComponent implements OnInit {
   isAdmin: boolean = false; // Отображать кнопку "Админка" или нет
   birthday: string | null = null; // Подгруженная дата рождения пользователя
 
-  // Список разрешённых username
-  private allowedAdmins: string[] = ['admin_user1', 'Sasha', 'Sanyokff'];
-
   constructor(
     public optionsService: OptionsService,
     private profileService: ProfileService
@@ -118,12 +115,13 @@ export class OptionsComponent implements OnInit {
     this.profileService.checkIfAdmin().subscribe({
       next: (response) => {
         this.isAdmin = response.is_admin;
-        alert(this.isAdmin)
+        alert(this.isAdmin);
       },
       error: (error) => {
         console.error('Ошибка проверки доступа к админке:', error);
       },
-    });
+    });    
   }
+  
   
 }
