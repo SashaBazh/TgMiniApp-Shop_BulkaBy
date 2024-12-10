@@ -64,7 +64,7 @@ export class ProductsService {
   }
 
   updateProduct(productId: number, formData: FormData): Observable<any> {
-    const url = `${this.apiUrl}/${productId}`;
+    const url = `${this.apiUrl}/`;
     return this.http.put(url, formData, { headers: this.getTelegramHeaders() });
   }
 
