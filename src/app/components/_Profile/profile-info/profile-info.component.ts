@@ -63,19 +63,20 @@ export class ProfileInfoComponent implements OnInit {
   }
 
   copyReferralLink() {
-  // Копирование ссылки в буфер обмена
-  navigator.clipboard.writeText('Ваша ссылка').then(() => {
-    if (this.telegramService.isTelegramWebAppAvailable()) {
-      // Используем Telegram alert
-      this.telegramService.showTelegramAlert('Ссылка скопирована в буфер обмена!');
-    } else {
-      // Fallback на стандартный alert
-      alert('Ссылка скопирована в буфер обмена!');
-    }
-  }).catch(() => {
-    console.error('Ошибка при копировании ссылки');
-  });
-}
+    // Копирование реальной реферальной ссылки в буфер обмена
+    navigator.clipboard.writeText(this.referralLink).then(() => {
+      if (this.telegramService.isTelegramWebAppAvailable()) {
+        // Используем Telegram alert
+        this.telegramService.showTelegramAlert('Ссылка скопирована в буфер обмена!');
+      } else {
+        // Fallback на стандартный alert
+        alert('Ссылка скопирована в буфер обмена!');
+      }
+    }).catch(() => {
+      console.error('Ошибка при копировании ссылки');
+    });
+  }
+  
 
   getStatusClass(status: string): string {
     switch (status.toLowerCase()) {
@@ -95,6 +96,6 @@ export class ProfileInfoComponent implements OnInit {
   navigateToPurchases(): void {
     this.router.navigate(['profile/my-purchases']);
   }
-  
+
 
 }
