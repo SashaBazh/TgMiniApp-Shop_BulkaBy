@@ -12,12 +12,12 @@ export class CategoriesService {
 
   constructor(private http: HttpClient) {}
 
-  private getTelegramHeaders(contentType: string = 'application/json'): HttpHeaders {
+  private getTelegramHeaders(): HttpHeaders {
     return new HttpHeaders({
       'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
-      'Content-Type': contentType,
     });
   }
+  
 
   getCategories(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/category`, { headers: this.getTelegramHeaders() });
@@ -35,15 +35,24 @@ export class CategoriesService {
 
   createCategory(categoryData: { name: string; description: string; translations: { ru: { name: string }; en: { name: string } }; image: File }): Observable<any> {
     const formData = new FormData();
-    formData.append('category_data', JSON.stringify({
-      name: categoryData.name,
-      description: categoryData.description,
-      translations: categoryData.translations,
-    }));
+    
+    // Добавляем данные категории как строку JSON
+    formData.append(
+      'category_data',
+      JSON.stringify({
+        name: categoryData.name,
+        description: categoryData.description,
+        translations: categoryData.translations,
+      })
+    );
+    
+    // Добавляем изображение
     formData.append('image', categoryData.image, categoryData.image.name);
-
+  
+    // Отправляем POST-запрос
     return this.http.post(`${this.apiUrl}/categories`, formData, { headers: this.getTelegramHeaders() });
   }
+  
 
   assignAttributesToCategory(categoryId: number, attributeIds: number[]): Observable<any[]> {
     const url = `${this.apiUrl}/categories/attributes`;
