@@ -115,7 +115,7 @@ export class OptionsComponent implements OnInit {
     this.profileService.checkIfAdmin().subscribe({
       next: (response) => {
         this.isAdmin = response.is_admin;
-        alert(this.isAdmin);
+        alert(response);
       },
       error: (error) => {
         console.error('Ошибка проверки доступа к админке:', error);
