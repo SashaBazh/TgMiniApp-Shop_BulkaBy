@@ -10,7 +10,6 @@ import { environment } from '../../enviroments/environment';
 export class OrderService {
   private apiUrl = `${environment.apiUrl}/cart`;
 
-  // Заголовок Telegram Init Data
   private headers = new HttpHeaders({
     'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
   });
