@@ -14,10 +14,9 @@ export class ProductsService {
 
   constructor(private http: HttpClient) { }
 
-  private getHeaders(contentType: string = 'application/json'): HttpHeaders {
+  private getTelegramHeaders(): HttpHeaders {
     return new HttpHeaders({
-      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '1',
-      'Content-Type': contentType,
+      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
     });
   }
 
@@ -32,50 +31,45 @@ export class ProductsService {
       httpParams = httpParams.set('search', search);
     }
 
+    // Добавляем фильтры
+    for (const filterKey in filters) {
+      const filterValues = filters[filterKey];
+      if (Array.isArray(filterValues)) {
+        filterValues.forEach((value: string) => {
+          httpParams = httpParams.append(`filter_${filterKey}`, value);
+        });
+      } else {
+        httpParams = httpParams.append(`filter_${filterKey}`, filterValues);
+      }
+    }
+
     const url = category_id ? `${this.apiUrl}/category/${category_id}` : this.apiUrl;
 
-    return this.http.get<Product[]>(url, { headers: this.getHeaders(), params: httpParams });
+    return this.http.get<Product[]>(url, { headers: this.getTelegramHeaders(), params: httpParams });
   }
 
   getCategoryAttributes(categoryId: number): Observable<AttributeResponse[]> {
-    const headers = new HttpHeaders({
-      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
-    });
-
     const url = `${this.apiUrl}/category/${categoryId}/attributes`;
-    return this.http.get<AttributeResponse[]>(url, { headers })
+    return this.http.get<AttributeResponse[]>(url, { headers: this.getTelegramHeaders() });
   }
 
   getProductDetail(productId: number): Observable<ProductDetailResponse> {
-    return this.http.get<ProductDetailResponse>(`${this.apiUrl}/${productId}`, { headers: this.getHeaders() });
+    const url = `${this.apiUrl}/${productId}`;
+    return this.http.get<ProductDetailResponse>(url, { headers: this.getTelegramHeaders() });
   }
 
   createProduct(formData: FormData): Observable<any> {
-    const headers = new HttpHeaders({
-      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '1',
-    });
-  
-    return this.http.post(`${this.apiUrl}/`, formData, { headers });
+    const url = `${this.apiUrl}/`;
+    return this.http.post(url, formData, { headers: this.getTelegramHeaders() });
   }
 
   updateProduct(productId: number, formData: FormData): Observable<any> {
-    return this.http.put(`${this.apiUrl}/`, formData, {
-      headers: {
-        'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '1',
-      },
-    });
-  }  
-  
-  deleteProduct(productId: number): Observable<any> {
-    const headers = {
-      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '1',
-    };
-    return this.http.delete(`${this.apiUrl}/${productId}`, { headers });
+    const url = `${this.apiUrl}/${productId}`;
+    return this.http.put(url, formData, { headers: this.getTelegramHeaders() });
   }
-  
-  
 
-
-
-
+  deleteProduct(productId: number): Observable<any> {
+    const url = `${this.apiUrl}/${productId}`;
+    return this.http.delete(url, { headers: this.getTelegramHeaders() });
+  }
 }
