@@ -23,11 +23,17 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   registerUser(data: RegisterUser): Observable<any> {
+    const initData = (window as any).Telegram?.WebApp?.initData;
+  
+    alert('initData: ' + initData);
+    alert('initDataUnsafe: ' + JSON.stringify((window as any).Telegram?.WebApp?.initDataUnsafe));
+  
     const headers = new HttpHeaders({
-      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '123',
+      'X-Telegram-Init-Data': initData || '123',
       'api-key': 'eee3f863-ce17-42e2-a9ae-15d3ee832705'
     });
-
+  
     return this.http.post(this.apiUrl, data, { headers });
   }
+  
 }
