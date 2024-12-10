@@ -4,14 +4,8 @@ import { Observable } from 'rxjs';
 import { environment } from '../../enviroments/environment';
 
 export interface RegisterUser {
-  telegram_id: number;
-  name: string;
-  username?: string;
-  lang?: string;
-  points?: number;
-  image?: string;
-  birthday?: string; // либо Date, если вы будете конвертировать
-  referrer_id?: number;
+  telegram_id: number; // Исправлено на тип number
+  name: string; // Исправлено на тип string
 }
 
 @Injectable({
@@ -23,17 +17,13 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   registerUser(data: RegisterUser): Observable<any> {
-    const initData = (window as any).Telegram?.WebApp?.initData;
-  
-    alert('initData: ' + initData);
-    alert('initDataUnsafe: ' + JSON.stringify((window as any).Telegram?.WebApp?.initDataUnsafe));
-  
+    // Убедимся, что заголовок `Content-Type` указан
     const headers = new HttpHeaders({
-      'X-Telegram-Init-Data': initData || '123',
+      'Content-Type': 'application/json',
       'api-key': 'eee3f863-ce17-42e2-a9ae-15d3ee832705'
     });
-  
-    return this.http.post(this.apiUrl, data, { headers });
+
+    // Передача данных в формате JSON
+    return this.http.post(this.apiUrl, JSON.stringify(data), { headers });
   }
-  
 }
