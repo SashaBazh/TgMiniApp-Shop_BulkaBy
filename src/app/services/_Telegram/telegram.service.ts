@@ -1,8 +1,5 @@
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import { Observable } from 'rxjs';
-import { environment } from '../../enviroments/environment';
-import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
@@ -13,7 +10,6 @@ export class TelegramService {
   constructor(
     @Inject(DOCUMENT) private _document: Document,
     @Inject(PLATFORM_ID) private platformId: object,
-    private http: HttpClient
   ) {
     // Проверяем, выполняется ли код в браузере
     const isBrowser = isPlatformBrowser(this.platformId);
@@ -100,25 +96,6 @@ export class TelegramService {
     return this.tg?.initData || null;
   }
 
-  // registerUser(data: {
-  //   telegram_id: number;
-  //   name: string;
-  //   username?: string;
-  //   lang?: string;
-  //   points?: number;
-  //   image?: string;
-  //   birthday?: string;
-  //   referrer_id?: number;
-  // }): Observable<any> {
-  //   const url = `${environment.apiUrl}/auth/register`;
-  //   const headers = {
-  //     'Content-Type': 'application/json',
-  //     'api-key': '2750562d-a939-4eff-8b3a-d214d1afb794',
-  //   };
-  
-  //   return this.http.post(url, data, { headers });
-  // }
-
   showTelegramAlert(message: string): void {
     if (this.tg?.showAlert) {
       this.tg.showAlert(message);
@@ -126,6 +103,4 @@ export class TelegramService {
       console.warn('Telegram WebApp alert недоступен, используйте fallback');
     }
   }
-  
-  
 }
