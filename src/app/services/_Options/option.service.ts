@@ -14,6 +14,11 @@ export class OptionsService {
 
   private apiUrl = `${environment.apiUrl}/user`;
 
+  // Заголовок Telegram Init Data
+  private headers = new HttpHeaders({
+    'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
+  });
+
   constructor(private translate: TranslateService, private http: HttpClient) {
     this.translate.addLangs(['en', 'ru']);
     this.translate.setDefaultLang('ru');
@@ -56,8 +61,8 @@ export class OptionsService {
   }
 
   private updateLanguage(lang: string): Observable<any> {
-    const payload = { telegram_id: 123456789, lang }; //this.getTelegramId()
-    return this.http.post(`${this.apiUrl}/lang`, payload);
+    const payload = { telegram_id: 123456789, lang }; // Replace 123456789 with actual Telegram ID
+    return this.http.post(`${this.apiUrl}/lang`, payload, { headers: this.headers });
   }
 
   private getTelegramId(): number | undefined {
@@ -82,15 +87,19 @@ export class OptionsService {
   }
 
   updateBirthDate(date: string): Observable<any> {
-    const telegramId = (window as any).Telegram.WebApp.initDataUnsafe?.user?.id; 
+    const telegramId = this.getTelegramId();
     const formattedDate = new Date(date).toISOString().replace('T', ' ').replace('Z', '');
-  
-    return this.http.put(`${this.apiUrl}/birthday`, {
-      telegram_id: 312321,
-      birthday: formattedDate,
-    });
+
+    return this.http.put(
+      `${this.apiUrl}/birthday`,
+      {
+        telegram_id: telegramId,
+        birthday: formattedDate,
+      },
+      { headers: this.headers }
+    );
   }
-  
+
   contactManager(): void {
     alert(this.translate.instant('CONTACT_MANAGER'));
   }

@@ -10,11 +10,15 @@ import { environment } from '../../enviroments/environment';
 })
 export class PickupPointService {
 
+  private headers = new HttpHeaders({
+    'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
+  });
+
   private apiUrl = `${environment.apiUrl}/cart`;
 
   constructor(private http: HttpClient) { }
 
   getPickupPoints(): Observable<PickupPoint[]> {
-    return this.http.get<PickupPoint[]>(`${this.apiUrl}/pickup-locations`);
+    return this.http.get<PickupPoint[]>(`${this.apiUrl}/pickup-locations`, { headers: this.headers });
   }
 }
