@@ -100,24 +100,24 @@ export class TelegramService {
     return this.tg?.initData || null;
   }
 
-  registerUser(data: {
-    telegram_id: number;
-    name: string;
-    username?: string;
-    lang?: string;
-    points?: number;
-    image?: string;
-    birthday?: string;
-    referrer_id?: number;
-  }): Observable<any> {
-    const url = `${environment.apiUrl}/auth/register`;
-    const headers = {
-      'Content-Type': 'application/json',
-      'api-key': '2750562d-a939-4eff-8b3a-d214d1afb794',
-    };
+  // registerUser(data: {
+  //   telegram_id: number;
+  //   name: string;
+  //   username?: string;
+  //   lang?: string;
+  //   points?: number;
+  //   image?: string;
+  //   birthday?: string;
+  //   referrer_id?: number;
+  // }): Observable<any> {
+  //   const url = `${environment.apiUrl}/auth/register`;
+  //   const headers = {
+  //     'Content-Type': 'application/json',
+  //     'api-key': '2750562d-a939-4eff-8b3a-d214d1afb794',
+  //   };
   
-    return this.http.post(url, data, { headers });
-  }
+  //   return this.http.post(url, data, { headers });
+  // }
 
   showTelegramAlert(message: string): void {
     if (this.tg?.showAlert) {

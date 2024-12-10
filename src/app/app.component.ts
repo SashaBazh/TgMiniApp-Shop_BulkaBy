@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { TelegramService } from './services/_Telegram/telegram.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { UserService } from './services/_User/user.service';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,7 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit {
-  constructor(private telegramService: TelegramService) {}
+  constructor(private telegramService: TelegramService, private authServise: UserService) {}
 
   ngOnInit(): void {
     if (this.telegramService.isTelegramWebAppAvailable()) {
@@ -28,7 +29,7 @@ export class AppComponent implements OnInit {
           points: 0, // Очки по умолчанию
         };
 
-        this.telegramService.registerUser(registerData).subscribe({
+        this.authServise.registerUser(registerData).subscribe({
           next: (res) => {
             // Пользователь успешно зарегистрирован
           },
