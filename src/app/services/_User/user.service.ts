@@ -25,6 +25,7 @@ export class UserService {
   registerUser(data: RegisterUser): Observable<any> {
     const headers = new HttpHeaders({
       'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
+      'api-key': 'eee3f863-ce17-42e2-a9ae-15d3ee832705'
     });
 
     return this.http.post(this.apiUrl, data, { headers });
