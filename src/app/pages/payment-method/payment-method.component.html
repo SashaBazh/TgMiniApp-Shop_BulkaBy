@@ -2,10 +2,10 @@
 
 <div class="payment-methods-container">
     <!-- USDT-BSC -->
-    <div class="payment-method" (click)="handleNetworkClick('LTCT')">
+    <!-- <div class="payment-method" (click)="handleNetworkClick('LTCT')">
         <app-payment-method-item imageSrc="../../../assets/payments/1.png" title="USDT-BSC">
         </app-payment-method-item>
-    </div>
+    </div> -->
 
     <!-- USDT-TRON -->
     <div class="payment-method" (click)="handleNetworkClick('USDT-TRC20')">
@@ -14,8 +14,21 @@
     </div>
 
     <!-- New Fiat Service -->
-    <div class="payment-method" (click)="handlePaymentMethodClick('iyzipay')">
+    <!-- <div class="payment-method" (click)="handlePaymentMethodClick('iyzipay')">
         <app-payment-method-item imageSrc="../../../assets/payments/4.png" title="FIAT">
         </app-payment-method-item>
+    </div> -->
+
+    <div class="payment-method" (click)="handlePaymentMethodClick('LIRE')">
+        <app-payment-method-item imageSrc="../../../assets/payments/2.png" title="LIRE"></app-payment-method-item>
+    </div>
+    
+    <div class="payment-method" (click)="handlePaymentMethodClick('USD')">
+        <app-payment-method-item imageSrc="../../../assets/payments/3.png" title="USD"></app-payment-method-item>
+    </div>
+    
+    <div class="payment-method" (click)="handlePaymentMethodClick('RUB')">
+        <app-payment-method-item imageSrc="../../../assets/payments/4.png" title="RUB"></app-payment-method-item>
     </div>
 </div>
+

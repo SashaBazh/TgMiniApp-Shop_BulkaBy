@@ -63,10 +63,19 @@ export class ProfileInfoComponent implements OnInit {
   }
 
   copyReferralLink() {
-    navigator.clipboard.writeText(this.referralLink).then(() => {
+  // Копирование ссылки в буфер обмена
+  navigator.clipboard.writeText('Ваша ссылка').then(() => {
+    if (this.telegramService.isTelegramWebAppAvailable()) {
+      // Используем Telegram alert
+      this.telegramService.showTelegramAlert('Ссылка скопирована в буфер обмена!');
+    } else {
+      // Fallback на стандартный alert
       alert('Ссылка скопирована в буфер обмена!');
-    });
-  }
+    }
+  }).catch(() => {
+    console.error('Ошибка при копировании ссылки');
+  });
+}
 
   getStatusClass(status: string): string {
     switch (status.toLowerCase()) {

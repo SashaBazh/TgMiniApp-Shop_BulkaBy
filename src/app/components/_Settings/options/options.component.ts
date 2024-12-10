@@ -28,7 +28,7 @@ export class OptionsComponent implements OnInit {
   birthday: string | null = null; // Подгруженная дата рождения пользователя
 
   // Список разрешённых username
-  private allowedAdmins: string[] = ['admin_user1', 'Sasha', 'Sanyokfff'];
+  private allowedAdmins: string[] = ['admin_user1', 'Sasha', 'Sanyokff'];
 
   constructor(
     public optionsService: OptionsService,
@@ -64,19 +64,6 @@ export class OptionsComponent implements OnInit {
       },
       error: (error) => {
         console.error('Ошибка при загрузке даты рождения:', error);
-      },
-    });
-  }
-  
-
-  checkAdminAccess(): void {
-    this.profileService.getUserProfile().subscribe({
-      next: (profile) => {
-        // Проверяем, есть ли username в списке разрешённых
-        this.isAdmin = this.allowedAdmins.includes(profile.username);
-      },
-      error: (error) => {
-        console.error('Ошибка проверки доступа к админке:', error);
       },
     });
   }
@@ -126,4 +113,16 @@ export class OptionsComponent implements OnInit {
   contactManager(): void {
     this.optionsService.contactManager();
   }
+
+  checkAdminAccess(): void {
+    this.profileService.checkIfAdmin().subscribe({
+      next: (response) => {
+        this.isAdmin = response.is_admin;
+      },
+      error: (error) => {
+        console.error('Ошибка проверки доступа к админке:', error);
+      },
+    });
+  }
+  
 }

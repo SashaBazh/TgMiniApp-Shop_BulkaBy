@@ -6,6 +6,7 @@ import { PaymentMethodItemComponent } from '../../components/_PaymentMethod/paym
 import { PaymentService } from '../../services/_Payment/payment.service';
 import { PaymentInitializeResponse } from '../../interfaces/_Payment/paymen.interface';
 import { TranslateModule } from '@ngx-translate/core';
+import { TelegramService } from '../../services/_Telegram/telegram.service';
 
 @Component({
   selector: 'app-payment-method',
@@ -23,7 +24,8 @@ export class PaymentMethodComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private paymentService: PaymentService
+    private paymentService: PaymentService,
+    private telegramService: TelegramService
   ) { }
 
   ngOnInit(): void {
@@ -64,7 +66,7 @@ export class PaymentMethodComponent implements OnInit {
   
   handlePaymentMethodClick(paymentMethod: string): void {
     console.log(`[PaymentMethodComponent] Обработка метода оплаты: ${paymentMethod}`);
-  
+    
     if (paymentMethod === 'iyzipay') {
       // Для Iyzico переходим на PaymentModal с параметрами
       this.router.navigate(['/cart/address/payment/modal'], {
@@ -73,8 +75,22 @@ export class PaymentMethodComponent implements OnInit {
           payment_type: 'iyzipay',
         },
       });
+    } else if (['LIRE', 'USD', 'RUB'].includes(paymentMethod)) {
+      // Для последних методов оплаты показываем уведомление
+      this.showContactManagerMessage();
     } else {
       console.error('[PaymentMethodComponent] Ошибка: Неподдерживаемый метод оплаты.');
     }
-  }  
+  }
+  
+  
+  
+
+  showContactManagerMessage(): void {
+    if (this.telegramService.isTelegramWebAppAvailable()) {
+      this.telegramService.showTelegramAlert('С вами скоро свяжется менеджер');
+    } else {
+      alert('С вами скоро свяжется менеджер'); // Фолбэк для обычных браузеров
+    }
+  }
 }

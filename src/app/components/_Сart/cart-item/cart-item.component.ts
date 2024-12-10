@@ -18,7 +18,7 @@ export class CartItemComponent {
   @Input() productId: number = 0;
   @Input() discountedPrice: number | null = null;
 
-  @Output() itemRemoved = new EventEmitter<number>(); // Событие для уведомления родителя
+  @Output() itemRemoved = new EventEmitter<number>();
   @Output() quantityChanged = new EventEmitter<{ productId: number; quantity: number }>();
 
   constructor(
@@ -38,11 +38,9 @@ export class CartItemComponent {
     }
   }
 
-
   updateQuantity() {
     this.cartService.updateItemQuantity(this.productId, this.quantity).subscribe({
       next: () => {
-        console.log('Количество обновлено');
         this.quantityChanged.emit({ productId: this.productId, quantity: this.quantity });
       },
       error: (err) => {
@@ -55,7 +53,7 @@ export class CartItemComponent {
     this.cartService.removeItemFromCart(this.productId).subscribe({
       next: () => {
         console.log('Товар удален из корзины');
-        this.itemRemoved.emit(this.productId); // Уведомляем родителя об удалении
+        this.itemRemoved.emit(this.productId); 
       },
       error: (err) => {
         console.error('Ошибка при удалении товара из корзины:', err);

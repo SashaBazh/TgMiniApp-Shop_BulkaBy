@@ -12,7 +12,7 @@ import { PickupPoint } from '../../../interfaces/_Address/pickup-point.interface
 export class PickupPointComponent implements OnInit {
   @Input() pickupPoint!: PickupPoint;
 
-  starOffsets: number[] = []; // Массив, хранящий значения закрашивания звёзд (0-100)
+  starOffsets: number[] = [];
 
   ngOnInit(): void {
     this.calculateStarOffsets();
@@ -23,12 +23,12 @@ export class PickupPointComponent implements OnInit {
       const rating = this.pickupPoint.rating;
 
       if (index + 1 <= rating) {
-        return 100; // Полностью закрашенная звезда
+        return 100; 
       } else if (index < rating) {
         const fractionalPart = rating - index;
-        return fractionalPart * 100; // Частичное закрашивание
+        return fractionalPart * 100;
       } else {
-        return 0; // Пустая звезда
+        return 0;
       }
     });
   }

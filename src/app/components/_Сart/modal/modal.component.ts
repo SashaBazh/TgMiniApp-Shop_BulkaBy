@@ -17,7 +17,7 @@ export class ModalComponent {
   constructor(private router: Router) {}
 
   closeModal() {
-    this.close.emit(); // Сообщить о закрытии
+    this.close.emit();
   }
 
   contactManager() {

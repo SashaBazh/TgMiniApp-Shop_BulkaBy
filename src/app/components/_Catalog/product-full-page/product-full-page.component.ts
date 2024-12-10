@@ -22,7 +22,6 @@ export class ProductFullPageComponent {
   showDetails = false;
   showMoreInfo: boolean = false;
 
-  // Media variables
   mediaItems: string[] = [];
   currentMediaIndex: number = 0;
 
@@ -32,7 +31,7 @@ export class ProductFullPageComponent {
     public imageService: ImageStreamService,
     private cartService: CartService,
     private router: Router,
-    private translate: TranslateService // Инжектируем TranslateService
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {

@@ -9,10 +9,10 @@ import { Component, Input } from '@angular/core';
   styleUrl: './order-item.component.css'
 })
 export class OrderItemComponent {
-  @Input() imageSrc: string = ''; // Добавьте типы
+  @Input() imageSrc: string = '';
   @Input() title: string = '';
   @Input() price: string = '';
 
-  quantity: number = 1; // Начальное количество
+  quantity: number = 1;
 
 }

@@ -118,5 +118,14 @@ export class TelegramService {
   
     return this.http.post(url, data, { headers });
   }
+
+  showTelegramAlert(message: string): void {
+    if (this.tg?.showAlert) {
+      this.tg.showAlert(message);
+    } else {
+      console.warn('Telegram WebApp alert недоступен, используйте fallback');
+    }
+  }
+  
   
 }

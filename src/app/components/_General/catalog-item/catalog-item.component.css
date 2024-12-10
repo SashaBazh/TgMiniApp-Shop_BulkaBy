@@ -26,7 +26,7 @@
 
 .item-name {
     font-family: 'Montserrat', sans-serif;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 500;
     color: #3E5587;
     text-align: center;
@@ -37,7 +37,12 @@
     padding: 5px 10px; /* Отступы вокруг текста */
     border-radius: 8px; /* Скругление фона */
     max-width: 90%; /* Ограничение ширины */
-    overflow: hidden;
-    text-overflow: ellipsis; /* Троеточие, если текст слишком длинный */
-    white-space: nowrap; /* Отключение переноса текста */
+    overflow: hidden; /* Обрезка текста */
+    text-overflow: ellipsis; /* Троеточие в конце текста */
+    white-space: normal; /* Разрешить перенос строк */
+    display: -webkit-box; /* Использование для поддержки line-clamp */
+    line-clamp: 2; /* Ограничение в 2 строки */
+    -webkit-box-orient: vertical; /* Вертикальная ориентация */
+    line-height: 1.2; /* Высота строки для лучшей читаемости */
 }
+
