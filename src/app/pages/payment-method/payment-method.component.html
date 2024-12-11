@@ -19,16 +19,17 @@
         </app-payment-method-item>
     </div> -->
 
-    <div class="payment-method" (click)="handlePaymentMethodClick('LIRE')">
-        <app-payment-method-item imageSrc="../../../assets/payments/2.png" title="LIRE"></app-payment-method-item>
-    </div>
-    
-    <div class="payment-method" (click)="handlePaymentMethodClick('USD')">
-        <app-payment-method-item imageSrc="../../../assets/payments/3.png" title="USD"></app-payment-method-item>
-    </div>
-    
     <div class="payment-method" (click)="handlePaymentMethodClick('RUB')">
-        <app-payment-method-item imageSrc="../../../assets/payments/4.png" title="RUB"></app-payment-method-item>
-    </div>
+        <app-payment-method-item imageSrc="../../../assets/payments/4.png" title="Оплата RUB">
+        </app-payment-method-item>
+      </div>
+      <div class="payment-method" (click)="handlePaymentMethodClick('USD')">
+        <app-payment-method-item imageSrc="../../../assets/payments/3.png" title="Оплата USD">
+        </app-payment-method-item>
+      </div>
+      <div class="payment-method" (click)="handlePaymentMethodClick('LIRE')">
+        <app-payment-method-item imageSrc="../../../assets/payments/2.png" title="Оплата LIRE">
+        </app-payment-method-item>
+      </div>      
 </div>
 

@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { PaymentMethodItemComponent } from '../../components/_PaymentMethod/payment-method-item/payment-method-item.component';
 import { PaymentService } from '../../services/_Payment/payment.service';
-import { PaymentInitializeResponse } from '../../interfaces/_Payment/paymen.interface';
 import { TranslateModule } from '@ngx-translate/core';
 import { TelegramService } from '../../services/_Telegram/telegram.service';
 
@@ -54,7 +53,6 @@ export class PaymentMethodComponent implements OnInit {
       return;
     }
   
-    // Для CoinPayments переходим на PaymentModal с параметрами
     this.router.navigate(['/cart/address/payment/modal'], {
       queryParams: {
         orderId: this.orderId,
@@ -66,22 +64,28 @@ export class PaymentMethodComponent implements OnInit {
   
   handlePaymentMethodClick(paymentMethod: string): void {
     console.log(`[PaymentMethodComponent] Обработка метода оплаты: ${paymentMethod}`);
-    
-    if (paymentMethod === 'iyzipay') {
-      // Для Iyzico переходим на PaymentModal с параметрами
+  
+    if (['RUB', 'USD', 'LIRE'].includes(paymentMethod)) {
+      // Переходим на модалку оплаты
+      this.router.navigate(['/cart/address/payment/modal'], {
+        queryParams: {
+          orderId: this.orderId,
+          payment_type: 'fiat', // Указываем тип как 'fiat'
+          currency: paymentMethod, // Передаем выбранную валюту
+        },
+      });
+    } else if (paymentMethod === 'iyzipay') {
       this.router.navigate(['/cart/address/payment/modal'], {
         queryParams: {
           orderId: this.orderId,
           payment_type: 'iyzipay',
         },
       });
-    } else if (['LIRE', 'USD', 'RUB'].includes(paymentMethod)) {
-      // Для последних методов оплаты показываем уведомление
-      this.showContactManagerMessage();
     } else {
       console.error('[PaymentMethodComponent] Ошибка: Неподдерживаемый метод оплаты.');
     }
   }
+  
   
   
   

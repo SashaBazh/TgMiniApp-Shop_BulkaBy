@@ -8,6 +8,7 @@ export interface PaymentInitializeResponse {
     pay_with_iyzico_page_url?: string;
     // Add new fields for the new payment service
     new_service_specific_field?: string;
+    message?: string;
   }
 
 
@@ -16,6 +17,13 @@ export interface CreatePaymentRequest {
     currency: string;
     email: string;
 }
+
+// export interface CreatePaymentRequest {
+//   order_id: number;
+//   payment_type: string; // Добавьте это свойство
+//   currency: string;
+// }
+
 
 export enum PaymentType {
     IYZIPAY = "iyzipay",

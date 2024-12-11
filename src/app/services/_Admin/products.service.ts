@@ -68,7 +68,6 @@ export class ProductsService {
       headers: this.getTelegramHeaders()
     });
   }  
-  
 
   deleteProduct(productId: number): Observable<any> {
     const url = `${this.apiUrl}/${productId}`;

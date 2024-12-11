@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PaymentService } from '../../../services/_Payment/payment.service';
 import { SafeResourceUrl } from '@angular/platform-browser';
+import { TelegramService } from '../../../services/_Telegram/telegram.service';
 
 @Component({
   selector: 'app-payment-modal',
@@ -57,7 +58,8 @@ export class PaymentModalComponent implements OnInit {
     private route: ActivatedRoute,
     private http: HttpClient,
     private router: Router,
-    private paymentService: PaymentService
+    private paymentService: PaymentService,
+    private telegramService: TelegramService
   ) { }
 
   ngOnInit(): void {
@@ -83,6 +85,12 @@ export class PaymentModalComponent implements OnInit {
         // Можно просто их игнорировать при сабмите
       } else {
         // Обычный сценарий iyzipay, если таковой есть
+      }
+
+      if (paymentType === 'fiat' && currency) {
+        this.isCoinpayments = false;
+        this.paymentData.payment_type = 'fiat';
+        this.paymentData.currency = currency;
       }
     });
 
@@ -146,6 +154,44 @@ export class PaymentModalComponent implements OnInit {
       return; // Прекращаем выполнение, так как обработали CoinPayments
     }
   
+    // Для фиатных платежей (RUB, USD, LIRE)
+    if (this.paymentData.payment_type === 'fiat') {
+      const paymentRequest = {
+        order_id: this.paymentData.order_id,
+        currency: this.paymentData.currency,
+        payment_type: 'fiat',
+        email: this.paymentData.email,
+      };
+  
+      console.log('[PaymentModalComponent] Отправка запроса для Fiat:', paymentRequest);
+  
+      this.paymentService.createPayment(paymentRequest).subscribe({
+        next: (response) => {
+          console.log('Фиатный платеж успешно создан:', response);
+  
+          // Показ уведомления через Telegram или alert
+          if (this.telegramService.isTelegramWebAppAvailable()) {
+            this.telegramService.showTelegramAlert('Платеж успешно создан. Ожидайте подтверждения от менеджера.');
+          } else {
+            alert('Платеж успешно создан. Ожидайте подтверждения от менеджера.');
+          }
+  
+          // Перенаправление на страницу с заказом
+          this.router.navigate(['/cart/address/payment'], { queryParams: { orderId: this.paymentData.order_id } });
+        },
+        error: (error) => {
+          console.error('Ошибка при создании фиатного платежа:', error);
+          if (this.telegramService.isTelegramWebAppAvailable()) {
+            this.telegramService.showTelegramAlert('Ошибка при создании платежа. Попробуйте еще раз.');
+          } else {
+            alert('Ошибка при создании платежа. Попробуйте еще раз.');
+          }
+        },
+      });
+  
+      return; // Завершаем выполнение для фиатных платежей
+    }
+  
     // Для Iyzico
     this.paymentData.email = this.paymentData.buyer.email; // Копируем email из buyer в верхний уровень
     console.log('[PaymentModalComponent] Отправка данных для Iyzico:', this.paymentData);
@@ -170,6 +216,17 @@ export class PaymentModalComponent implements OnInit {
         console.error('Ошибка при создании платежа для Iyzico:', error);
       },
     });
+  }
+  
+
+  showSuccessNotification(): void {
+    if (this.paymentData.payment_type === 'fiat') {
+      this.paymentData.currency && alert(`Платеж в валюте ${this.paymentData.currency} успешно создан.`);
+    }
+  }
+  
+  showErrorNotification(): void {
+    alert('Ошибка при создании фиатного платежа. Попробуйте еще раз.');
   }
   
 
