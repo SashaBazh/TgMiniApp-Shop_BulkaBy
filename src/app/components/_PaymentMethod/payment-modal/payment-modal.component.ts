@@ -76,6 +76,28 @@ export class PaymentModalComponent implements OnInit {
         console.error('Не удалось получить идентификатор заказа из маршрута.');
       }
 
+      if (paymentType === 'fiat' && currency) {
+        this.isCoinpayments = false;
+        this.paymentData.payment_type = 'fiat';
+        this.paymentData.currency = currency;
+
+        this.paymentData.buyer = {
+          id: `${orderId}`,
+          name: '',
+          surname: '',
+          identity_number: '',
+          email: '', // Оставляем только email
+          gsm_number: '',
+          registration_date: '',
+          last_login_date: '',
+          registration_address: '',
+          city: '',
+          country: '',
+          zip_code: '',
+          ip: '',
+      };
+      }
+
       if (paymentType === 'coinpayments' && currency) {
         // Для coinpayments оставляем только email
         this.isCoinpayments = true;
@@ -85,12 +107,6 @@ export class PaymentModalComponent implements OnInit {
         // Можно просто их игнорировать при сабмите
       } else {
         // Обычный сценарий iyzipay, если таковой есть
-      }
-
-      if (paymentType === 'fiat' && currency) {
-        this.isCoinpayments = false;
-        this.paymentData.payment_type = 'fiat';
-        this.paymentData.currency = currency;
       }
     });
 
@@ -169,7 +185,6 @@ export class PaymentModalComponent implements OnInit {
         next: (response) => {
           console.log('Фиатный платеж успешно создан:', response);
   
-          // Показ уведомления через Telegram или alert
           if (this.telegramService.isTelegramWebAppAvailable()) {
             this.telegramService.showTelegramAlert('Платеж успешно создан. Ожидайте подтверждения от менеджера.');
           } else {

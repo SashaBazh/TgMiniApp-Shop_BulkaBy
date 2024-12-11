@@ -63,8 +63,6 @@ export class PaymentMethodComponent implements OnInit {
   }
   
   handlePaymentMethodClick(paymentMethod: string): void {
-    console.log(`[PaymentMethodComponent] Обработка метода оплаты: ${paymentMethod}`);
-  
     if (['RUB', 'USD', 'LIRE'].includes(paymentMethod)) {
       // Переходим на модалку оплаты
       this.router.navigate(['/cart/address/payment/modal'], {

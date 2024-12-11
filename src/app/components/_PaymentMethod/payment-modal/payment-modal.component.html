@@ -1,6 +1,19 @@
 <div class="payment-modal-container">
     <h2>Заполните данные для оплаты</h2>
     <form (ngSubmit)="submitPayment()">
+
+
+        <ng-container *ngIf="paymentData.payment_type === 'fiat'; else coinpaymentsForm">
+            <fieldset>
+                <legend>Введите Email для оплаты</legend>
+                <div>
+                    <label for="buyer-email">Email:</label>
+                    <input id="buyer-email" name="buyer-email" [(ngModel)]="paymentData.email" type="email" required />
+                </div>
+            </fieldset>
+        </ng-container>
+
+
         <fieldset *ngIf="!isCoinpayments; else coinpaymentsForm">
             <legend>Информация о покупателе</legend>
             <div>
