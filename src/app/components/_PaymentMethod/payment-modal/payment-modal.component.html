@@ -2,7 +2,7 @@
     <h2>Заполните данные для оплаты</h2>
     <form (ngSubmit)="submitPayment()">
 
-        <ng-container *ngIf="paymentData.payment_type === 'fiat'; else fullPaymentForm">
+        <ng-container *ngIf="paymentData.payment_type === 'fiat' || paymentData.payment_type === 'coinpayments'; else fullPaymentForm">
             <fieldset>
                 <legend>Введите Email для оплаты</legend>
                 <div>
