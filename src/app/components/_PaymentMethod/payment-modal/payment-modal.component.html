@@ -2,8 +2,7 @@
     <h2>Заполните данные для оплаты</h2>
     <form (ngSubmit)="submitPayment()">
 
-
-        <ng-container *ngIf="paymentData.payment_type === 'fiat'; else coinpaymentsForm">
+        <ng-container *ngIf="paymentData.payment_type === 'fiat'; else fullPaymentForm">
             <fieldset>
                 <legend>Введите Email для оплаты</legend>
                 <div>
@@ -14,68 +13,58 @@
         </ng-container>
 
 
-        <fieldset *ngIf="!isCoinpayments; else coinpaymentsForm">
-            <legend>Информация о покупателе</legend>
-            <div>
-                <label for="buyer-id">ID заказа:</label>
-                <input id="buyer-id" name="buyer-id" [value]="paymentData.buyer.id" readonly />
-            </div>
-            <div>
-                <label for="buyer-name">Имя:</label>
-                <input id="buyer-name" name="buyer-name" [(ngModel)]="paymentData.buyer.name" required />
-            </div>
-            <div>
-                <label for="buyer-surname">Фамилия:</label>
-                <input id="buyer-surname" name="buyer-surname" [(ngModel)]="paymentData.buyer.surname" required />
-            </div>
-            <div>
-                <label for="buyer-identity-number">Идентификационный номер:</label>
-                <input id="buyer-identity-number" name="buyer-identity-number"
-                    [(ngModel)]="paymentData.buyer.identity_number" required />
-            </div>
-            <div>
-                <label for="buyer-email">Email:</label>
-                <input id="buyer-email" name="buyer-email" [(ngModel)]="paymentData.buyer.email" type="email"
-                    required />
-            </div>
-            <div>
-                <label for="buyer-phone">Телефон:</label>
-                <input id="buyer-phone" name="buyer-phone" [(ngModel)]="paymentData.buyer.gsm_number" required />
-            </div>
-            <div>
-                <label for="buyer-address">Адрес регистрации:</label>
-                <input id="buyer-address" name="buyer-address" [(ngModel)]="paymentData.buyer.registration_address"
-                    required />
-            </div>
-            <div>
-                <label for="buyer-city">Город:</label>
-                <input id="buyer-city" name="buyer-city" [(ngModel)]="paymentData.buyer.city" required />
-            </div>
-            <div>
-                <label for="buyer-country">Страна:</label>
-                <input id="buyer-country" name="buyer-country" [(ngModel)]="paymentData.buyer.country" required />
-            </div>
-            <div>
-                <label for="buyer-zip">Почтовый индекс:</label>
-                <input id="buyer-zip" name="buyer-zip" [(ngModel)]="paymentData.buyer.zip_code" required />
-            </div>
-            <div>
-                <label for="buyer-ip">IP-адрес:</label>
-                <input id="buyer-ip" name="buyer-ip" [value]="paymentData.buyer.ip" readonly />
-            </div>
-        </fieldset>
-
-        <ng-template #coinpaymentsForm>
-            <!-- Для coinpayments показываем только email -->
+        <ng-template #fullPaymentForm>
             <fieldset>
-                <legend>Введите Email для оплаты</legend>
+                <legend>Информация о покупателе</legend>
+                <div>
+                    <label for="buyer-id">ID заказа:</label>
+                    <input id="buyer-id" name="buyer-id" [value]="paymentData.buyer.id" readonly />
+                </div>
+                <div>
+                    <label for="buyer-name">Имя:</label>
+                    <input id="buyer-name" name="buyer-name" [(ngModel)]="paymentData.buyer.name" required />
+                </div>
+                <div>
+                    <label for="buyer-surname">Фамилия:</label>
+                    <input id="buyer-surname" name="buyer-surname" [(ngModel)]="paymentData.buyer.surname" required />
+                </div>
+                <div>
+                    <label for="buyer-identity-number">Идентификационный номер:</label>
+                    <input id="buyer-identity-number" name="buyer-identity-number"
+                        [(ngModel)]="paymentData.buyer.identity_number" required />
+                </div>
                 <div>
                     <label for="buyer-email">Email:</label>
-                    <input id="buyer-email" name="buyer-email" [(ngModel)]="paymentData.email" type="email" required />
+                    <input id="buyer-email" name="buyer-email" [(ngModel)]="paymentData.buyer.email" type="email"
+                        required />
+                </div>
+                <div>
+                    <label for="buyer-phone">Телефон:</label>
+                    <input id="buyer-phone" name="buyer-phone" [(ngModel)]="paymentData.buyer.gsm_number" required />
+                </div>
+                <div>
+                    <label for="buyer-address">Адрес регистрации:</label>
+                    <input id="buyer-address" name="buyer-address" [(ngModel)]="paymentData.buyer.registration_address"
+                        required />
+                </div>
+                <div>
+                    <label for="buyer-city">Город:</label>
+                    <input id="buyer-city" name="buyer-city" [(ngModel)]="paymentData.buyer.city" required />
+                </div>
+                <div>
+                    <label for="buyer-country">Страна:</label>
+                    <input id="buyer-country" name="buyer-country" [(ngModel)]="paymentData.buyer.country" required />
+                </div>
+                <div>
+                    <label for="buyer-zip">Почтовый индекс:</label>
+                    <input id="buyer-zip" name="buyer-zip" [(ngModel)]="paymentData.buyer.zip_code" required />
+                </div>
+                <div>
+                    <label for="buyer-ip">IP-адрес:</label>
+                    <input id="buyer-ip" name="buyer-ip" [value]="paymentData.buyer.ip" readonly />
                 </div>
             </fieldset>
         </ng-template>
-
 
         <fieldset *ngIf="!isCoinpayments">
             <fieldset>
@@ -103,36 +92,6 @@
                 <div>
                     <label for="shipping-zip">Почтовый индекс:</label>
                     <input id="shipping-zip" name="shipping-zip" [(ngModel)]="paymentData.shipping_address.zip_code"
-                        required />
-                </div>
-            </fieldset>
-
-
-            <fieldset>
-                <legend>Адрес для счета</legend>
-                <div>
-                    <label for="billing-contact-name">Контактное лицо:</label>
-                    <input id="billing-contact-name" name="billing-contact-name"
-                        [(ngModel)]="paymentData.billing_address.contact_name" required />
-                </div>
-                <div>
-                    <label for="billing-city">Город:</label>
-                    <input id="billing-city" name="billing-city" [(ngModel)]="paymentData.billing_address.city"
-                        required />
-                </div>
-                <div>
-                    <label for="billing-country">Страна:</label>
-                    <input id="billing-country" name="billing-country" [(ngModel)]="paymentData.billing_address.country"
-                        required />
-                </div>
-                <div>
-                    <label for="billing-address">Адрес:</label>
-                    <input id="billing-address" name="billing-address" [(ngModel)]="paymentData.billing_address.address"
-                        required />
-                </div>
-                <div>
-                    <label for="billing-zip">Почтовый индекс:</label>
-                    <input id="billing-zip" name="billing-zip" [(ngModel)]="paymentData.billing_address.zip_code"
                         required />
                 </div>
             </fieldset>
