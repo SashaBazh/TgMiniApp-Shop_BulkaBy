@@ -195,7 +195,8 @@ export class CategoriesComponent implements OnInit {
   }
 
   applyCategoryChanges() {
-    if (!this.editedCategory || !this.editingCategoryId) {
+    if (!this.editedCategory || this.editingCategoryId === null) {
+      this.showNotification('ID категории обязателен для применения изменений.', false);
       return;
     }
   
@@ -220,7 +221,9 @@ export class CategoriesComponent implements OnInit {
         formData.append('image', file, 'current-image.jpg');
   
         // Отправляем данные
-        this.sendCategoryUpdate(formData);
+        this.sendCategoryUpdate(formData).then(() => {
+          this.assignAttributesToCategory(this.editingCategoryId!);
+        });
       }).catch((error) => {
         console.error('Ошибка при загрузке файла из URL:', error);
         this.showNotification('Ошибка при обновлении категории.', false);
@@ -229,24 +232,31 @@ export class CategoriesComponent implements OnInit {
     }
   
     // Если новое изображение не выбрано и текущего URL нет, отправляем сразу
-    this.sendCategoryUpdate(formData);
-
-    this.assignAttributesToCategory(this.editingCategoryId);
-  }  
-
-  private sendCategoryUpdate(formData: FormData) {
-    this.categoriesService.updateCategory(formData).subscribe({
-      next: () => {
-        this.showNotification('Категория успешно обновлена');
-        this.loadCategories();
-        this.cancelEditing();
-      },
-      error: (err) => {
-        console.error('Ошибка при обновлении категории:', err);
-        this.showNotification('Ошибка при обновлении категории.', false);
-      },
+    this.sendCategoryUpdate(formData).then(() => {
+      this.assignAttributesToCategory(this.editingCategoryId!);
     });
   }
+  
+  
+
+  private sendCategoryUpdate(formData: FormData): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.categoriesService.updateCategory(formData).subscribe({
+        next: () => {
+          this.showNotification('Категория успешно обновлена');
+          this.loadCategories();
+          this.cancelEditing();
+          resolve();
+        },
+        error: (err) => {
+          console.error('Ошибка при обновлении категории:', err);
+          this.showNotification('Ошибка при обновлении категории.', false);
+          reject(err);
+        },
+      });
+    });
+  }
+  
   
   
 
