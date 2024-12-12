@@ -230,6 +230,8 @@ export class CategoriesComponent implements OnInit {
   
     // Если новое изображение не выбрано и текущего URL нет, отправляем сразу
     this.sendCategoryUpdate(formData);
+
+    this.assignAttributesToCategory(this.editingCategoryId);
   }  
 
   private sendCategoryUpdate(formData: FormData) {
@@ -254,15 +256,6 @@ export class CategoriesComponent implements OnInit {
     const fileName = url.split('/').pop() || 'image.jpg'; // Извлекаем имя файла из URL
     return new File([blob], fileName, { type: blob.type });
   }
-  
-  
-  
-  
-
-
-
-
-
 
 
   onEditImageSelected(event: Event) {
