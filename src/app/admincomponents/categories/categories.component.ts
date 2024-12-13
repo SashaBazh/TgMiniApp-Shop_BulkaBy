@@ -235,6 +235,8 @@ export class CategoriesComponent implements OnInit {
     this.sendCategoryUpdate(formData).then(() => {
       this.assignAttributesToCategory(this.editingCategoryId!);
     });
+
+    // this.assignAttributesToCategory(this.editingCategoryId);
   }
   
   
@@ -245,7 +247,7 @@ export class CategoriesComponent implements OnInit {
         next: () => {
           this.showNotification('Категория успешно обновлена');
           this.loadCategories();
-          this.cancelEditing();
+          // this.cancelEditing();
           resolve();
         },
         error: (err) => {
