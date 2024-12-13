@@ -161,7 +161,7 @@ export class CategoriesComponent implements OnInit {
 
   startEditing(category: ProductCategory) {
     this.editingCategoryId = category.id;
-    alert(this.editingCategoryId);
+    // alert(this.editingCategoryId);
     this.editedCategory = {
       name: category.name || '',
       description: category.description || '',
