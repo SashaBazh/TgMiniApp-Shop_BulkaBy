@@ -6,7 +6,11 @@
     <app-filters [items]="filters" (filtersChanged)="onFiltersChanged($event)"></app-filters>
   </div>
   <div class="products-container">
-    <p *ngIf="isLoading" class="loading-text">{{ 'ENTER_QUERY' | translate }}</p>
+    <!-- <p *ngIf="isLoading" class="loading-text">{{ 'ENTER_QUERY' | translate }}</p> -->
+    <div *ngIf="isLoading" class="loading-indicator">
+      <div class="loader"></div>
+    </div>
+
     <p *ngIf="!isLoading && !products?.length" class="no-results-text">
       {{ 'NOT_FOUND_FOR_CATEGORY' | translate }} "{{ categoryName }}" 😞
     </p>
