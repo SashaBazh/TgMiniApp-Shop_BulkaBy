@@ -6,7 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RouterLink } from '@angular/router';
 import { OptionsService } from '../../../services/_Options/option.service';
 import { ProfileService } from '../../../services/_Profile/profile.service';
-import { CataloggeneralComponent } from '../../_General/cataloggeneral/cataloggeneral.component';
+import { LanguageService } from '../../../services/_Language/language.service';
 
 @Component({
   selector: 'app-options',
@@ -31,14 +31,14 @@ export class OptionsComponent implements OnInit {
   constructor(
     public optionsService: OptionsService,
     private profileService: ProfileService,
-    private cataloggeneral: CataloggeneralComponent
-  ) {}
+    private languageService: LanguageService
+  ) { }
 
   ngOnInit(): void {
     console.log('ngOnInit вызван');
     this.checkAdminAccess();
     this.loadBirthday(); // Подгружаем дату рождения
-  }  
+  }
 
   get language(): string {
     return this.optionsService.language;
@@ -49,16 +49,16 @@ export class OptionsComponent implements OnInit {
       next: (profile) => {
         // Устанавливаем дату рождения, если она есть
         this.birthday = profile.birthday
-        ? profile.birthday.substring(0, 10) // Оставляем первые 10 символов
-        : null;
+          ? profile.birthday.substring(0, 10) // Оставляем первые 10 символов
+          : null;
 
-          console.log('Дата рождения из профиля:', this.birthday);
-  
+        console.log('Дата рождения из профиля:', this.birthday);
+
         // Сохраняем дату рождения в OptionsService
         if (this.birthday) {
           this.optionsService.setBirthDate(this.birthday);
         }
-  
+
         console.log('Дата рождения установлена:', this.birthday);
       },
       error: (error) => {
@@ -69,10 +69,12 @@ export class OptionsComponent implements OnInit {
 
   toggleLanguage(): void {
     this.optionsService.toggleLanguage();
-    this.cataloggeneral.loadCategories();
-    setTimeout(() => {
-      window.location.reload();
-    });
+    // setTimeout(() => {
+    //   window.location.reload();
+    // });
+
+    const newLang = this.languageService.getLanguage() === 'ru' ? 'en' : 'ru';
+    this.languageService.setLanguage(newLang);
   }
 
   toggleCurrency(): void {
@@ -91,7 +93,7 @@ export class OptionsComponent implements OnInit {
     if (this.selectedDate) {
       // Преобразуем дату в короткий формат `YYYY-MM-DD`
       const formattedDate = this.selectedDate.substring(0, 10); // Берём только первые 10 символов
-  
+
       this.optionsService.updateBirthDate(formattedDate).subscribe({
         next: (response) => {
           console.log('Дата рождения обновлена успешно:', response);
@@ -107,8 +109,8 @@ export class OptionsComponent implements OnInit {
     } else {
       console.error('Дата не выбрана');
     }
-  }  
-  
+  }
+
 
   contactManager(): void {
     this.optionsService.contactManager();
@@ -124,7 +126,7 @@ export class OptionsComponent implements OnInit {
       },
     });
   }
-  
-  
-  
+
+
+
 }

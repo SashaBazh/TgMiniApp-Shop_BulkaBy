@@ -9,7 +9,8 @@ import { CategoryService } from '../../../services/_Catalog/category.service';
 import { Product } from '../../../interfaces/_General/product.interface';
 import { ProductCardComponent } from '../../_General/product-card/product-card.component';
 import { ImageStreamService } from '../../../services/_Image/image-stream.service';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-products',
@@ -25,12 +26,14 @@ export class ProductsComponent implements OnInit {
   filters: any[] = [];
   selectedFilters: any = {}; // Храним выбранные фильтры
   isLoading = false;
+  private languageSubscription!: Subscription;
 
   constructor(
     private route: ActivatedRoute,
     private categoryAttributesService: CategoryService,
     private imageService: ImageStreamService,
-    private router: Router // Инжектируем Router
+    private router: Router,
+    private translate: TranslateService
   ) { }
 
   ngOnInit() {

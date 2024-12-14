@@ -5,6 +5,8 @@ import { CatalogItemComponent } from '../catalog-item/catalog-item.component';
 import { ProductCategoryService } from '../../../services/_Catalog/product-category.service';
 import { ProductCategory } from '../../../interfaces/_Catalog/catalog.interface';
 import { ImageStreamService } from '../../../services/_Image/image-stream.service';
+import { Subscription } from 'rxjs';
+import { LanguageService } from '../../../services/_Language/language.service';
 
 @Component({
   selector: 'app-cataloggeneral',
@@ -19,18 +21,35 @@ export class CataloggeneralComponent implements OnInit {
   categories: ProductCategory[] = [];
   isLoading = true;
   error: string | null = null;
+  private languageSubscription!: Subscription;
 
   constructor(
     private router: Router,
     private productCategoryService: ProductCategoryService,
-    private imageService: ImageStreamService
-  ) {}
+    private imageService: ImageStreamService,
+    private languageService: LanguageService,
+  ) { }
 
   ngOnInit() {
     this.loadCategories();
+
+    this.languageSubscription = this.languageService.languageChange$.subscribe(() => {
+      console.log('Language change detected. Reloading categories...');
+      this.loadCategories();
+      console.log('Категории обновлены');
+    });
+  }
+
+  ngOnDestroy() {
+    // Отписываемся, чтобы избежать утечек памяти
+    if (this.languageSubscription) {
+      console.log('Unsubscribing from language changes...');
+      this.languageSubscription.unsubscribe();
+    }
   }
 
   public loadCategories() {
+    console.log('Категории начинают обновляться');
     this.productCategoryService.getCategories().subscribe({
       next: (categories) => {
         this.isLoading = false;
@@ -49,8 +68,8 @@ export class CataloggeneralComponent implements OnInit {
       },
     });
   }
-  
+
   navigateToCategory(categoryId: number) {
     this.router.navigate(['/catalog', categoryId]);
-  }  
+  }
 }

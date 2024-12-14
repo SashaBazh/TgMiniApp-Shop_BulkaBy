@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
           name:
             tgUser.first_name + (tgUser.last_name ? ' ' + tgUser.last_name : ''),
           username: tgUser.username,
-          lang: 'ru', // Язык по умолчанию
+          lang: 'en', // Язык по умолчанию
           points: 0, // Очки по умолчанию
         };
 

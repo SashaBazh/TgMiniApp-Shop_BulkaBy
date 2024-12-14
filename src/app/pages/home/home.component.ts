@@ -36,6 +36,6 @@ export class HomeComponent {
   constructor(
     private translate: TranslateService,
   ) {
-    this.translate.setDefaultLang('ru');
+    this.translate.setDefaultLang('en');
   }
 }

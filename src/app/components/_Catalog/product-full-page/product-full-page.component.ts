@@ -6,6 +6,7 @@ import { ImageStreamService } from '../../../services/_Image/image-stream.servic
 import { ProductService } from '../../../services/_Product/product-service.service';
 import { CartService } from '../../../services/_Cart/cart.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-product-full-page',
@@ -24,6 +25,7 @@ export class ProductFullPageComponent {
 
   mediaItems: string[] = [];
   currentMediaIndex: number = 0;
+  private languageSubscription!: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -39,6 +41,20 @@ export class ProductFullPageComponent {
       this.productId = +params.get('id')!;
       this.loadProduct(this.productId);
     });
+
+    this.languageSubscription = this.translate.onLangChange.subscribe(() => {
+      console.log('Язык изменен, обновляем продукт...');
+      if (this.productId !== null) {
+        this.loadProduct(this.productId);
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    // Отписываемся от событий при уничтожении компонента
+    if (this.languageSubscription) {
+      this.languageSubscription.unsubscribe();
+    }
   }
 
   loadProduct(productId: number) {
