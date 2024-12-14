@@ -11,7 +11,10 @@
 
       <div *ngIf="cart" class="payment-block">
         <span class="payment-text">
-          {{ 'TOTAL_PAYMENT' | translate }}: {{ cart.total_price | number:'1.2-2' }} USD
+          {{ 'TOTAL_PAYMENT' | translate }} {{ cart.total_price }} USD
+        </span>
+        <span class="payment-text">
+          {{ 'POINTS_DISCOUNT_INFO' | translate }} (до {{ maxPoints }}  {{ 'POINTS' | translate }})
         </span>
       
         <input
