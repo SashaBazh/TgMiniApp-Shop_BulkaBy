@@ -30,7 +30,7 @@ export class CataloggeneralComponent implements OnInit {
     this.loadCategories();
   }
 
-  private loadCategories() {
+  public loadCategories() {
     this.productCategoryService.getCategories().subscribe({
       next: (categories) => {
         this.isLoading = false;

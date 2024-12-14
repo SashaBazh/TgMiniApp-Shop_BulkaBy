@@ -6,6 +6,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RouterLink } from '@angular/router';
 import { OptionsService } from '../../../services/_Options/option.service';
 import { ProfileService } from '../../../services/_Profile/profile.service';
+import { CataloggeneralComponent } from '../../_General/cataloggeneral/cataloggeneral.component';
 
 @Component({
   selector: 'app-options',
@@ -29,7 +30,8 @@ export class OptionsComponent implements OnInit {
 
   constructor(
     public optionsService: OptionsService,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private cataloggeneral: CataloggeneralComponent
   ) {}
 
   ngOnInit(): void {
@@ -67,6 +69,7 @@ export class OptionsComponent implements OnInit {
 
   toggleLanguage(): void {
     this.optionsService.toggleLanguage();
+    this.cataloggeneral.loadCategories();
     setTimeout(() => {
       window.location.reload();
     });
