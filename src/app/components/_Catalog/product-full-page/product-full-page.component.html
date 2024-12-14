@@ -6,7 +6,7 @@
                     <!-- Изображение -->
                     <img *ngIf="isImage(currentMedia)" [src]="currentMedia" alt="Media Content" class="slider-media" />
                     <!-- Видео -->
-                    <video *ngIf="isVideo(currentMedia)" [src]="currentMedia" controls playsinline muted class="slider-media"></video>
+                    <video *ngIf="isVideo(currentMedia)" [src]="currentMedia" controls class="slider-media"></video>
                 </ng-container>
             </div>
 
@@ -75,7 +75,7 @@
                 <p>{{ 'JEWELRY_MEANING' | translate }}</p>
                 <p>{{ 'LIFETIME_GUARANTEE' | translate }}</p>
                 <p>{{ 'AUTHENTICITY_CERTIFICATION' | translate }}</p>
-                <p>{{ 'DELIVERY_INFORMATION' | translate }}</p>
+                <p>{{ 'AUTHENTICITY_CERTIFICATION' | translate }}</p>
             </div>
         </div>
 
