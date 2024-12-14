@@ -8,6 +8,6 @@ export class ImageStreamService {
   private apiUrl = `${environment.apiUrl}/data`;
 
   getImageUrl(imagePath: string): string {
-    return `${this.apiUrl}/stream?image_path=${encodeURIComponent(imagePath)}`;
+    return `${this.apiUrl}/image?image_path=${encodeURIComponent(imagePath)}`;
   }
 }
