@@ -3,21 +3,40 @@
 <div class="margin">
   <div *ngIf="cart">
     <app-cart-item *ngFor="let item of cart.items" [imageSrc]="item.image || 'assets/default-image.png'"
-      [title]="item.product_name" [price]="item.price" [discountedPrice]="item.discounted_price" 
-      [quantity]="item.quantity"
-      [productId]="item.product_id"
-      (itemRemoved)="onItemRemoved($event)"
-      (quantityChanged)="onQuantityChanged($event)"
-      ></app-cart-item>
+      [title]="item.product_name" [price]="item.price" [discountedPrice]="item.discounted_price"
+      [quantity]="item.quantity" [productId]="item.product_id" (itemRemoved)="onItemRemoved($event)"
+      (quantityChanged)="onQuantityChanged($event)"></app-cart-item>
 
 
 
-    <div class="payment-block">
-      <span class="payment-text">{{ 'TOTAL_PAYMENT' | translate }} {{ cart.total_price }} USD</span>
-    </div>
+      <div *ngIf="cart" class="payment-block">
+        <span class="payment-text">
+          {{ 'TOTAL_PAYMENT' | translate }}: {{ cart.total_price | number:'1.2-2' }} USD
+        </span>
+      
+        <input
+          class="points-input"
+          type="number"
+          [max]="maxPoints"
+          [min]="0"
+          [(ngModel)]="usedPoints"
+          (input)="onPointsChanged($event)"
+        />
+      
+        <input
+          class="points-slider"
+          type="range"
+          [max]="maxPoints"
+          [min]="0"
+          [(ngModel)]="usedPoints"
+          (input)="onPointsChanged($event)"
+        />
+      </div>
+      
+
   </div>
 
-  <div class="payment-block">
+  <!-- <div class="payment-block">
     <span class="payment-text">
       {{ 'POINTS_DISCOUNT_INFO' | translate }} (до {{ maxPoints }}  {{ 'POINTS' | translate }})
     </span>
@@ -37,7 +56,7 @@
       [max]="maxPoints"
       (input)="onPointsSliderChange()"
     />
-  </div>
+  </div> -->
 
 </div>
 

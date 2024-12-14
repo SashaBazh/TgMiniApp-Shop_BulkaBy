@@ -20,8 +20,9 @@ import { FormsModule } from '@angular/forms';
 })
 export class CartComponent implements OnInit {
   cart: CartResponse | null = null;
-  maxPoints: number = 100; // Заглушка: максимально доступные баллы для списания
-  usedPoints: number = 0; // Текущие баллы для списания
+  maxPoints: number = 300; // Максимум баллов (заглушка)
+  usedPoints: number = 0; // Используемые баллы
+  initialTotalPrice: number = 0; // Исходная общая сумма
 
   constructor(private cartService: CartService, private imageService: ImageStreamService) {}
 
@@ -42,6 +43,7 @@ export class CartComponent implements OnInit {
             discounted_price: item.discounted_price ?? null, // Гарантируем, что undefined заменяется на null
           })),
         };
+        this.initialTotalPrice = this.cart?.total_price || 0;
       },
       error: (err) => {
         console.error('Ошибка при загрузке корзины:', err);
@@ -116,5 +118,15 @@ export class CartComponent implements OnInit {
       ) - discount;
     }
   }
+
+  onPointsChanged(event: Event): void {
+    const inputValue = (event.target as HTMLInputElement).value;
+    const points = parseInt(inputValue, 10) || 0;
+    this.usedPoints = points;
+    if (this.cart) {
+      this.cart.total_price = this.initialTotalPrice - points;
+    }
+  }
+  
   
 }
