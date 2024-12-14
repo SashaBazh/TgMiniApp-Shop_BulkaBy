@@ -33,9 +33,17 @@ export class HomeComponent {
     { name: 'Подвески' },
   ];
 
-  constructor(
-    private translate: TranslateService,
-  ) {
-    this.translate.setDefaultLang('en');
+  constructor(private translate: TranslateService) {
+    // Получаем язык пользователя из Telegram WebApp
+    const userLanguage = (window as any)?.Telegram?.WebApp?.initDataUnsafe?.user?.language_code;
+
+    // Устанавливаем язык по умолчанию, основываясь на языке Telegram
+    if (userLanguage) {
+      console.log('Язык пользователя из Telegram:', userLanguage);
+      this.translate.setDefaultLang(userLanguage);
+    } else {
+      console.warn('Не удалось определить язык пользователя. Устанавливается язык по умолчанию: "en".');
+      this.translate.setDefaultLang('en'); // Язык по умолчанию
+    }
   }
 }
