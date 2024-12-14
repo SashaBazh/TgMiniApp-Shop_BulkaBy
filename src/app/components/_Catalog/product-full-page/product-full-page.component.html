@@ -1,7 +1,8 @@
 <div class="product-full-page" *ngIf="product">
     <div class="media-gallery">
         <div class="slider">
-            <div class="media-container">
+            <div class="media-container" (touchstart)="onTouchStart($event)" (touchmove)="onTouchMove($event)"
+                (touchend)="onTouchEnd()">
                 <ng-container *ngIf="currentMedia">
                     <!-- Изображение -->
                     <img *ngIf="isImage(currentMedia)" [src]="currentMedia" alt="Media Content" class="slider-media" />
@@ -9,6 +10,7 @@
                     <video *ngIf="isVideo(currentMedia)" [src]="currentMedia" controls class="slider-media"></video>
                 </ng-container>
             </div>
+
 
             <!-- Навигационные точки -->
             <div class="dots">

@@ -258,3 +258,14 @@ hr {
   line-height: 1.5;
 }
 
+.media-container {
+  display: flex;
+  transition: transform 0.3s ease-in-out;
+}
+
+.slider-media {
+  flex-shrink: 0;
+  width: 100%;
+}
+
+

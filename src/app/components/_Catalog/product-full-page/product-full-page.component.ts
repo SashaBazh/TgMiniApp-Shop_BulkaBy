@@ -27,6 +27,9 @@ export class ProductFullPageComponent {
   currentMediaIndex: number = 0;
   private languageSubscription!: Subscription;
 
+  private touchStartX: number = 0; // Начальная позиция X
+  private touchEndX: number = 0; // Конечная позиция X
+
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
@@ -34,7 +37,7 @@ export class ProductFullPageComponent {
     private cartService: CartService,
     private router: Router,
     private translate: TranslateService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.route.paramMap.subscribe((params) => {
@@ -72,21 +75,21 @@ export class ProductFullPageComponent {
 
   prepareAttributes() {
     if (!this.product) return;
-  
+
     // Transform attributes from attribute_values
     const allAttributes = this.product.attribute_values.map((attr: any) => ({
       name: attr.attribute.name,
       value: attr.value,
     }));
-  
+
     // Split into main and extra attributes
     this.mainAttributes = allAttributes.slice(0, 3);
     this.extraAttributes = allAttributes.slice(3);
-  
+
     // Определяем текущий язык
     const descriptionLabel =
       this.translate.currentLang === 'ru' ? 'Описание' : 'Description';
-  
+
     // Add description to extra attributes
     if (this.product.description) {
       this.extraAttributes.unshift({ name: descriptionLabel, value: this.product.description });
@@ -110,17 +113,17 @@ export class ProductFullPageComponent {
   prevMedia() {
     this.currentMediaIndex = (this.currentMediaIndex - 1 + this.mediaItems.length) % this.mediaItems.length;
   }
-  
+
 
   nextMedia() {
     this.currentMediaIndex = (this.currentMediaIndex + 1) % this.mediaItems.length;
   }
-  
+
 
   selectMedia(index: number) {
     this.currentMediaIndex = index;
   }
-  
+
 
   get currentMedia(): string | null {
     return this.mediaItems.length > 0 ? this.mediaItems[this.currentMediaIndex] : null;
@@ -154,7 +157,7 @@ export class ProductFullPageComponent {
       // alert('ID товара отсутствует');
     }
   }
-  
+
   addToCartFast() {
     if (this.productId !== null) {
       // alert(`Добавляем товар с ID ${this.productId} в корзину`);
@@ -171,21 +174,45 @@ export class ProductFullPageComponent {
       // alert('ID товара отсутствует');
     }
   }
-  
+
 
 
 
   currentIndex = 0;
 
   // Геттер для текущего элемента
-  
-  
+
+
   // Устанавливаем текущий индекс по клику на точку
   setIndex(index: number) {
     this.currentIndex = index;
   }
 
-    toggleExpandableInfo() {
-        this.showMoreInfo = !this.showMoreInfo;
+  toggleExpandableInfo() {
+    this.showMoreInfo = !this.showMoreInfo;
+  }
+
+  // Обработка начала касания
+  onTouchStart(event: TouchEvent) {
+    this.touchStartX = event.touches[0].clientX;
+  }
+
+  // Обработка окончания касания
+  onTouchEnd() {
+    const threshold = 50; // Минимальное расстояние для распознавания свайпа
+    const deltaX = this.touchEndX - this.touchStartX;
+
+    if (deltaX > threshold) {
+      // Свайп вправо
+      this.prevMedia();
+    } else if (deltaX < -threshold) {
+      // Свайп влево
+      this.nextMedia();
     }
+  }
+
+  // Обработка движения пальца
+  onTouchMove(event: TouchEvent) {
+    this.touchEndX = event.touches[0].clientX;
+  }
 }
