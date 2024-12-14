@@ -79,7 +79,7 @@
   border-radius: 5px; /* Скругленные края трека */
   outline: none; /* Убираем обводку при фокусе */
   transition: background 0.3s ease;
-  margin-bottom: 4px;
+  margin-bottom: 24px;
 }
 
 .points-slider:hover {

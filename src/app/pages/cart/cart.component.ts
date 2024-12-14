@@ -94,31 +94,6 @@ export class CartComponent implements OnInit {
     window.location.href = 'https://t.me/GEORG653';
   }
 
-
-
-  onPointsInputChange() {
-    if (this.usedPoints > this.maxPoints) {
-      this.usedPoints = this.maxPoints;
-    } else if (this.usedPoints < 0) {
-      this.usedPoints = 0;
-    }
-    this.updateTotalPriceWithPoints();
-  }
-
-  onPointsSliderChange() {
-    this.updateTotalPriceWithPoints();
-  }
-
-  updateTotalPriceWithPoints() {
-    if (this.cart) {
-      const discount = (this.usedPoints / this.maxPoints) * this.cart.total_price * 0.1; // 10% скидка от суммы
-      this.cart.total_price = this.cart.items.reduce(
-        (sum, item) => sum + item.price * item.quantity,
-        0
-      ) - discount;
-    }
-  }
-
   onPointsChanged(event: Event): void {
     const inputValue = (event.target as HTMLInputElement).value;
     const points = parseInt(inputValue, 10) || 0;
@@ -127,6 +102,19 @@ export class CartComponent implements OnInit {
       this.cart.total_price = this.initialTotalPrice - points;
     }
   }
+
+  validatePointsInput(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    let value = inputElement.value;
   
+    // Убираем все символы, кроме цифр
+    value = value.replace(/[^0-9]/g, '');
   
+    // Преобразуем в число и проверяем диапазон
+    const numericValue = Math.min(Math.max(Number(value), 0), this.maxPoints);
+  
+    // Обновляем значение инпута и переменной
+    inputElement.value = numericValue.toString();
+    this.usedPoints = numericValue;
+  }
 }

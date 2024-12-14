@@ -9,33 +9,22 @@
 
 
 
-      <div *ngIf="cart" class="payment-block">
-        <span class="payment-text">
-          {{ 'TOTAL_PAYMENT' | translate }} {{ cart.total_price }} USD
-        </span>
-        <span class="payment-text">
-          {{ 'POINTS_DISCOUNT_INFO' | translate }} (до {{ maxPoints }}  {{ 'POINTS' | translate }})
-        </span>
-      
-        <input
-          class="points-input"
-          type="number"
-          [max]="maxPoints"
-          [min]="0"
-          [(ngModel)]="usedPoints"
-          (input)="onPointsChanged($event)"
-        />
-      
-        <input
-          class="points-slider"
-          type="range"
-          [max]="maxPoints"
-          [min]="0"
-          [(ngModel)]="usedPoints"
-          (input)="onPointsChanged($event)"
-        />
-      </div>
-      
+    <div *ngIf="cart" class="payment-block">
+      <span class="payment-text">
+        {{ 'TOTAL_PAYMENT' | translate }} {{ cart.total_price }} USD
+      </span>
+      <span class="payment-text">
+        {{ 'POINTS_DISCOUNT_INFO' | translate }} (до {{ maxPoints }} {{ 'POINTS' | translate }})
+      </span>
+
+      <input class="points-input" type="number" [max]="maxPoints" [min]="0" [(ngModel)]="usedPoints"
+        (input)="validatePointsInput($event); onPointsChanged($event)" />
+
+
+      <input class="points-slider" type="range" [max]="maxPoints" [min]="0" [(ngModel)]="usedPoints"
+        (input)="onPointsChanged($event)" />
+    </div>
+
 
   </div>
 
