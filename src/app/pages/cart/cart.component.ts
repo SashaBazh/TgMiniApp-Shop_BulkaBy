@@ -9,16 +9,19 @@ import { CartService } from '../../services/_Cart/cart.service';
 import { CartResponse } from '../../interfaces/_Cart/cart.interface';
 import { ImageStreamService } from '../../services/_Image/image-stream.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [NavigationComponent, HeaderComponent, ImageSliderComponent, CartItemComponent, RouterModule, CommonModule, TranslateModule],
+  imports: [NavigationComponent, HeaderComponent, ImageSliderComponent, CartItemComponent, RouterModule, CommonModule, TranslateModule, CommonModule, FormsModule],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css'
 })
 export class CartComponent implements OnInit {
   cart: CartResponse | null = null;
+  maxPoints: number = 100; // Заглушка: максимально доступные баллы для списания
+  usedPoints: number = 0; // Текущие баллы для списания
 
   constructor(private cartService: CartService, private imageService: ImageStreamService) {}
 
@@ -87,6 +90,31 @@ export class CartComponent implements OnInit {
 
   redirectToTelegram(): void {
     window.location.href = 'https://t.me/GEORG653';
+  }
+
+
+
+  onPointsInputChange() {
+    if (this.usedPoints > this.maxPoints) {
+      this.usedPoints = this.maxPoints;
+    } else if (this.usedPoints < 0) {
+      this.usedPoints = 0;
+    }
+    this.updateTotalPriceWithPoints();
+  }
+
+  onPointsSliderChange() {
+    this.updateTotalPriceWithPoints();
+  }
+
+  updateTotalPriceWithPoints() {
+    if (this.cart) {
+      const discount = (this.usedPoints / this.maxPoints) * this.cart.total_price * 0.1; // 10% скидка от суммы
+      this.cart.total_price = this.cart.items.reduce(
+        (sum, item) => sum + item.price * item.quantity,
+        0
+      ) - discount;
+    }
   }
   
 }

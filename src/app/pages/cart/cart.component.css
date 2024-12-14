@@ -1,19 +1,29 @@
 .payment-block {
-    font-family: 'Montserrat', sans-serif; /* Шрифт Montserrat */
-    font-weight: 400; /* Тонкий текст (light) */
-    font-size: 16px; /* Размер шрифта */
-    text-align: center; /* Центровка текста */
+    font-family: 'Montserrat', sans-serif;
+    /* Шрифт Montserrat */
+    font-weight: 400;
+    /* Тонкий текст (light) */
+    font-size: 16px;
+    /* Размер шрифта */
+    text-align: center;
+    /* Центровка текста */
     display: flex;
-    flex-direction: column; /* Текст и сумма вертикально */
-    align-items: center; /* Центровка по горизонтали */
-    color: #000000; /* Черный цвет текста */
+    flex-direction: column;
+    /* Текст и сумма вертикально */
+    align-items: center;
+    /* Центровка по горизонтали */
+    color: #000000;
+    /* Черный цвет текста */
     margin-top: 8px;
-    margin-bottom: 8px; /* Отступы сверху и снизу для центровки */
+    margin-bottom: 8px;
+    /* Отступы сверху и снизу для центровки */
 }
 
 .payment-text {
-    font-weight: 400; /* Тонкий стиль */
-    margin-bottom: 4px; /* Небольшой отступ от суммы */
+    font-weight: 400;
+    /* Тонкий стиль */
+    margin-bottom: 4px;
+    /* Небольшой отступ от суммы */
 }
 
 .delivery-button {
@@ -26,11 +36,13 @@
     padding: 15px 20px;
     text-align: center;
     cursor: pointer;
-    outline: none; /* Убирает стандартный outline */
+    outline: none;
+    /* Убирает стандартный outline */
     display: inline-block;
     width: 100%;
     margin-bottom: 8px;
-    border: none; /* Убирает возможную черную рамку от границы */
+    border: none;
+    /* Убирает возможную черную рамку от границы */
 }
 
 .margin {
@@ -39,4 +51,77 @@
 
 .px {
     margin-bottom: 80px;
-  }
+}
+
+
+
+.points-input {
+  margin-top: 8px;
+  padding: 8px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  font-family: 'Montserrat', sans-serif;
+  text-align: center;
+  background-color: #F3EBDA; /* Фон в стиле слайдера */
+  color: #000; /* Черный текст */
+  margin-bottom: 4px;
+}
+
+.points-slider {
+  margin-top: 8px;
+  width: 100%;
+  cursor: pointer;
+  appearance: none; /* Убираем стандартный вид */
+  height: 8px; /* Высота трека */
+  background: #F3EBDA; /* Цвет трека */
+  border-radius: 5px; /* Скругленные края трека */
+  outline: none; /* Убираем обводку при фокусе */
+  transition: background 0.3s ease;
+  margin-bottom: 4px;
+}
+
+.points-slider:hover {
+  background: #e2d4be; /* Более темный оттенок при наведении */
+}
+
+.points-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px; /* Ширина ползунка */
+  height: 20px; /* Высота ползунка */
+  background: #EBEDF7; /* Черный ползунок */
+  border-radius: 50%; /* Круглый ползунок */
+  border: 1px solid #000000; /* Обводка совпадает с треком */
+  transition: transform 0.3s ease;
+}
+
+.points-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2); /* Увеличение ползунка при наведении */
+}
+
+.points-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #EBEDF7;
+  border-radius: 50%;
+  border: 2px solid #F3EBDA;
+  transition: transform 0.3s ease;
+}
+
+.points-slider::-moz-range-thumb:hover {
+  transform: scale(1.2);
+}
+
+.payment-block {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #000000;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}

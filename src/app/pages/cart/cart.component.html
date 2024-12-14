@@ -17,6 +17,28 @@
     </div>
   </div>
 
+  <div class="payment-block">
+    <span class="payment-text">
+      {{ 'POINTS_DISCOUNT_INFO' | translate }} (до {{ maxPoints }}  {{ 'POINTS' | translate }})
+    </span>
+    <input
+      type="number"
+      class="points-input"
+      [(ngModel)]="usedPoints"
+      [min]="0"
+      [max]="maxPoints"
+      (input)="onPointsInputChange()"
+    />
+    <input
+      type="range"
+      class="points-slider"
+      [(ngModel)]="usedPoints"
+      [min]="0"
+      [max]="maxPoints"
+      (input)="onPointsSliderChange()"
+    />
+  </div>
+
 </div>
 
 <button class="delivery-button" [routerLink]="['/cart', 'address']">
