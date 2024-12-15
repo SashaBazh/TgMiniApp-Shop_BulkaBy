@@ -103,4 +103,15 @@ export class TelegramService {
       console.warn('Telegram WebApp alert недоступен, используйте fallback');
     }
   }
+
+  requestFullscreen() {
+    if (this.tg?.requestFullscreen) {
+      this.tg.requestFullscreen().catch((err: any) => {
+        console.error('Ошибка при попытке перейти в полноэкранный режим:', err);
+      });
+    } else {
+      console.warn('requestFullscreen недоступен');
+    }
+  }
+  
 }

@@ -32,6 +32,7 @@ export class AppComponent implements OnInit {
         this.authServise.registerUser(registerData).subscribe({
           next: (res) => {
             // Пользователь успешно зарегистрирован
+            this.telegramService.requestFullscreen();
           },
           error: (err) => {
             if (
@@ -40,6 +41,7 @@ export class AppComponent implements OnInit {
                 'User with this telegram ID already exists'
             ) {
               // Пользователь уже зарегистрирован
+              this.telegramService.requestFullscreen();
             } else {
               // Ошибка при регистрации пользователя
             }
