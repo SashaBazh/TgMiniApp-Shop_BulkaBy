@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HeaderbackComponent } from '../../components/_General/headerback/headerback.component';
 import { PickupPointComponent } from '../../components/_Address/pickup-point/pickup-point.component';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
 import { PickupPoint } from '../../interfaces/_Address/pickup-point.interface';
 import { PickupPointService } from '../../services/_Address/pickup-point.service';
@@ -19,15 +19,22 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class AddressComponent implements OnInit {
   pickupPoints: PickupPoint[] = [];
+  usedPoints: number = 0;
 
   constructor(
     private pickupPointService: PickupPointService,
     private orderService: OrderService, // Добавляем сервис заказа
-    private router: Router // Для навигации после создания заказа
+    private router: Router, // Для навигации после создания заказа
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
     this.loadPickupPoints();
+
+    const usedPointsParam = this.route.snapshot.queryParamMap.get('usedPoints');
+    if (usedPointsParam) {
+      this.usedPoints = Number(usedPointsParam);
+    }
   }
 
   loadPickupPoints(): void {
@@ -65,6 +72,7 @@ export class AddressComponent implements OnInit {
     const orderData: OrderCreateRequest = {
       delivery_method: DeliveryMethod.PICKUP,
       pickup_location_id: selectedPoint.id,
+      points_to_use: this.usedPoints
     };
   
     this.orderService.createOrder(orderData).subscribe({

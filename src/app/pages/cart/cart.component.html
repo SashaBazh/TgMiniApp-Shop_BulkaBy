@@ -52,7 +52,7 @@
 
 </div>
 
-<button class="delivery-button" [routerLink]="['/cart', 'address']">
+<button class="delivery-button" [routerLink]="['/cart', 'address']" [queryParams]="{ usedPoints: usedPoints }">
   {{ 'SELF_PICKUP' | translate }}
 </button>
 

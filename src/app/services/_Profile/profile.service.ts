@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { environment } from '../../enviroments/environment';
 import { UserProfileResponse } from '../../interfaces/_Profile/friend.interface';
 import { UserStatusInfo } from '../../interfaces/_Cart/cart.interface';
@@ -22,7 +22,11 @@ export class ProfileService {
   }
 
   getUserStatus(): Observable<UserStatusInfo> {
-    return this.http.get<UserStatusInfo>(`${this.apiUrl}/status`, { headers: this.headers });
+    return this.http.get<UserStatusInfo>(`${this.apiUrl}/status`, { headers: this.headers }).pipe(
+      tap(response => {
+        console.log('Получен ответ от /status:', response);
+      })
+    );
   }
 
   checkIfAdmin(): Observable<boolean> {
