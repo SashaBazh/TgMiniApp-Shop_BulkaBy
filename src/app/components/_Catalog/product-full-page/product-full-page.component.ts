@@ -29,7 +29,6 @@ export class ProductFullPageComponent {
 
   private touchStartX: number = 0; // Начальная позиция X
   private touchEndX: number = 0; // Конечная позиция X
-  private dragOffset: number = 0; // Смещение при перетаскивании
 
   constructor(
     private route: ActivatedRoute,
@@ -112,15 +111,12 @@ export class ProductFullPageComponent {
 
   // Navigation methods
   prevMedia() {
-    if (this.mediaItems.length > 0) {
-      this.currentMediaIndex = (this.currentMediaIndex - 1 + this.mediaItems.length) % this.mediaItems.length;
-    }
+    this.currentMediaIndex = (this.currentMediaIndex - 1 + this.mediaItems.length) % this.mediaItems.length;
   }
 
+
   nextMedia() {
-    if (this.mediaItems.length > 0) {
-      this.currentMediaIndex = (this.currentMediaIndex + 1) % this.mediaItems.length;
-    }
+    this.currentMediaIndex = (this.currentMediaIndex + 1) % this.mediaItems.length;
   }
 
 
@@ -199,32 +195,24 @@ export class ProductFullPageComponent {
   // Обработка начала касания
   onTouchStart(event: TouchEvent) {
     this.touchStartX = event.touches[0].clientX;
-    this.dragOffset = 0;
   }
 
-  onTouchMove(event: TouchEvent) {
-    this.touchEndX = event.touches[0].clientX;
-    this.dragOffset = this.touchEndX - this.touchStartX;
-  }
-
+  // Обработка окончания касания
   onTouchEnd() {
-    const threshold = 50;
+    const threshold = 50; // Минимальное расстояние для распознавания свайпа
     const deltaX = this.touchEndX - this.touchStartX;
 
     if (deltaX > threshold) {
+      // Свайп вправо
       this.prevMedia();
     } else if (deltaX < -threshold) {
+      // Свайп влево
       this.nextMedia();
     }
-
-    this.dragOffset = 0;
   }
 
-  getTransform(): string {
-    const baseOffset = -this.currentMediaIndex * 100; // Смещение по индексам в %
-    // dragOffset в px, чтобы перевести dragOffset в проценты, нам нужно знать ширину, но можно оставить в px
-    // Поскольку блок занимает 100% ширины, dragOffset будет в пикселях, допустимо оставить так для небольших сдвигов.
-    return `translateX(calc(${baseOffset}% + ${this.dragOffset}px))`;
+  // Обработка движения пальца
+  onTouchMove(event: TouchEvent) {
+    this.touchEndX = event.touches[0].clientX;
   }
-
 }

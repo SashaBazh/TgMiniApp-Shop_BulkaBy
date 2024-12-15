@@ -1,28 +1,25 @@
 <div class="product-full-page" *ngIf="product">
     <div class="media-gallery">
         <div class="slider">
-          <div class="media-container"
-               (touchstart)="onTouchStart($event)"
-               (touchmove)="onTouchMove($event)"
-               (touchend)="onTouchEnd()"
-               [style.transform]="getTransform()">
-      
-            <ng-container *ngFor="let media of mediaItems; let i = index">
-              <img *ngIf="isImage(media)" [src]="media" alt="Media Content" class="slider-media" />
-              <video *ngIf="isVideo(media)" [src]="media" controls class="slider-media"></video>
-            </ng-container>
-      
-          </div>
-      
-          <!-- Навигационные точки -->
-          <div class="dots">
-            <button *ngFor="let media of mediaItems; let i = index" class="dot"
+            <div class="media-container" (touchstart)="onTouchStart($event)" (touchmove)="onTouchMove($event)"
+                (touchend)="onTouchEnd()">
+                <ng-container *ngIf="currentMedia">
+                    <!-- Изображение -->
+                    <img *ngIf="isImage(currentMedia)" [src]="currentMedia" alt="Media Content" class="slider-media" />
+                    <!-- Видео -->
+                    <video *ngIf="isVideo(currentMedia)" [src]="currentMedia" controls class="slider-media"></video>
+                </ng-container>
+            </div>
+
+
+            <!-- Навигационные точки -->
+            <div class="dots">
+                <button *ngFor="let media of mediaItems; let i = index" class="dot"
                     [class.active]="i === currentMediaIndex" (click)="selectMedia(i)">
-            </button>
-          </div>
+                </button>
+            </div>
         </div>
-      </div>
-      
+    </div>
 
     <!-- Product Info -->
     <div class="product-info">
