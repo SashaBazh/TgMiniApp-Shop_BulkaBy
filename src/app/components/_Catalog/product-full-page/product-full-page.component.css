@@ -203,6 +203,7 @@ hr {
   object-fit: cover; /* Обрезка изображения с сохранением пропорций */
   transition: opacity 0.5s ease-in-out; /* Плавный переход */
   border-radius: 16px;
+  border: 1px solid #EBEDF7;
 }
 
 .dots {
@@ -226,7 +227,7 @@ hr {
 }
 
 .dot.active {
-  background: white;
+  background: #EBEDF7;
 }
 
 
