@@ -65,6 +65,7 @@ export class TelegramService {
       this.tg.isClosingConfirmationEnabled = true; // Включаем подтверждение закрытия
       this.tg.isVerticalSwipesEnabled = false; // Блокировка ориентации
       this.tg.isOrientationLocked = true; // Отключаем вертикальные свайпы
+      this.tg.disableSwipeBack(); // Отключение свайпов для возврата назад
     } catch (error) {
       console.error('Ошибка при настройке Telegram WebApp: ' + JSON.stringify(error));
     }
