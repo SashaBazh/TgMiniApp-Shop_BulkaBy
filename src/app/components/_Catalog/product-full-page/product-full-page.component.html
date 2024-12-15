@@ -7,7 +7,9 @@
                     <!-- Изображение -->
                     <img *ngIf="isImage(currentMedia)" [src]="currentMedia" alt="Media Content" class="slider-media" />
                     <!-- Видео -->
-                    <video *ngIf="isVideo(currentMedia)" [src]="currentMedia" controls class="slider-media"></video>
+                    <video *ngIf="isVideo(currentMedia)" [src]="currentMedia" class="slider-media" controls muted
+                        playsinline webkit-playsinline></video>
+
                 </ng-container>
             </div>
 
