@@ -9,11 +9,11 @@
                     <!-- Видео -->
                     <video *ngIf="isVideo(currentMedia)" [src]="currentMedia" class="slider-media" controls muted
                         playsinline webkit-playsinline (loadstart)="onVideoLoadStart()"
-                        (canplay)="onVideoCanPlay()"></video>
+                        (canplay)="onVideoCanPlay()">
+                        <div *ngIf="videoLoading" class="loading-spinner"></div>           
+                    </video>
 
                 </ng-container>
-
-                <div *ngIf="videoLoading" class="loading-spinner"></div>
             </div>
 
 
