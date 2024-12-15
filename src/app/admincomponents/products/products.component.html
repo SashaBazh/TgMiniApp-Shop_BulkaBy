@@ -73,15 +73,16 @@
                         </label>
 
                         <!-- Выпадающий список для атрибутов с опциями -->
-                        <select *ngIf="attribute.options && attribute.options.length > 0"
-                            [id]="'attribute_' + attribute.id" class="form-control"
-                            [formControlName]="'attribute_' + attribute.id"
-                            [ngClass]="{ 'is-invalid': isAttributeInvalid(attribute) }">
-                            <option value="">Выберите {{ attribute.name }}</option>
-                            <option *ngFor="let option of attribute.options" [value]="option.id">
-                                {{ option.title || option.value }}
-                            </option>
-                        </select>
+                        <ng-container *ngIf="attribute.options && attribute.options.length > 0">
+                            <div *ngFor="let option of attribute.options" class="form-check">
+                                <input type="checkbox" class="form-check-input"
+                                    [checked]="(createProductForm.get('attributes')?.get('attribute_' + attribute.id)?.value || []).includes(option.id)"
+                                    (change)="onOptionCheckboxChange(attribute.id, option.id, $event)" />
+                                <label class="form-check-label">{{ option.title || option.value }}</label>
+                            </div>
+                        </ng-container>
+
+
 
 
                         <!-- Поле ввода для строковых атрибутов без опций -->
@@ -229,18 +230,21 @@
                                 </div>
                                 <div class="form-group mb-3">
                                     <label for="edit-images" class="form-label">Загрузить новые изображения</label>
-                                    <input type="file" id="edit-images" class="form-control" (change)="onEditImagesSelected($event)" multiple />
+                                    <input type="file" id="edit-images" class="form-control"
+                                        (change)="onEditImagesSelected($event)" multiple />
                                 </div>
-                                
+
                                 <!-- Предварительный просмотр новых изображений -->
-                                <div class="image-preview mb-3" *ngIf="editedImagesPreview && editedImagesPreview.length > 0">
+                                <div class="image-preview mb-3"
+                                    *ngIf="editedImagesPreview && editedImagesPreview.length > 0">
                                     <p>Предварительный просмотр новых изображений:</p>
                                     <div class="image-preview-list">
-                                        <img *ngFor="let preview of editedImagesPreview" [src]="preview" alt="Image Preview" class="img-fluid rounded"
+                                        <img *ngFor="let preview of editedImagesPreview" [src]="preview"
+                                            alt="Image Preview" class="img-fluid rounded"
                                             style="max-height: 300px; margin: 5px;" />
                                     </div>
                                 </div>
-                                
+
 
 
                                 <!-- Навигационные точки -->
@@ -255,14 +259,14 @@
                         <!-- Название -->
                         <div class="form-group mb-3">
                             <label for="edit-name" class="form-label">Название</label>
-                            <input id="edit-name" class="form-control" formControlName="name" readonly/>
+                            <input id="edit-name" class="form-control" formControlName="name" readonly />
                         </div>
 
                         <!-- Описание -->
                         <div class="form-group mb-3">
                             <label for="edit-description" class="form-label">Описание</label>
-                            <textarea id="edit-description" class="form-control"
-                                formControlName="description" readonly></textarea>
+                            <textarea id="edit-description" class="form-control" formControlName="description"
+                                readonly></textarea>
                         </div>
 
                         <!-- Цена -->

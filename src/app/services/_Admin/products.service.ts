@@ -16,7 +16,7 @@ export class ProductsService {
 
   private getTelegramHeaders(): HttpHeaders {
     return new HttpHeaders({
-      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
+      'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '1',
     });
   }
 

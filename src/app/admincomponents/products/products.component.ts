@@ -192,40 +192,60 @@ export class ProductsComponent implements OnInit {
 
   updateAttributesForm(attributes: AttributeResponse[]) {
     const attributesGroup = this.createProductForm.get('attributes') as FormGroup;
-
-    // Удаляем старые контролы
+  
+    // Очищаем старые контролы
     Object.keys(attributesGroup.controls).forEach(key => {
       attributesGroup.removeControl(key);
     });
-
+  
     attributes.forEach(attr => {
       let control: FormControl;
-
-      switch (attr.data_type) {
-        case 'string':
-          control = this.fb.control('', Validators.required);
-          break;
-        case 'integer':
-          control = this.fb.control('', [Validators.required, Validators.pattern(/^\d+$/)]);
-          break;
-        case 'float':
-          control = this.fb.control('', [Validators.required, Validators.pattern(/^\d+(\.\d+)?$/)]);
-          break;
-        case 'boolean':
-          // Устанавливаем начальное значение как `false`, если значение отсутствует
-          control = this.fb.control(attr.default_value ?? false);
-          break;
-        case 'enum':
-          control = this.fb.control('', Validators.required);
-          break;
-        default:
-          control = this.fb.control('');
+  
+      if (attr.options && attr.options.length > 0) {
+        // Для атрибутов с опциями — массив выбранных значений
+        control = this.fb.control([], Validators.required);
+      } else {
+        // Для остальных типов, как и раньше
+        switch (attr.data_type) {
+          case 'string':
+            control = this.fb.control('', Validators.required);
+            break;
+          case 'integer':
+            control = this.fb.control('', [Validators.required, Validators.pattern(/^\d+$/)]);
+            break;
+          case 'float':
+            control = this.fb.control('', [Validators.required, Validators.pattern(/^\d+(\.\d+)?$/)]);
+            break;
+          case 'boolean':
+            control = this.fb.control(attr.default_value ?? false);
+            break;
+          default:
+            control = this.fb.control('');
+        }
       }
-
-      // Добавляем FormControl для текущего атрибута
+  
       attributesGroup.addControl(`attribute_${attr.id}`, control);
     });
   }
+
+  onOptionCheckboxChange(attributeId: number, optionId: number, event: Event) {
+    const checkbox = event.target as HTMLInputElement;
+    const attributesGroup = this.createProductForm.get('attributes') as FormGroup;
+    const control = attributesGroup.get('attribute_' + attributeId) as FormControl;
+  
+    const currentValue: number[] = control.value || [];
+    if (checkbox.checked) {
+      // Добавляем опцию, если её ещё нет в массиве
+      if (!currentValue.includes(optionId)) {
+        control.setValue([...currentValue, optionId]);
+      }
+    } else {
+      // Удаляем опцию
+      control.setValue(currentValue.filter(v => v !== optionId));
+    }
+  }
+  
+  
 
 
   onImagesSelected(event: Event): void {
@@ -256,17 +276,19 @@ export class ProductsComponent implements OnInit {
       this.categoryAttributes.forEach((attr) => {
         const controlName = `attribute_${attr.id}`;
         const value = attributesGroup.get(controlName)?.value;
-
+      
         if (value !== null && value !== undefined) {
           if (attr.options && attr.options.length > 0) {
-            // Если это атрибут с опциями, используем выбранный ID опции
-            attributeValues[attr.id] = parseInt(value, 10);
+            // Теперь value — это массив чисел (ID опций)
+            // Если пользователь не выбрал ни одной опции, массив будет пустым []
+            attributeValues[attr.id] = value.map((v: string | number) => parseInt(v as string, 10));
           } else {
-            // Для остальных типов сохраняем значение как есть
+            // Для остальных атрибутов - как прежде
             attributeValues[attr.id] = value;
           }
         }
       });
+      
 
       // Prepare translations for submission
       const translations = {
