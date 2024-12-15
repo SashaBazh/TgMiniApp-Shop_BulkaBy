@@ -209,7 +209,7 @@ export class ProductFullPageComponent {
 
   // Обработка окончания касания
   onTouchEnd() {
-    const threshold = 150; // Минимальное расстояние для распознавания свайпа
+    const threshold = 70; // Минимальное расстояние для распознавания свайпа
     const deltaX = this.touchEndX - this.touchStartX;
 
     if (deltaX > threshold) {

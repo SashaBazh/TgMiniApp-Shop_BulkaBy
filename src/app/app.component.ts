@@ -16,6 +16,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.telegramService.isTelegramWebAppAvailable()) {
+      this.telegramService.expandApp();
       const tgUser = this.telegramService.getUser();
 
       if (tgUser) {
