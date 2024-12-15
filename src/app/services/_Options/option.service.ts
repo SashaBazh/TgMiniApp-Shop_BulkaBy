@@ -99,8 +99,4 @@ export class OptionsService {
       { headers: this.headers }
     );
   }
-
-  contactManager(): void {
-    alert(this.translate.instant('CONTACT_MANAGER'));
-  }
 }

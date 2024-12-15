@@ -42,7 +42,7 @@ export class HeaderComponent {
   }
 
   redirectToTelegram(): void {
-    window.location.href = 'https://t.me/GEORG653';
+    window.location.href = 'https://t.me/alenka15em';
   }
   
 }

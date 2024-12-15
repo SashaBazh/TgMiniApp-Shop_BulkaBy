@@ -225,4 +225,8 @@ export class ProductFullPageComponent {
   onTouchMove(event: TouchEvent) {
     this.touchEndX = event.touches[0].clientX;
   }
+
+  contactManager(): void {
+    window.location.href = 'https://t.me/alenka15em';
+  }
 }

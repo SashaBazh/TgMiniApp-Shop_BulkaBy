@@ -70,7 +70,7 @@
         <div class="actions">
             <button class="add-to-cart" (click)="addToCartFast()">{{ 'BUY_NOW' | translate }}</button>
             <button class="add-to-cart" (click)="addToCart()">{{ 'ADD_TO_CART' | translate }}</button>
-            <button class="contact-manager">{{ 'CONTACT_MANAGER_BUTTON' | translate }}</button>
+            <button class="contact-manager" (click)="contactManager()">{{ 'CONTACT_MANAGER_BUTTON' | translate }}</button>
             <button class="contact-manager" (click)="toggleExpandableInfo()">
                 {{ showMoreInfo ? ('HIDE_INFO' | translate) : ('MORE_INFO' | translate) }}
             </button>

@@ -113,7 +113,7 @@ export class OptionsComponent implements OnInit {
 
 
   contactManager(): void {
-    this.optionsService.contactManager();
+    window.location.href = 'https://t.me/alenka15em';
   }
 
   checkAdminAccess(): void {

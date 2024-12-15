@@ -51,36 +51,28 @@ export class TelegramService {
 
   initializeApp(): void {
     console.log('Инициализация приложения начата');
-
+  
     if (!this.tg) {
       console.warn('Ошибка: this.tg равен undefined');
       return;
     }
-
+  
     try {
       console.log('Telegram WebApp объект доступен, начинаем настройку');
-      
-      console.log('Вызов tg.expand()');
+  
+      // Настройка WebApp
       this.tg.expand();
-      console.log('tg.expand() выполнен успешно');
-      
-      console.log('Вызов tg.enableClosingConfirmation()');
-      this.tg.enableClosingConfirmation();
-      console.log('tg.enableClosingConfirmation() выполнен успешно');
-      
-      console.log('Вызов tg.setViewportSettings({ rotate: false })');
-      this.tg.setViewportSettings({ rotate: false });
-      console.log('tg.setViewportSettings выполнен успешно');
-      
-      console.log('Вызов tg.ready()');
-      this.tg.ready();
-      console.log('tg.ready() выполнен успешно');
+      this.tg.enableClosingConfirmation(); // Включаем подтверждение закрытия
+      this.tg.setViewportSettings({ rotate: false }); // Блокировка ориентации
+      this.tg.disableSwipeBack(); // Отключаем вертикальные свайпы
+      this.tg.ready(); // Уведомляем Telegram, что WebApp готов
     } catch (error) {
       console.error('Ошибка при настройке Telegram WebApp: ' + JSON.stringify(error));
     }
-
+  
     console.log('Инициализация приложения завершена');
   }
+  
 
   expandApp() {
     if (this.tg?.expand) {

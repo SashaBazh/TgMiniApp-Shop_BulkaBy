@@ -110,7 +110,7 @@ export class CartComponent implements OnInit {
   }
 
   redirectToTelegram(): void {
-    window.location.href = 'https://t.me/GEORG653';
+    window.location.href = 'https://t.me/alenka15em';
   }
 
   onPointsChanged(event: Event): void {
