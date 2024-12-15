@@ -8,9 +8,12 @@
                     <img *ngIf="isImage(currentMedia)" [src]="currentMedia" alt="Media Content" class="slider-media" />
                     <!-- Видео -->
                     <video *ngIf="isVideo(currentMedia)" [src]="currentMedia" class="slider-media" controls muted
-                        playsinline webkit-playsinline></video>
+                        playsinline webkit-playsinline (loadstart)="onVideoLoadStart()"
+                        (canplay)="onVideoCanPlay()"></video>
 
                 </ng-container>
+
+                <div *ngIf="videoLoading" class="loading-spinner"></div>
             </div>
 
 

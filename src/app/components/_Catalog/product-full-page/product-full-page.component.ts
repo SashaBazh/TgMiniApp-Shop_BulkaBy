@@ -22,6 +22,7 @@ export class ProductFullPageComponent {
   extraAttributes: { name: string; value: any }[] = [];
   showDetails = false;
   showMoreInfo: boolean = false;
+  videoLoading: boolean = false;
 
   mediaItems: string[] = [];
   currentMediaIndex: number = 0;
@@ -136,6 +137,15 @@ export class ProductFullPageComponent {
   isVideo(mediaUrl: string): boolean {
     return /\.(mp4|webm|ogg)$/i.test(mediaUrl);
   }
+
+  onVideoLoadStart() {
+    this.videoLoading = true;
+  }
+
+  onVideoCanPlay() {
+    this.videoLoading = false;
+  }
+
 
   toggleDetails() {
     this.showDetails = !this.showDetails;
