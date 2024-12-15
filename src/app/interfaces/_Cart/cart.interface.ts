@@ -29,4 +29,11 @@ export interface AddProduct {
     total_price: number;
     discounted_price: number,
   }
+
+  export interface UserStatusInfo {
+    name: string;
+    cashback_percentage: number;
+    max_points_usage: number; // тип float
+    points_balance: number;
+  }
   

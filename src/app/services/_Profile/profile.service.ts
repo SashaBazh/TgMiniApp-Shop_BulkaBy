@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../enviroments/environment';
 import { UserProfileResponse } from '../../interfaces/_Profile/friend.interface';
+import { UserStatusInfo } from '../../interfaces/_Cart/cart.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -18,6 +19,10 @@ export class ProfileService {
 
   getUserProfile(): Observable<UserProfileResponse> {
     return this.http.get<UserProfileResponse>(`${this.apiUrl}/profile`, { headers: this.headers });
+  }
+
+  getUserStatus(): Observable<UserStatusInfo> {
+    return this.http.get<UserStatusInfo>(`${this.apiUrl}/status`, { headers: this.headers });
   }
 
   checkIfAdmin(): Observable<boolean> {

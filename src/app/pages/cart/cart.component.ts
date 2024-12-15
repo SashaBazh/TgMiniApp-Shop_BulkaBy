@@ -10,6 +10,7 @@ import { CartResponse } from '../../interfaces/_Cart/cart.interface';
 import { ImageStreamService } from '../../services/_Image/image-stream.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
+import { ProfileService } from '../../services/_Profile/profile.service';
 
 @Component({
   selector: 'app-cart',
@@ -20,11 +21,14 @@ import { FormsModule } from '@angular/forms';
 })
 export class CartComponent implements OnInit {
   cart: CartResponse | null = null;
-  maxPoints: number = 300; // Максимум баллов (заглушка)
+  maxPoints: number = 0; // Максимум баллов (заглушка)
   usedPoints: number = 0; // Используемые баллы
   initialTotalPrice: number = 0; // Исходная общая сумма
 
-  constructor(private cartService: CartService, private imageService: ImageStreamService) {}
+  max_points_usage: number = 0; 
+  points_balance: number = 0;
+
+  constructor(private cartService: CartService, private imageService: ImageStreamService,  private userService: ProfileService) {}
 
   ngOnInit() {
     this.loadCart();
@@ -44,16 +48,31 @@ export class CartComponent implements OnInit {
           })),
         };
         this.initialTotalPrice = this.cart?.total_price || 0;
+
+        this.loadUserStatus();
       },
       error: (err) => {
         console.error('Ошибка при загрузке корзины:', err);
       },
     });
   }  
-  
-  
-  
 
+  loadUserStatus() {
+    this.userService.getUserStatus().subscribe({
+      next: (statusInfo) => {
+        this.max_points_usage = statusInfo.max_points_usage; // например 0.05, 0.1 и тд
+        this.points_balance = statusInfo.points_balance;
+
+        // Рассчитываем максимально доступное количество поинтов
+        const potentialMaxPoints = this.initialTotalPrice * this.max_points_usage; 
+        this.maxPoints = Math.min(potentialMaxPoints, this.points_balance);
+      },
+      error: (err) => {
+        console.error('Ошибка при получении статуса пользователя:', err);
+      }
+    });
+  }
+  
   onItemRemoved(productId: number) {
     console.log(`Товар с ID ${productId} удален`);
     this.loadCart(); // Перезагружаем данные корзины
@@ -99,7 +118,9 @@ export class CartComponent implements OnInit {
     const points = parseInt(inputValue, 10) || 0;
     this.usedPoints = points;
     if (this.cart) {
-      this.cart.total_price = this.initialTotalPrice - points;
+      // Убедимся, что использованные поинты не превышают maxPoints
+      const appliedPoints = Math.min(this.usedPoints, this.maxPoints);
+      this.cart.total_price = this.initialTotalPrice - appliedPoints;
     }
   }
 
