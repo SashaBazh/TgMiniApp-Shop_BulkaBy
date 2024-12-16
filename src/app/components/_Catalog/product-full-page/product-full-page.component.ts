@@ -89,7 +89,7 @@ export class ProductFullPageComponent {
 
     // Определяем текущий язык
     const descriptionLabel =
-      this.translate.currentLang === 'ru' ? 'Описание' : 'Description';
+      this.translate.currentLang === 'en' ? 'Description' : 'Описание';
 
     // Add description to extra attributes
     if (this.product.description) {
