@@ -14,4 +14,5 @@ export interface UserProfileResponse {
   birthday: string | null;
   image_url?: string;
   status: string;
+  lang: string;
 }

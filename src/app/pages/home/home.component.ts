@@ -7,6 +7,7 @@ import { NewJewelryComponent } from '../../components/_General/new-jewelry/new-j
 import { CatalogButtonComponent } from '../../components/_Home/catalog-button/catalog-button.component';
 import { CataloggeneralComponent } from '../../components/_General/cataloggeneral/cataloggeneral.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { ProfileService } from '../../services/_Profile/profile.service';
 
 @Component({
   selector: 'app-home',
@@ -33,17 +34,19 @@ export class HomeComponent {
     { name: 'Подвески' },
   ];
 
-  constructor(private translate: TranslateService) {
-    // Получаем язык пользователя из Telegram WebApp
-    const userLanguage = (window as any)?.Telegram?.WebApp?.initDataUnsafe?.user?.language_code;
+  constructor(private translate: TranslateService, private userService: ProfileService) {}
 
-    // Устанавливаем язык по умолчанию, основываясь на языке Telegram
-    if (userLanguage) {
-      console.log('Язык пользователя из Telegram:', userLanguage);
-      this.translate.setDefaultLang(userLanguage);
-    } else {
-      console.warn('Не удалось определить язык пользователя. Устанавливается язык по умолчанию: "en".');
-      this.translate.setDefaultLang('en'); // Язык по умолчанию
-    }
+  ngOnInit(): void {
+    this.userService.getUserProfile().subscribe({
+      next: (profile) => {
+        const userLang = profile.lang || 'en'; // Если язык отсутствует, используем 'en'
+        console.log('Язык пользователя из профиля:', userLang);
+        this.translate.setDefaultLang(userLang);
+      },
+      error: (err) => {
+        console.error('Не удалось получить профиль пользователя. Устанавливается язык по умолчанию: "en".', err);
+        this.translate.setDefaultLang('en');
+      },
+    });
   }
 }
