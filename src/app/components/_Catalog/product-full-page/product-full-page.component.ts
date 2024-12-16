@@ -95,6 +95,11 @@ export class ProductFullPageComponent {
     // if (this.product.description) {
     //   this.extraAttributes.unshift({ name: descriptionLabel, value: this.product.description });
     // }
+
+    if (this.product.description) {
+      const descriptionLabel = this.translate.instant('DESCRIPTION'); // Получаем перевод
+      this.extraAttributes.unshift({ name: descriptionLabel, value: this.product.description });
+    }
   }
 
   // Prepare media items
