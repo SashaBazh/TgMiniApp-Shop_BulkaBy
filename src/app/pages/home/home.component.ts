@@ -46,6 +46,7 @@ export class HomeComponent {
 
         // Показать Telegram alert при успешной загрузке профиля
         this.telegramService.showTelegramAlert('Профиль успешно загружен!');
+        this.telegramService.showTelegramAlert(userLang);
       },
       error: (err) => {
         console.error('Не удалось получить профиль пользователя. Устанавливается язык по умолчанию: "en".', err);
