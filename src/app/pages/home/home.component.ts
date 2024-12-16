@@ -44,14 +44,14 @@ export class HomeComponent {
         console.log('Язык пользователя из профиля:', userLang);
         this.translate.setDefaultLang(userLang);
 
-        this.telegramService.showTelegramAlert(userLang);
+        // this.telegramService.showTelegramAlert(userLang);
       },
       error: (err) => {
         console.error('Не удалось получить профиль пользователя. Устанавливается язык по умолчанию: "en".', err);
         this.translate.setDefaultLang('en');
 
         // Показать Telegram alert при ошибке загрузки профиля
-        this.telegramService.showTelegramAlert('Ошибка загрузки профиля.');
+        // this.telegramService.showTelegramAlert('Ошибка загрузки профиля.');
       },
     });
   }
