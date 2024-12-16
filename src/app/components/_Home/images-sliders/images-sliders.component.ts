@@ -1,6 +1,8 @@
 import { CommonModule, isPlatformBrowser } from '@angular/common';
-import { ChangeDetectorRef, Component, Inject, PLATFORM_ID } from '@angular/core';
+import { ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
 import { SlideImage } from '../../../interfaces/_Home/image-slider.interface';
+import { BanerService } from '../../../services/_Baner/baner.service';
+import { ImageStreamService } from '../../../services/_Image/image-stream.service';
 
 @Component({
   selector: 'app-images-sliders',
@@ -9,21 +11,9 @@ import { SlideImage } from '../../../interfaces/_Home/image-slider.interface';
   templateUrl: './images-sliders.component.html',
   styleUrl: './images-sliders.component.css'
 })
-export class ImagesSlidersComponent {
-  images: SlideImage[] = [
-    {
-      url: '../../../../assets/image-slider/baner02.jpg',
-      alt: 'Highway in mountains'
-    },
-  ];
-
-  secondImages: SlideImage[] = [
-    {
-      url: '../../../../assets/image-slider/baner03.jpg',
-      alt: 'Highway in mountains'
-    },
-  ];
-
+export class ImagesSlidersComponent implements OnInit, OnDestroy {
+  images: SlideImage[] = [];
+  secondImages: SlideImage[] = [];
   currentIndex = 0;
   secondCurrentIndex = 0;
   private intervalId: number | undefined;
@@ -33,19 +23,51 @@ export class ImagesSlidersComponent {
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
-    private cdr: ChangeDetectorRef
+    private cdr: ChangeDetectorRef,
+    private bannerService: BanerService,
+    private imageService: ImageStreamService
   ) {}
 
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
-      this.preloadImages();
-      this.preloadSecondImages();
+      this.loadImagesFromService();
+      this.loadSecondImagesFromService();
     }
   }
 
   ngOnDestroy() {
     this.stopSlideshow();
     this.stopSecondSlideshow();
+  }
+
+  private loadImagesFromService() {
+    this.bannerService.getBannerById(3).subscribe({
+      next: (banner) => {
+        this.images = banner.media.map((mediaUrl) => ({
+          url: this.imageService.getImageUrl(mediaUrl),
+          alt: banner.category || 'Banner Image'
+        }));
+        this.preloadImages();
+      },
+      error: (err) => {
+        console.error('Failed to load banner', err);
+      }
+    });
+  }
+
+  private loadSecondImagesFromService() {
+    this.bannerService.getBannerById(4).subscribe({
+      next: (banner) => {
+        this.secondImages = banner.media.map((mediaUrl) => ({
+          url: this.imageService.getImageUrl(mediaUrl),
+          alt: banner.category || 'Banner Image'
+        }));
+        this.preloadSecondImages();
+      },
+      error: (err) => {
+        console.error('Failed to load second banner', err);
+      }
+    });
   }
 
   private preloadImages() {
@@ -84,7 +106,7 @@ export class ImagesSlidersComponent {
 
   private startSlideshow() {
     if (!this.imagesLoaded) return;
-    
+
     this.intervalId = window.setInterval(() => {
       this.next();
       this.cdr.detectChanges();
@@ -93,7 +115,7 @@ export class ImagesSlidersComponent {
 
   private startSecondSlideshow() {
     if (!this.secondImagesLoaded) return;
-    
+
     this.secondIntervalId = window.setInterval(() => {
       this.nextSecond();
       this.cdr.detectChanges();

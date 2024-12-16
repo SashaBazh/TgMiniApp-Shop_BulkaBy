@@ -1,5 +1,5 @@
 <app-header [pageTitle]="'CART' | translate"></app-header>
-<app-image-slider></app-image-slider>
+<app-image-slider [bannerId]="2"></app-image-slider>
 <div class="margin">
   <div *ngIf="cart">
     <app-cart-item *ngFor="let item of cart.items" [imageSrc]="item.image || 'assets/default-image.png'"
