@@ -8,6 +8,7 @@ import { CatalogButtonComponent } from '../../components/_Home/catalog-button/ca
 import { CataloggeneralComponent } from '../../components/_General/cataloggeneral/cataloggeneral.component';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ProfileService } from '../../services/_Profile/profile.service';
+import { TelegramService } from '../../services/_Telegram/telegram.service';
 
 @Component({
   selector: 'app-home',
@@ -34,7 +35,7 @@ export class HomeComponent {
     { name: 'Подвески' },
   ];
 
-  constructor(private translate: TranslateService, private userService: ProfileService) {}
+  constructor(private translate: TranslateService, private userService: ProfileService, private telegramService: TelegramService) {}
 
   ngOnInit(): void {
     this.userService.getUserProfile().subscribe({
@@ -42,10 +43,16 @@ export class HomeComponent {
         const userLang = profile.lang || 'en'; // Если язык отсутствует, используем 'en'
         console.log('Язык пользователя из профиля:', userLang);
         this.translate.setDefaultLang(userLang);
+
+        // Показать Telegram alert при успешной загрузке профиля
+        this.telegramService.showTelegramAlert('Профиль успешно загружен!');
       },
       error: (err) => {
         console.error('Не удалось получить профиль пользователя. Устанавливается язык по умолчанию: "en".', err);
         this.translate.setDefaultLang('en');
+
+        // Показать Telegram alert при ошибке загрузки профиля
+        this.telegramService.showTelegramAlert('Ошибка загрузки профиля.');
       },
     });
   }
