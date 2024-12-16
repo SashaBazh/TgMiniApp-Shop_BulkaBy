@@ -88,13 +88,13 @@ export class ProductFullPageComponent {
     this.extraAttributes = allAttributes.slice(3);
 
     // Определяем текущий язык
-    const descriptionLabel =
-      this.translate.currentLang === 'en' ? 'Description' : 'Описание';
+    // const descriptionLabel =
+    //   this.translate.currentLang === 'en' ? 'Description' : 'Описание';
 
-    // Add description to extra attributes
-    if (this.product.description) {
-      this.extraAttributes.unshift({ name: descriptionLabel, value: this.product.description });
-    }
+    // // Add description to extra attributes
+    // if (this.product.description) {
+    //   this.extraAttributes.unshift({ name: descriptionLabel, value: this.product.description });
+    // }
   }
 
   // Prepare media items
