@@ -1,40 +1,40 @@
-<div class="banners-admin">
-    <h1>Manage Banners</h1>
-  
-    <div class="banner-form">
-      <h2>{{ selectedBanner ? 'Edit Banner' : 'Create Banner' }}</h2>
-      <form [formGroup]="bannerForm">
-        <div>
-          <label for="link">Link</label>
-          <input id="link" formControlName="link" type="text" />
-        </div>
-        <div>
-          <label for="category">Category</label>
-          <input id="category" formControlName="category" type="text" required />
-        </div>
-        <div>
-          <label for="image">Image</label>
-          <input id="image" type="file" (change)="onImageSelected($event)" />
-        </div>
-        <div *ngIf="imagePreview">
-          <p>Image Preview:</p>
-          <img [src]="imagePreview" alt="Image Preview" />
-        </div>
-        <button (click)="selectedBanner ? updateBanner() : createBanner()" type="button">
-          {{ selectedBanner ? 'Update' : 'Create' }} Banner
-        </button>
-      </form>
-    </div>
-  
-    <div class="banners-list">
-      <h2>Existing Banners</h2>
-      <ul>
-        <li *ngFor="let banner of banners">
-          <p>{{ banner.category }} - {{ banner.link }}</p>
-          <img [src]="banner.image" alt="Banner Image" />
-          <button (click)="editBanner(banner)">Edit</button>
-          <button (click)="deleteBanner(banner)">Delete</button>
-        </li>
-      </ul>
-    </div>
+<div class="banners-admin container mt-5">
+  <h1 class="text-center mb-4">Редактирование баннеров</h1>
+
+  <div class="banner-form card p-4 mb-4" *ngIf="selectedBanner">
+    <h2 class="h4 mb-3">Редактирование банера</h2>
+    <form>
+      <div class="mb-3">
+        <label for="image" class="form-label">Загрузи новые изображения которые будут отображаться в банере</label>
+        <input
+          id="image"
+          type="file"
+          class="form-control"
+          (change)="onImageSelected($event)"
+          multiple
+        />
+      </div>
+      <button class="btn btn-primary w-100" (click)="updateBanner()" type="button">
+        Обновить баннер
+      </button>
+    </form>
   </div>
+
+  <div class="banners-list">
+    <ul class="list-group">
+      <li *ngFor="let banner of banners" class="list-group-item d-flex flex-column align-items-start">
+        <p class="fw-bold">{{ banner.category }}</p>
+        <div class="banner-images d-flex flex-wrap gap-2 mb-3">
+          <img
+            *ngFor="let image of banner.media"
+            [src]="imageService.getImageUrl(image)"
+            alt="Banner Image"
+            class="img-thumbnail"
+            style="max-width: 150px; max-height: 150px;"
+          />
+        </div>
+        <button class="btn btn-secondary me-2" (click)="editBanner(banner)">Редактировать</button>
+      </li>
+    </ul>
+  </div>
+</div>

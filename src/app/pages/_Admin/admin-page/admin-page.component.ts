@@ -4,6 +4,7 @@ import { CategoriesComponent } from '../../../admincomponents/categories/categor
 import { ProductsComponent } from '../../../admincomponents/products/products.component';
 import { FiltersComponent } from '../../../admincomponents/filters/filters.component';
 import { SalesComponent } from '../../../admincomponents/sales/sales.component';
+import { BannersAdminComponent } from "../../../admincomponents/banners-admin/banners-admin.component";
 
 @Component({
   selector: 'app-admin-page',
@@ -13,8 +14,9 @@ import { SalesComponent } from '../../../admincomponents/sales/sales.component';
     CategoriesComponent,
     ProductsComponent,
     FiltersComponent,
-    SalesComponent
-  ],
+    SalesComponent,
+    BannersAdminComponent
+],
   templateUrl: './admin-page.component.html',
   styleUrls: ['./admin-page.component.css'],
 })

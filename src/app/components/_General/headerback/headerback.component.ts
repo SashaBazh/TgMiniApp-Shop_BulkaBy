@@ -16,16 +16,13 @@ export class HeaderbackComponent {
   constructor(private location: Location, private router: Router) {}
 
   goBack() {
-    const currentUrl = this.router.url; // Получаем текущий URL
+    const currentUrl = this.router.url;
 
     if (currentUrl.startsWith('/cart/address/payment')) {
-      // Перенаправляем на /cart/address, если URL начинается с /cart/address/payment
       this.router.navigate(['/cart/address']);
     } else if (currentUrl === '/cart/address') {
-      // Перенаправляем на /cart, если URL равен /cart/address
       this.router.navigate(['/cart']);
     } else {
-      // Выполняем обычный возврат назад
       this.location.back();
     }
   }
