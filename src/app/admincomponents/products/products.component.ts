@@ -268,29 +268,25 @@ export class ProductsComponent implements OnInit {
   submitProductForm() {
     if (this.createProductForm.valid && this.selectedImages.length > 0) {
       const formValue = this.createProductForm.value;
-
-      // Prepare attributes for submission
+  
+      // Подготавливаем атрибуты для отправки
       const attributeValues: Record<number, any> = {};
       const attributesGroup = this.createProductForm.get('attributes') as FormGroup;
-
+  
       this.categoryAttributes.forEach((attr) => {
         const controlName = `attribute_${attr.id}`;
         const value = attributesGroup.get(controlName)?.value;
-      
+  
         if (value !== null && value !== undefined) {
           if (attr.options && attr.options.length > 0) {
-            // Теперь value — это массив чисел (ID опций)
-            // Если пользователь не выбрал ни одной опции, массив будет пустым []
             attributeValues[attr.id] = value.map((v: string | number) => parseInt(v as string, 10));
           } else {
-            // Для остальных атрибутов - как прежде
             attributeValues[attr.id] = value;
           }
         }
       });
-      
-
-      // Prepare translations for submission
+  
+      // Подготовка переводов
       const translations = {
         ru: {
           name: formValue.nameRu,
@@ -301,25 +297,32 @@ export class ProductsComponent implements OnInit {
           description: formValue.descriptionEn,
         }
       };
-
+  
       // Формируем FormData
       const formData = new FormData();
       formData.append(
         'product_data',
         JSON.stringify({
           category_id: formValue.category_id,
-          name: formValue.nameEn, // Добавляем поле name (на английском языке)
+          name: formValue.nameEn,
           price: formValue.price,
           attributes: attributeValues,
           translations,
         })
       );
-
-      // Добавляем изображения в FormData
-      this.selectedImages.forEach((file) => {
+  
+      // Сортируем файлы так, чтобы видео (mp4) были последними
+      const sortedFiles = this.selectedImages.sort((a, b) => {
+        const aIsVideo = a.type === 'video/mp4';
+        const bIsVideo = b.type === 'video/mp4';
+        return aIsVideo === bIsVideo ? 0 : aIsVideo ? 1 : -1; // Видео идут в конец
+      });
+  
+      // Добавляем отсортированные файлы в FormData
+      sortedFiles.forEach((file) => {
         formData.append('files', file, file.name);
       });
-
+  
       // Отправляем данные на сервер
       this.productsService.createProduct(formData).subscribe({
         next: () => {
@@ -344,6 +347,7 @@ export class ProductsComponent implements OnInit {
       this.showNotification('Please fill all required fields and upload images', false);
     }
   }
+  
 
 
 
