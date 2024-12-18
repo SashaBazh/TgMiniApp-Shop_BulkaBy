@@ -17,6 +17,7 @@ export class OptionsService {
   // Заголовок Telegram Init Data
   private headers = new HttpHeaders({
     'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
+    'authorization': '1'
   });
 
   constructor(private translate: TranslateService, private http: HttpClient) {

@@ -17,6 +17,7 @@ export class BannerService {
     return new HttpHeaders({
       'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
       'Content-Type': 'application/json',
+      'authorization': '1'
     });
   }
 

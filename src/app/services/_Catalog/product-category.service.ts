@@ -15,6 +15,7 @@ export class ProductCategoryService {
   getCategories(): Observable<ProductCategory[]> {
     const headers = new HttpHeaders({
       'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
+      'authorization': '1'
     });
   
     console.log('Подготовка к запросу категорий...');

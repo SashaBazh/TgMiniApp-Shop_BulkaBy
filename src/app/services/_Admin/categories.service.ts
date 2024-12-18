@@ -15,6 +15,7 @@ export class CategoriesService {
   private getTelegramHeaders(): HttpHeaders {
     return new HttpHeaders({
       'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
+      'authorization': '1'
     });
   }
   

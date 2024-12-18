@@ -13,6 +13,7 @@ export class ProfileService {
 
   private headers = new HttpHeaders({
     'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
+    'authorization': '1'
   });
 
   constructor(private http: HttpClient) {}

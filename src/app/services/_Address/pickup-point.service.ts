@@ -12,6 +12,7 @@ export class PickupPointService {
 
   private headers = new HttpHeaders({
     'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
+    'authorization': '1'
   });
 
   private apiUrl = `${environment.apiUrl}/cart`;
