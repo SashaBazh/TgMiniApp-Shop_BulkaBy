@@ -62,7 +62,7 @@ export class TelegramService {
   
       // Настройка WebApp
       this.tg.expand();
-      this.tg.requestFullscreen();
+      // this.tg.requestFullscreen();
       this.tg.isClosingConfirmationEnabled = true; // Включаем подтверждение закрытия
       this.tg.isVerticalSwipesEnabled = false; // Блокировка ориентации
       this.tg.isOrientationLocked = true; // Отключаем вертикальные свайпы
