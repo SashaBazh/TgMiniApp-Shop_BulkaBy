@@ -56,9 +56,11 @@
   {{ 'SELF_PICKUP' | translate }}
 </button>
 
-<button class="delivery-button" (click)="redirectToTelegram()">
+<button class="delivery-button" [routerLink]="['/cart', 'deliveryaddress']" [queryParams]="{ usedPoints: usedPoints }">
   {{ 'DELIVERY_CONTACT_MANAGER' | translate }}
 </button>
+
+
 
 <!-- <button class="delivery-button" (click)="openModal()">Модалка после оплаты</button> -->
 

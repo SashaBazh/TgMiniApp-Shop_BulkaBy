@@ -48,6 +48,11 @@ export const routes: Routes = [
       import('./pages/address/address.component').then((m) => m.AddressComponent),
   },
   {
+    path: 'cart/deliveryaddress',
+    loadComponent: () =>
+      import('./pages/delivery-address/delivery-address.component').then((m) => m.DeliveryAddressComponent),
+  },
+  {
     path: 'cart/address/payment',
     loadComponent: () =>
       import('./pages/payment-method/payment-method.component').then(
@@ -55,7 +60,21 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'cart/deliveryaddress/payment',
+    loadComponent: () =>
+      import('./pages/payment-method/payment-method.component').then(
+        (m) => m.PaymentMethodComponent
+      ),
+  },
+  {
     path: 'cart/address/payment/modal',
+    loadComponent: () =>
+      import('./components/_PaymentMethod/payment-modal/payment-modal.component').then(
+        (m) => m.PaymentModalComponent
+      ),
+  },
+  {
+    path: 'cart/deliveryaddress/payment/modal',
     loadComponent: () =>
       import('./components/_PaymentMethod/payment-modal/payment-modal.component').then(
         (m) => m.PaymentModalComponent

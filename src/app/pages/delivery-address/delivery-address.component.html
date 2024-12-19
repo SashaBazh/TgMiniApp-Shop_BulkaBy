@@ -1,0 +1,20 @@
+<app-headerback [pageTitle]="'DELIVERY_ADDRESS' | translate"></app-headerback>
+
+<div class="address-container">
+  <div class="address-form">
+    <label for="address">{{ 'ENTER_ADDRESS' | translate }}</label>
+    <input
+      id="address"
+      [(ngModel)]="address"
+      type="text"
+      placeholder="{{ 'ADDRESS_PLACEHOLDER' | translate }}"
+    />
+
+    <button
+      class="button"
+      (click)="confirmOrder()"
+      [disabled]="!address.trim()">
+      {{ 'CONFIRM' | translate }}
+    </button>
+  </div>
+</div>

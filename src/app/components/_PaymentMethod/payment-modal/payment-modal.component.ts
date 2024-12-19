@@ -192,7 +192,7 @@ export class PaymentModalComponent implements OnInit {
           }
   
           // Перенаправление на страницу с заказом
-          this.router.navigate(['/cart/address/payment'], { queryParams: { orderId: this.paymentData.order_id } });
+          this.router.navigate(['/home']);
         },
         error: (error) => {
           console.error('Ошибка при создании фиатного платежа:', error);
@@ -203,7 +203,6 @@ export class PaymentModalComponent implements OnInit {
           }
         },
       });
-  
       return; // Завершаем выполнение для фиатных платежей
     }
   

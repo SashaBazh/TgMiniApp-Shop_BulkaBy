@@ -1,0 +1,94 @@
+.address-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #E9DABC; /* Цвет фона */
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: 'Montserrat', sans-serif;
+    margin-top: 56px;
+  }
+  
+  .address-container h2 {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .address-container .address-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .address-container label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    margin-bottom: 8px;
+    display: block;
+  }
+  
+  .address-container input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #D4DCFF;
+    border-radius: 8px;
+    font-size: 14px;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s;
+  }
+  
+  .address-container input:focus {
+    border-color: #4A67A7;
+    outline: none;
+  }
+  
+  .address-container button {
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: background-color 0.3s, color 0.3s;
+  }
+  
+  .address-container button[type="submit"] {
+    background-color: #4A67A7;
+    color: #fff;
+  }
+  
+  .address-container button[type="submit"]:hover {
+    background-color: #3a5590;
+  }
+  
+  .address-container button[type="button"] {
+    background-color: #E9DABC;
+    color: #4A67A7;
+  }
+  
+  .address-container button[type="button"]:hover {
+    background-color: #d4dcff;
+    color: #333;
+  }
+  
+  .button {
+    background-color: #EBEDF7;
+    color: #000000;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    border-radius: 8px;
+    padding: 15px 20px;
+    text-align: center;
+    cursor: pointer;
+    outline: none; /* Убирает стандартный outline */
+    display: inline-block;
+    width: 100%;
+    margin-bottom: 8px;
+    border: none; /* Убирает возможную черную рамку от границы */
+}
