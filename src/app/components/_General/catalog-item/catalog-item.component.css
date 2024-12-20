@@ -1,28 +1,47 @@
 .catalog-item {
-    width: 100%; /* Адаптация под grid */
-    aspect-ratio: 1; /* Квадратная форма */
+    width: 100%;
+    /* Адаптация под grid */
+    aspect-ratio: 1;
+    /* Квадратная форма */
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #E5E7F6;
     border-radius: 16px;
     overflow: hidden;
-    position: relative; /* Родительский элемент для абсолютного позиционирования */
+    position: relative;
+    /* Родительский элемент для абсолютного позиционирования */
 }
 
 .item-image {
     width: 100%;
     height: 100%;
     overflow: hidden;
+    background-color: #e0e0e0;
+    /* Серый фон по умолчанию */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
 }
 
-.item-image img {
+.item-image.loading {
+    background-color: #e0e0e0; /* Серый фон до загрузки изображения */
+  }
+  
+  .item-image img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Заполняет блок, сохраняя пропорции */
-    object-position: center; /* Центрирование изображения */
+    object-fit: cover;
+    object-position: center;
     display: block;
-}
+    transition: opacity 0.3s ease-in-out;
+    opacity: 0; /* Скрыто, пока не загрузится */
+  }
+  
+  .item-image:not(.loading) img {
+    opacity: 1; /* Показываем изображение после загрузки */
+  }
 
 .item-name {
     font-family: 'Montserrat', sans-serif;
@@ -30,19 +49,32 @@
     font-weight: 500;
     color: #3E5587;
     text-align: center;
-    position: absolute; /* Абсолютное позиционирование */
-    bottom: 6px; /* Расположение над нижней частью изображения */
-    left: 50%; /* Центровка по горизонтали */
-    transform: translateX(-50%); /* Для точного выравнивания по центру */
-    padding: 5px 10px; /* Отступы вокруг текста */
-    border-radius: 8px; /* Скругление фона */
-    max-width: 90%; /* Ограничение ширины */
-    overflow: hidden; /* Обрезка текста */
-    text-overflow: ellipsis; /* Троеточие в конце текста */
-    white-space: normal; /* Разрешить перенос строк */
-    display: -webkit-box; /* Использование для поддержки line-clamp */
-    line-clamp: 2; /* Ограничение в 2 строки */
-    -webkit-box-orient: vertical; /* Вертикальная ориентация */
-    line-height: 1.2; /* Высота строки для лучшей читаемости */
+    position: absolute;
+    /* Абсолютное позиционирование */
+    bottom: 6px;
+    /* Расположение над нижней частью изображения */
+    left: 50%;
+    /* Центровка по горизонтали */
+    transform: translateX(-50%);
+    /* Для точного выравнивания по центру */
+    padding: 5px 10px;
+    /* Отступы вокруг текста */
+    border-radius: 8px;
+    /* Скругление фона */
+    max-width: 90%;
+    /* Ограничение ширины */
+    overflow: hidden;
+    /* Обрезка текста */
+    text-overflow: ellipsis;
+    /* Троеточие в конце текста */
+    white-space: normal;
+    /* Разрешить перенос строк */
+    display: -webkit-box;
+    /* Использование для поддержки line-clamp */
+    line-clamp: 2;
+    /* Ограничение в 2 строки */
+    -webkit-box-orient: vertical;
+    /* Вертикальная ориентация */
+    line-height: 1.2;
+    /* Высота строки для лучшей читаемости */
 }
-

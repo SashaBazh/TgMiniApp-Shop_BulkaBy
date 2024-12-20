@@ -1,6 +1,11 @@
 <div class="catalog-item">
-  <div class="item-image">
-    <img [src]="imageSrc || 'assets/default-image.png'" alt="{{ name }}" />
+  <div class="item-image" [class.loading]="!imageLoaded">
+    <img
+      [src]="imageSrc || 'assets/default-image.png'"
+      alt="{{ name }}"
+      (load)="onImageLoad()"
+      (error)="onImageError()"
+    />
   </div>
   <span class="item-name">{{ name }}</span>
 </div>
