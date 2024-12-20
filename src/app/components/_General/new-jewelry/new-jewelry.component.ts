@@ -26,25 +26,62 @@ export class NewJewelryComponent implements OnInit {
     this.loadNewProducts();
   }
   
-  private loadNewProducts() {
+  private async loadNewProducts() {
     this.isLoading = true;
   
-    this.categoryService.getNewProducts(6).subscribe({
-      next: (data) => {
-        this.products = data.map((product) => ({
+    try {
+      const products = await this.categoryService.getNewProducts(6).toPromise();
+  
+      if (!products || products.length === 0) {
+        console.warn('Новые продукты не найдены');
+        this.products = [];
+        return;
+      }
+  
+      // Инициализируем продукты с серым фоном
+      this.products = products.map((product) => ({
+        ...product,
+        image: 'assets/default-image.png',
+        imageLoading: true,
+      }));
+  
+      // Последовательная загрузка изображений
+      for (let i = 0; i < products.length; i++) {
+        const product = products[i];
+        const imageUrl = product.media && product.media.length > 0
+          ? await this.loadImage(product.media[0])
+          : 'assets/default-image.png';
+  
+        this.products[i] = {
           ...product,
-          image: product.media && product.media.length > 0
-            ? this.imageService.getImageUrl(product.media[0]) // Первая картинка из media
-            : 'assets/default-image.png', // Изображение по умолчанию
-        }));
-        this.isLoading = false;
-      },
-      error: (err) => {
-        console.error('Ошибка загрузки новых продуктов:', err);
-        this.isLoading = false;
-      },
-    });
+          image: imageUrl,
+          imageLoading: false,
+        };
+        console.log(`Изображение загружено для продукта: ${product.name}`);
+      }
+  
+      console.log('Все новые продукты успешно обработаны:', this.products);
+    } catch (err) {
+      console.error('Ошибка загрузки новых продуктов:', err);
+      this.products = [];
+    } finally {
+      this.isLoading = false;
+    }
   }
+  
+  // Метод загрузки изображения
+  private loadImage(imageUrl: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.src = this.imageService.getImageUrl(imageUrl);
+  
+      img.onload = () => resolve(this.imageService.getImageUrl(imageUrl));
+      img.onerror = () => {
+        console.error('Ошибка загрузки изображения:', imageUrl);
+        resolve('assets/default-image.png');
+      };
+    });
+  }  
   
   
 

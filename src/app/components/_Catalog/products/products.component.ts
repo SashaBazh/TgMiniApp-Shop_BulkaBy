@@ -77,37 +77,74 @@ export class ProductsComponent implements OnInit {
       },
     });
   }
+
+  private async loadProductsSequentially(categoryId: number, search?: string) {
+    console.log('Вызван метод loadProductsSequentially с categoryId:', categoryId, 'и поисковым запросом:', search);
+    this.isLoading = true;
+  
+    const filters = this.selectedFilters;
+  
+    try {
+      const products = await this.categoryAttributesService.getProductsByCategory(categoryId, filters, search).toPromise();
+      console.log('Полученные данные от API:', products);
+  
+      if (!products || products.length === 0) {
+        console.warn('Список продуктов пуст или не определён');
+        this.products = [];
+        return;
+      }
+  
+      // Изначально заполняем массив серыми карточками
+      this.products = products.map((product) => ({
+        ...product,
+        image: 'assets/default-image.png', // Устанавливаем серый фон
+        imageLoading: true, // Флаг для отображения состояния загрузки
+      }));
+  
+      // Последовательная загрузка изображений
+      for (let i = 0; i < products.length; i++) {
+        const product = products[i];
+        const imageUrl = product.media && product.media.length > 0
+          ? await this.loadImage(product.media[0])
+          : 'assets/default-image.png';
+        this.products[i] = {
+          ...product,
+          image: imageUrl,
+          imageLoading: false, // Снимаем флаг загрузки
+        };
+        console.log(`Изображение загружено для продукта: ${product.name}`);
+      }
+  
+      console.log('Все продукты успешно обработаны:', this.products);
+    } catch (err) {
+      console.error('Ошибка загрузки продуктов:', err);
+      this.products = [];
+    } finally {
+      this.isLoading = false;
+    }
+  }
+  
+  
+  
+  private loadImage(imageUrl: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.src = this.imageService.getImageUrl(imageUrl);
+  
+      img.onload = () => resolve(this.imageService.getImageUrl(imageUrl));
+      img.onerror = () => {
+        console.error('Ошибка загрузки изображения:', imageUrl);
+        resolve('assets/default-image.png'); // Возвращаем изображение по умолчанию в случае ошибки
+      };
+    });
+  } 
   
 
 
   private loadProducts(categoryId: number, search?: string) {
-    console.log('Вызван метод loadProducts с categoryId:', categoryId, 'и поисковым запросом:', search);
-    this.isLoading = true;
-
-    const filters = this.selectedFilters; // Используем выбранные фильтры
-
-    this.categoryAttributesService.getProductsByCategory(categoryId, filters, search).subscribe({
-      next: (data) => {
-        console.log('Полученные данные от API:', data);
-        this.products = data.map((product) => ({
-          ...product,
-          image: product.media && product.media.length > 0
-            ? this.imageService.getImageUrl(product.media[0]) // Используем только первый путь из media
-            : 'assets/default-image.png', // Устанавливаем изображение по умолчанию
-        }));
-        console.log('Обработанные данные продуктов:', this.products);
-        this.isLoading = false;
-      },
-      error: (err) => {
-        console.error('Ошибка загрузки продуктов:', err);
-        this.products = [];
-        this.isLoading = false;
-      },
-    });
+    this.loadProductsSequentially(categoryId, search);
   }
-
-
-
+  
 
   onFiltersChanged(filters: any) {
     console.log('Выбранные фильтры:', filters);

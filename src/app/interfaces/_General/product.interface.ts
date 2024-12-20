@@ -8,4 +8,5 @@ export interface Product {
   image?: string; // URL первого изображения из media
   currency: string; // Валюта (например, ₽)
   discounted_price: number;
+  imageLoading?: boolean;
 }

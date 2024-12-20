@@ -3,13 +3,15 @@
     <div *ngIf="isLoading" class="loading-indicator">
       <div class="loader"></div>
     </div>
-    <p *ngIf="!isLoading && !products?.length" class="no-results-text">
+    <!-- <p *ngIf="!isLoading && !products?.length" class="no-results-text">
       К сожалению, ничего не найдено 😞
-    </p>
+    </p> -->
 
     <div class="slider-container">
       <div class="products-row">
-        <app-product-card *ngFor="let product of firstRowProducts" [product]="product"
+        <app-product-card
+          *ngFor="let product of firstRowProducts"
+          [product]="product"
           (click)="openProduct(product.id)">
         </app-product-card>
       </div>
@@ -17,7 +19,9 @@
 
     <div class="slider-container">
       <div class="products-row">
-        <app-product-card *ngFor="let product of secondRowProducts" [product]="product"
+        <app-product-card
+          *ngFor="let product of secondRowProducts"
+          [product]="product"
           (click)="openProduct(product.id)">
         </app-product-card>
       </div>

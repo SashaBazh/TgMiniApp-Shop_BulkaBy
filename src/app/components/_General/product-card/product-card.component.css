@@ -130,3 +130,32 @@ app-product-card {
     flex: 0 0 160px;
     min-width: 0;
 }
+  
+.product-image-container {
+    width: 100%;
+    height: 209px; /* Высота блока с изображением */
+    background-color: #e0e0e0; /* Серый фон по умолчанию */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .product-image-container.loading {
+    background-color: #e0e0e0; /* Серый фон во время загрузки */
+  }
+  
+  .product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: opacity 0.3s ease-in-out;
+    opacity: 0; /* Скрываем изображение до загрузки */
+  }
+  
+  .product-image-container:not(.loading) .product-image {
+    opacity: 1; /* Показываем изображение после загрузки */
+  }
+  

@@ -1,14 +1,14 @@
 <div class="product-card">
-    <!-- <button class="favorite-button">
-        <img src="../../../../assets/icons/plus.svg" alt="Add to favorite" class="favorite-icon">
-    </button> -->
-    <img *ngIf="product.image" [src]="product.image" alt="{{ product.name }}" class="product-image" />
-    <div class="product-info">
-        <h3 class="product-title">{{ product.name }}</h3>
-        <p class="product-price">
-            <span *ngIf="product.discounted_price !== null" class="old-price">{{ product.price }} USD</span>
-            <span *ngIf="product.discounted_price !== null" class="new-price">{{ product.discounted_price }} USD</span>
-            <span *ngIf="product.discounted_price === null">{{ product.price }} USD</span>
-        </p>
+    <div class="product-image-container" [class.loading]="product.imageLoading">
+      <img *ngIf="!product.imageLoading" [src]="product.image" alt="{{ product.name }}" class="product-image" />
     </div>
-</div>
+    <div class="product-info">
+      <h3 class="product-title">{{ product.name }}</h3>
+      <p class="product-price">
+        <span *ngIf="product.discounted_price !== null" class="old-price">{{ product.price }} USD</span>
+        <span *ngIf="product.discounted_price !== null" class="new-price">{{ product.discounted_price }} USD</span>
+        <span *ngIf="product.discounted_price === null">{{ product.price }} USD</span>
+      </p>
+    </div>
+  </div>
+  
