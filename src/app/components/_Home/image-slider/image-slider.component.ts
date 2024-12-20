@@ -17,7 +17,7 @@ export class ImageSliderComponent implements OnInit, OnDestroy {
   images: SlideImage[] = [];
   currentIndex = 0;
   private intervalId: number | undefined;
-  private imagesLoaded = false;
+  public imagesLoaded = false;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -56,7 +56,7 @@ export class ImageSliderComponent implements OnInit, OnDestroy {
   }
 
   private preloadImages() {
-    const imagePromises = this.images.map(image => {
+    const imagePromises = this.images.map((image) => {
       return new Promise((resolve) => {
         const img = new Image();
         img.src = image.url;
@@ -64,13 +64,14 @@ export class ImageSliderComponent implements OnInit, OnDestroy {
         img.onerror = () => resolve(false);
       });
     });
-
+  
     Promise.all(imagePromises).then(() => {
-      this.imagesLoaded = true;
+      this.imagesLoaded = true; // Устанавливаем флаг загрузки
       this.startSlideshow();
       this.cdr.detectChanges();
     });
   }
+  
 
   private startSlideshow() {
     if (!this.imagesLoaded) return;

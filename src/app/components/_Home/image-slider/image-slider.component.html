@@ -1,7 +1,21 @@
 <div class="slider">
-    <img [src]="images[currentIndex].url" [alt]="images[currentIndex].alt" class="slider-image">
+    <div
+      class="slider-placeholder"
+      *ngIf="!imagesLoaded || !images[currentIndex]?.url"
+    ></div>
+    <img
+      *ngIf="imagesLoaded && images[currentIndex]?.url"
+      [src]="images[currentIndex].url"
+      [alt]="images[currentIndex].alt"
+      class="slider-image"
+    />
     <div class="dots">
-        <button *ngFor="let image of images; let i = index" class="dot" [class.active]="i === currentIndex"
-            (click)="setIndex(i)"></button>
+      <button
+        *ngFor="let image of images; let i = index"
+        class="dot"
+        [class.active]="i === currentIndex"
+        (click)="setIndex(i)"
+      ></button>
     </div>
-</div>
+  </div>
+  

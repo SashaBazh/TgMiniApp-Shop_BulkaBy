@@ -18,8 +18,8 @@ export class ImagesSlidersComponent implements OnInit, OnDestroy {
   secondCurrentIndex = 0;
   private intervalId: number | undefined;
   private secondIntervalId: number | undefined;
-  private imagesLoaded = false;
-  private secondImagesLoaded = false;
+  public imagesLoaded = false;
+  public secondImagesLoaded = false;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
@@ -71,7 +71,7 @@ export class ImagesSlidersComponent implements OnInit, OnDestroy {
   }
 
   private preloadImages() {
-    const imagePromises = this.images.map(image => {
+    const imagePromises = this.images.map((image) => {
       return new Promise((resolve) => {
         const img = new Image();
         img.src = image.url;
@@ -79,16 +79,16 @@ export class ImagesSlidersComponent implements OnInit, OnDestroy {
         img.onerror = () => resolve(false);
       });
     });
-
+  
     Promise.all(imagePromises).then(() => {
-      this.imagesLoaded = true;
+      this.imagesLoaded = true; // Устанавливаем флаг загрузки
       this.startSlideshow();
       this.cdr.detectChanges();
     });
-  }
+  }  
 
   private preloadSecondImages() {
-    const imagePromises = this.secondImages.map(image => {
+    const imagePromises = this.secondImages.map((image) => {
       return new Promise((resolve) => {
         const img = new Image();
         img.src = image.url;
@@ -96,13 +96,13 @@ export class ImagesSlidersComponent implements OnInit, OnDestroy {
         img.onerror = () => resolve(false);
       });
     });
-
+  
     Promise.all(imagePromises).then(() => {
-      this.secondImagesLoaded = true;
+      this.secondImagesLoaded = true; // Устанавливаем флаг загрузки
       this.startSecondSlideshow();
       this.cdr.detectChanges();
     });
-  }
+  }  
 
   private startSlideshow() {
     if (!this.imagesLoaded) return;
