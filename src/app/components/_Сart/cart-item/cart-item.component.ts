@@ -21,6 +21,8 @@ export class CartItemComponent {
   @Output() itemRemoved = new EventEmitter<number>();
   @Output() quantityChanged = new EventEmitter<{ productId: number; quantity: number }>();
 
+  imageLoading: boolean = true; // Переменная для отслеживания состояния загрузки изображения
+
   constructor(
     private cartService: CartService,
     public imageService: ImageStreamService
@@ -63,6 +65,10 @@ export class CartItemComponent {
 
   setDefaultImage(event: Event): void {
     (event.target as HTMLImageElement).src = '../../../../assets/products/2.png';
+    this.imageLoading = false; // Останавливаем состояние загрузки при ошибке
   }
-  
+
+  onImageLoad() {
+    this.imageLoading = false; // Останавливаем состояние загрузки при успешной загрузке изображения
+  }
 }

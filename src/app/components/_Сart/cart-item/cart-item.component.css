@@ -23,6 +23,13 @@
     justify-content: center;
 }
 
+.item-image img.loading {
+    background-color: #e0e0e0; /* Серый фон */
+    width: 100%;
+    height: 108px;
+    border-radius: 12px;
+  }  
+
 .item-image img {
     width: 100%;
     height: 108px;

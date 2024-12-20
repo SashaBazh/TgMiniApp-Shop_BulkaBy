@@ -7,8 +7,19 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './product-card-recomendation.component.html',
-  styleUrl: './product-card-recomendation.component.css'
+  styleUrls: ['./product-card-recomendation.component.css']
 })
 export class ProductCardRecomendationComponent {
   @Input() product!: Product;
+
+  imageLoading: boolean = true; // Состояние загрузки изображения
+
+  onImageLoad() {
+    this.imageLoading = false; // Убираем серый фон после загрузки
+  }
+
+  setDefaultImage(event: Event): void {
+    (event.target as HTMLImageElement).src = 'assets/default-image.png'; // Изображение по умолчанию
+    this.imageLoading = false; // Убираем серый фон после ошибки загрузки
+  }
 }

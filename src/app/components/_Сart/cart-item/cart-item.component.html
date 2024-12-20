@@ -1,6 +1,11 @@
 <div class="cart-item">
   <div class="item-image">
-    <img [src]="imageSrc" alt="Product Image" (error)="setDefaultImage($event)" />
+    <img 
+      [src]="imageSrc" 
+      alt="Product Image" 
+      (load)="onImageLoad()" 
+      (error)="setDefaultImage($event)" 
+      [class.loading]="imageLoading" />
   </div>
   <div class="item-details">
     <div class="item-title">{{ title }}</div>
