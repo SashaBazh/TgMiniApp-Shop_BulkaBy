@@ -43,6 +43,7 @@ export class ProductsComponent implements OnInit {
       if (this.categoryId !== null) {
         this.loadCategoryName(this.categoryId); // Загружаем имя категории
         this.loadFilters();
+        this.restoreFiltersFromUrl(); // Восстанавливаем фильтры из URL
         this.loadProducts(this.categoryId);
       }
     });
@@ -75,6 +76,30 @@ export class ProductsComponent implements OnInit {
       error: (err) => {
         console.error('Ошибка загрузки фильтров:', err);
       },
+    });
+  }
+
+  private restoreFiltersFromUrl() {
+    const queryParams = this.route.snapshot.queryParams;
+    for (const key in queryParams) {
+      if (Object.prototype.hasOwnProperty.call(queryParams, key)) {
+        this.selectedFilters[key] = queryParams[key].split(',');
+      }
+    }
+  }
+
+  private saveFiltersToUrl() {
+    const queryParams: any = {};
+    for (const key in this.selectedFilters) {
+      if (this.selectedFilters[key]?.length > 0) {
+        queryParams[key] = this.selectedFilters[key].join(',');
+      }
+    }
+
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams,
+      queryParamsHandling: 'merge', // Сохраняем существующие параметры
     });
   }
 
@@ -149,6 +174,7 @@ export class ProductsComponent implements OnInit {
   onFiltersChanged(filters: any) {
     console.log('Выбранные фильтры:', filters);
     this.selectedFilters = filters;
+    this.saveFiltersToUrl(); // Сохраняем выбранные фильтры в URL
 
     if (this.categoryId !== null) {
       this.loadProducts(this.categoryId); // Загружаем продукты с выбранными фильтрами

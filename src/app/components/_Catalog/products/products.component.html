@@ -3,8 +3,10 @@
   <h2 class="category-title">{{ categoryName | capitalize }}</h2>
   <app-search (search)="onSearch($event)"></app-search>
   <div class="filters">
-    <app-filters [items]="filters" (filtersChanged)="onFiltersChanged($event)"></app-filters>
+    <app-filters [items]="filters" [preselectedFilters]="selectedFilters" (filtersChanged)="onFiltersChanged($event)">
+    </app-filters>
   </div>
+
   <div class="products-container">
     <!-- <p *ngIf="isLoading" class="loading-text">{{ 'ENTER_QUERY' | translate }}</p> -->
     <div *ngIf="isLoading" class="loading-indicator">
