@@ -43,7 +43,7 @@ export class CategoryService {
     categoryId: number,
     filters: any = {},
     search?: string,
-    limit: number = 50,
+    limit: number = 500,
     offset: number = 0
   ): Observable<Product[]> {
     let url = `${this.apiUrl}/category/${categoryId}?limit=${limit}&offset=${offset}&timestamp=${new Date().getTime()}`;
