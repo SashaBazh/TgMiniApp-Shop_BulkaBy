@@ -1,21 +1,26 @@
-<div class="product-full-page" *ngIf="product">
+<div class="product-full-page" *ngIf="product; else loadingBlock">
+    <!-- Основной контент, отображается после загрузки продукта -->
     <div class="media-gallery">
         <div class="slider">
             <div class="media-container" (touchstart)="onTouchStart($event)" (touchmove)="onTouchMove($event)"
                 (touchend)="onTouchEnd()">
                 <ng-container *ngIf="currentMedia">
-                    <!-- Изображение -->
+                    <!-- Если это изображение -->
                     <img *ngIf="isImage(currentMedia)" [src]="currentMedia" alt="Media Content" class="slider-media" />
-                    <!-- Видео -->
-                    <video *ngIf="isVideo(currentMedia)" [src]="currentMedia" class="slider-media" controls muted
-                        playsinline webkit-playsinline (loadstart)="onVideoLoadStart()"
-                        (canplay)="onVideoCanPlay()"></video>
+
+                    <!-- Если это видео -->
+                    <ng-container *ngIf="isVideo(currentMedia)">
+                        <video controls autoplay loop muted playsinline class="slider-media">
+                            <source [src]="currentMedia" type="video/mp4">
+                            Ваш браузер не поддерживает видео.
+                        </video>
+                    </ng-container>
+
 
                 </ng-container>
 
                 <div *ngIf="videoLoading && isVideo(currentMedia!)" class="loading-spinner"></div>
             </div>
-
 
             <!-- Навигационные точки -->
             <div class="dots">
@@ -39,22 +44,27 @@
 
         <div class="product-details">
             <!-- Main Attributes -->
-            <div class="detail" *ngFor="let attr of mainAttributes">
-                <span class="detail-title">{{ attr.name }}</span>
-                <span class="detail-value">{{ attr.value }}</span>
-            </div>
-
-            <!-- Extra Attributes -->
-            <div class="detail-extra" *ngIf="showDetails">
-                <div class="detail" *ngFor="let attr of extraAttributes">
+            <ng-container *ngIf="!isLoadingAttributes; else loadingAttributesBlock">
+                <div class="detail" *ngFor="let attr of mainAttributes">
                     <span class="detail-title">{{ attr.name }}</span>
                     <span class="detail-value">{{ attr.value }}</span>
                 </div>
-            </div>
+
+                <!-- Extra Attributes -->
+                <div class="detail-extra" *ngIf="showDetails">
+                    <div class="detail" *ngFor="let attr of extraAttributes">
+                        <span class="detail-title">{{ attr.name }}</span>
+                        <span class="detail-value">{{ attr.value }}</span>
+                    </div>
+                </div>
+            </ng-container>
+
+            <ng-template #loadingAttributesBlock>
+                <p>Loading attributes...</p>
+            </ng-template>
 
             <!-- Toggle Details Arrow -->
             <div class="arrow-container" (click)="toggleDetails()">
-                <!-- SVG Arrow Icon -->
                 <svg [class.open]="showDetails" xmlns="http://www.w3.org/2000/svg" width="37" height="37"
                     viewBox="0 0 37 37" fill="none">
                     <path fill-rule="evenodd" clip-rule="evenodd"
@@ -64,13 +74,12 @@
             </div>
         </div>
 
-
-
         <!-- Buttons -->
         <div class="actions">
             <button class="add-to-cart" (click)="addToCartFast()">{{ 'BUY_NOW' | translate }}</button>
             <button class="add-to-cart" (click)="addToCart()">{{ 'ADD_TO_CART' | translate }}</button>
-            <button class="contact-manager" (click)="contactManager()">{{ 'CONTACT_MANAGER_BUTTON' | translate }}</button>
+            <button class="contact-manager" (click)="contactManager()">{{ 'CONTACT_MANAGER_BUTTON' | translate
+                }}</button>
             <button class="contact-manager" (click)="toggleExpandableInfo()">
                 {{ showMoreInfo ? ('HIDE_INFO' | translate) : ('MORE_INFO' | translate) }}
             </button>
@@ -85,7 +94,6 @@
                 <p>{{ 'DELIVERY_INFORMATION' | translate }}</p>
             </div>
         </div>
-
     </div>
 
     <!-- Recommendations -->
@@ -93,3 +101,12 @@
         <app-recomendations></app-recomendations>
     </div>
 </div>
+
+<!-- Блок загрузки -->
+<ng-template #loadingBlock>
+    <div class="loading-skeleton">
+        <div class="skeleton-title"></div>
+        <div class="skeleton-media"></div>
+        <div class="skeleton-details"></div>
+    </div>
+</ng-template>

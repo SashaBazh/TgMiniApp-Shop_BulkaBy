@@ -62,45 +62,55 @@ export class ProductFullPageComponent {
   }
 
   loadProduct(productId: number) {
+    this.product = null; // Сбрасываем продукт, чтобы показать прелоадер
     this.productService.getProductDetail(productId).subscribe({
       next: (data) => {
         this.product = data;
-        this.prepareAttributes();
+  
+        if (this.product && Array.isArray(this.product.attribute_values)) {
+          this.prepareAttributes();
+        } else {
+          console.warn('Атрибуты отсутствуют для продукта:', this.productId);
+          this.mainAttributes = [];
+          this.extraAttributes = [];
+          this.isLoadingAttributes = false; // Завершаем состояние загрузки
+        }
+  
         this.prepareMedia();
       },
       error: (err) => {
         console.error('Ошибка при загрузке данных о товаре:', err);
-      }
+      },
     });
   }
+  
+
+  isLoadingAttributes: boolean = true;
 
   prepareAttributes() {
-    if (!this.product) return;
+    if (!this.product || !this.product.attribute_values) return;
 
-    // Transform attributes from attribute_values
-    const allAttributes = this.product.attribute_values.map((attr: any) => ({
-      name: attr.attribute.name,
-      value: attr.value,
-    }));
+    this.isLoadingAttributes = true; // Начинаем подготовку
 
-    // Split into main and extra attributes
+    const allAttributes = Array.isArray(this.product.attribute_values)
+      ? this.product.attribute_values.map((attr: any) => ({
+        name: attr.attribute?.name || 'Unknown Attribute',
+        value: attr.value || 'N/A',
+      }))
+      : [];
+
     this.mainAttributes = allAttributes.slice(0, 3);
     this.extraAttributes = allAttributes.slice(3);
 
-    // Определяем текущий язык
-    // const descriptionLabel =
-    //   this.translate.currentLang === 'en' ? 'Description' : 'Описание';
-
-    // // Add description to extra attributes
-    // if (this.product.description) {
-    //   this.extraAttributes.unshift({ name: descriptionLabel, value: this.product.description });
-    // }
-
     if (this.product.description) {
-      const descriptionLabel = this.translate.instant('DESCRIPTION'); // Получаем перевод
+      const descriptionLabel = this.translate.instant('DESCRIPTION');
       this.extraAttributes.unshift({ name: descriptionLabel, value: this.product.description });
     }
+
+    this.isLoadingAttributes = false; // Завершаем подготовку
   }
+
+
 
   // Prepare media items
   prepareMedia() {
@@ -234,4 +244,11 @@ export class ProductFullPageComponent {
   contactManager(): void {
     window.location.href = 'https://t.me/alenka15em';
   }
+
+  onUserClick(videoElement: HTMLVideoElement) {
+    videoElement.play()
+      .then(() => console.log('Видео играет'))
+      .catch(err => console.error('Видео не запустилось', err));
+  }
+  
 }
