@@ -10,7 +10,7 @@
 
                     <!-- Если это видео -->
                     <ng-container *ngIf="isVideo(currentMedia)">
-                        <video controls autoplay loop muted playsinline class="slider-media">
+                        <video controls autoplay loop playsinline class="slider-media" (loadedmetadata)="muteVideo($event)">
                             <source [src]="currentMedia" type="video/mp4">
                             Ваш браузер не поддерживает видео.
                         </video>

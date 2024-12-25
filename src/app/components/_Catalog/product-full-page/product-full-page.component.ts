@@ -128,17 +128,20 @@ export class ProductFullPageComponent {
   // Navigation methods
   prevMedia() {
     this.currentMediaIndex = (this.currentMediaIndex - 1 + this.mediaItems.length) % this.mediaItems.length;
+    console.log('Текущее медиа:', this.currentMedia); // Текущее медиа выводится через геттер
   }
-
-
+  
   nextMedia() {
     this.currentMediaIndex = (this.currentMediaIndex + 1) % this.mediaItems.length;
+    console.log('Текущее медиа:', this.currentMedia); // Текущее медиа выводится через геттер
   }
-
-
+  
   selectMedia(index: number) {
     this.currentMediaIndex = index;
+    console.log('Текущее медиа:', this.currentMedia); // Текущее медиа выводится через геттер
   }
+  
+  
 
 
   get currentMedia(): string | null {
@@ -148,6 +151,12 @@ export class ProductFullPageComponent {
   isImage(mediaUrl: string): boolean {
     return /\.(jpg|jpeg|png|gif|webp)$/i.test(mediaUrl);
   }
+
+  muteVideo(event: Event) {
+    const videoElement = event.target as HTMLVideoElement;
+    videoElement.muted = true; // Программное выключение звука
+  }
+  
 
   isVideo(mediaUrl: string): boolean {
     return /\.(mp4|webm|ogg)$/i.test(mediaUrl);
