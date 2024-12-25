@@ -2,34 +2,58 @@
     <!-- Основной контент, отображается после загрузки продукта -->
     <div class="media-gallery">
         <div class="slider">
-            <div class="media-container" (touchstart)="onTouchStart($event)" (touchmove)="onTouchMove($event)"
-                (touchend)="onTouchEnd()">
-                <ng-container *ngIf="currentMedia">
-                    <!-- Если это изображение -->
-                    <img *ngIf="isImage(currentMedia)" [src]="currentMedia" alt="Media Content" class="slider-media" />
-
-                    <!-- Если это видео -->
-                    <ng-container *ngIf="isVideo(currentMedia)">
-                        <video controls autoplay loop playsinline class="slider-media" (loadedmetadata)="muteVideo($event)">
-                            <source [src]="currentMedia" type="video/mp4">
-                            Ваш браузер не поддерживает видео.
-                        </video>
-                    </ng-container>
-
-
-                </ng-container>
-
-                <div *ngIf="videoLoading && isVideo(currentMedia!)" class="loading-spinner"></div>
+          <!-- Контейнер для всех слайдов -->
+          <div 
+            class="media-container"
+            [style.transform]="'translateX(' + (-currentMediaIndex * 100) + '%)'"
+            (touchstart)="onTouchStart($event)"
+            (touchmove)="onTouchMove($event)"
+            (touchend)="onTouchEnd()"
+          >
+            <!-- Генерируем слайды по количеству медиа -->
+            <div class="slide" *ngFor="let media of mediaItems; let i = index">
+              
+              <!-- Если это изображение -->
+              <img 
+                *ngIf="isImage(media)"
+                [src]="media"
+                alt="Media Content"
+                class="slider-media"
+              />
+      
+              <!-- Если это видео -->
+              <ng-container *ngIf="isVideo(media)">
+                <video
+                  controls
+                  autoplay
+                  loop
+                  playsinline
+                  class="slider-media"
+                  (loadedmetadata)="muteVideo($event)"
+                >
+                  <source [src]="media" type="video/mp4" />
+                  Ваш браузер не поддерживает видео.
+                </video>
+              </ng-container>
+      
+              <!-- Индикатор загрузки видео -->
+              <div *ngIf="videoLoading && isVideo(media)" class="loading-spinner"></div>
             </div>
-
-            <!-- Навигационные точки -->
-            <div class="dots">
-                <button *ngFor="let media of mediaItems; let i = index" class="dot"
-                    [class.active]="i === currentMediaIndex" (click)="selectMedia(i)">
-                </button>
-            </div>
+          </div>
+      
+          <!-- Навигационные точки -->
+          <div class="dots">
+            <button
+              *ngFor="let media of mediaItems; let i = index"
+              class="dot"
+              [class.active]="i === currentMediaIndex"
+              (click)="selectMedia(i)"
+            >
+            </button>
+          </div>
         </div>
-    </div>
+      </div>
+      
 
     <!-- Product Info -->
     <div class="product-info">

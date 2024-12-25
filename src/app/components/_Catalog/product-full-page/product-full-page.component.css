@@ -14,14 +14,17 @@
   margin: 8px 0;
   color: #000;
   /* Цвет текста (чёрный, можно изменить) */
-  text-align: left; /* Выровнять текст по левому краю */
+  text-align: left;
+  /* Выровнять текст по левому краю */
 }
 
 .price-container {
   display: flex;
-  justify-content: flex-start; /* Выровнять по левому краю */
+  justify-content: flex-start;
+  /* Выровнять по левому краю */
   align-items: center;
-  gap: 8px; /* Отступ между старой и новой ценой */
+  gap: 8px;
+  /* Отступ между старой и новой ценой */
   font-family: 'Montserrat', sans-serif;
   font-size: 18px;
   font-weight: 500;
@@ -52,7 +55,8 @@
   /* Размер текста */
   margin: 8px 0;
   color: #666;
-  text-align: left; /* Выровнять текст по левому краю */
+  text-align: left;
+  /* Выровнять текст по левому краю */
 }
 
 hr {
@@ -187,24 +191,33 @@ hr {
 .slider {
   position: relative;
   overflow: hidden;
-  height: 420px; /* Высота на всю высоту окна */
+  height: 420px;
+  /* Общая высота слайдера */
 }
 
 .media-container {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%; /* Контейнер занимает всю высоту слайдера */
+  /* ключевой момент – чтобы слайды шли «горизонтальной лентой» */
+  transition: transform 0.3s ease-in-out;
+  height: 100%;
+}
+
+.slide {
+  /* Каждый слайд занимает 100% ширины родителя */
+  min-width: 100%;
+  box-sizing: border-box;
+  position: relative;
+  /* чтобы внутри можно было позиционировать элементы */
 }
 
 .slider-media {
-  width: 100%; /* Изображение растягивается на всю ширину */
-  height: 420px; /* Изображение растягивается на всю высоту */
-  object-fit: cover; /* Обрезка изображения с сохранением пропорций */
-  transition: opacity 0.5s ease-in-out; /* Плавный переход */
+  width: 100%;
+  height: 420px;
+  object-fit: cover;
   border-radius: 16px;
   border: 1px solid #EBEDF7;
 }
+
 
 .dots {
   position: absolute;
@@ -272,12 +285,12 @@ hr {
   left: 50%;
   width: 40px;
   height: 40px;
-  margin: -20px 0 0 -20px; /* Чтобы центрировать спиннер */
+  margin: -20px 0 0 -20px;
   border: 4px solid #fff;
   border-top: 4px solid #333;
   border-radius: 50%;
   animation: spin 1s linear infinite;
-  z-index: 9999; /* Чтобы спиннер был поверх видео */
+  z-index: 9999;
 }
 
 @keyframes spin {
@@ -322,11 +335,8 @@ hr {
   0% {
     background-position: -200% 0;
   }
+
   100% {
     background-position: 200% 0;
   }
 }
-
-
-
-

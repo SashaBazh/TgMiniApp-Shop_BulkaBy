@@ -116,29 +116,25 @@ export class ProductFullPageComponent {
   prepareMedia() {
     if (!this.product) return;
 
-    // Assuming media URLs are stored in product.media
+    // Допустим, массив ссылок приходит из product.media
     this.mediaItems = this.product.media.map((mediaUrl: string) =>
       this.imageService.getImageUrl(mediaUrl)
     );
 
-    // Set initial media index
     this.currentMediaIndex = 0;
   }
 
-  // Navigation methods
-  prevMedia() {
-    this.currentMediaIndex = (this.currentMediaIndex - 1 + this.mediaItems.length) % this.mediaItems.length;
-    console.log('Текущее медиа:', this.currentMedia); // Текущее медиа выводится через геттер
-  }
-  
-  nextMedia() {
-    this.currentMediaIndex = (this.currentMediaIndex + 1) % this.mediaItems.length;
-    console.log('Текущее медиа:', this.currentMedia); // Текущее медиа выводится через геттер
-  }
-  
   selectMedia(index: number) {
     this.currentMediaIndex = index;
-    console.log('Текущее медиа:', this.currentMedia); // Текущее медиа выводится через геттер
+  }
+
+  nextMedia() {
+    this.currentMediaIndex = (this.currentMediaIndex + 1) % this.mediaItems.length;
+  }
+
+  prevMedia() {
+    this.currentMediaIndex =
+      (this.currentMediaIndex - 1 + this.mediaItems.length) % this.mediaItems.length;
   }
   
   
@@ -209,9 +205,6 @@ export class ProductFullPageComponent {
     }
   }
 
-
-
-
   currentIndex = 0;
 
   // Геттер для текущего элемента
@@ -226,14 +219,27 @@ export class ProductFullPageComponent {
     this.showMoreInfo = !this.showMoreInfo;
   }
 
-  // Обработка начала касания
+  contactManager(): void {
+    window.location.href = 'https://t.me/alenka15em';
+  }
+
+  onUserClick(videoElement: HTMLVideoElement) {
+    videoElement.play()
+      .then(() => console.log('Видео играет'))
+      .catch(err => console.error('Видео не запустилось', err));
+  }
+
+
   onTouchStart(event: TouchEvent) {
     this.touchStartX = event.touches[0].clientX;
   }
 
-  // Обработка окончания касания
+  onTouchMove(event: TouchEvent) {
+    this.touchEndX = event.touches[0].clientX;
+  }
+
   onTouchEnd() {
-    const threshold = 70; // Минимальное расстояние для распознавания свайпа
+    const threshold = 80; // порог для распознавания свайпа
     const deltaX = this.touchEndX - this.touchStartX;
 
     if (deltaX > threshold) {
@@ -243,21 +249,6 @@ export class ProductFullPageComponent {
       // Свайп влево
       this.nextMedia();
     }
-  }
-
-  // Обработка движения пальца
-  onTouchMove(event: TouchEvent) {
-    this.touchEndX = event.touches[0].clientX;
-  }
-
-  contactManager(): void {
-    window.location.href = 'https://t.me/alenka15em';
-  }
-
-  onUserClick(videoElement: HTMLVideoElement) {
-    videoElement.play()
-      .then(() => console.log('Видео играет'))
-      .catch(err => console.error('Видео не запустилось', err));
   }
   
 }
