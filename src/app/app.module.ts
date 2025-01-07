@@ -17,7 +17,11 @@ export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   imports: [
     BrowserModule,
     HttpClientModule,
-    RouterModule.forRoot(routes),
+    RouterModule.forRoot(routes, {
+      scrollPositionRestoration: 'enabled', // восстанавливаем позицию скролла
+      anchorScrolling: 'enabled',           // если используешь якоря <a href="#anchor">
+      // onSameUrlNavigation: 'reload',     // иногда тоже полезно, если нужно обновлять при переходе на тот же url
+    }),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,

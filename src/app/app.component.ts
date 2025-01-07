@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { TelegramService } from './services/_Telegram/telegram.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { UserService } from './services/_User/user.service';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -12,9 +13,16 @@ import { UserService } from './services/_User/user.service';
   styleUrl: './app.component.css',
 })
 export class AppComponent implements OnInit {
-  constructor(private telegramService: TelegramService, private authServise: UserService) {}
+  constructor( private router: Router, private telegramService: TelegramService, private authServise: UserService) {}
 
   ngOnInit(): void {
+
+    this.router.events
+      .pipe(filter(event => event instanceof NavigationEnd))
+      .subscribe(() => {
+        window.scrollTo(0, 0); // Устанавливаем прокрутку в начало
+      });
+
     if (this.telegramService.isTelegramWebAppAvailable()) {
       this.telegramService.expandApp();
       this.telegramService.initializeApp();
