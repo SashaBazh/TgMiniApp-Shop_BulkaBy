@@ -31,10 +31,10 @@
       <div class="price-and-remove">
         <span *ngIf="discountedPrice !== null; else normalPrice">
           <span class="old-price">{{ price * quantity }} USD</span>
-          <span class="new-price">{{ discountedPrice * quantity }} USD</span>
+          <span class="new-price">{{ discountedPrice * quantity | number:'1.2-2' }} USD</span>
         </span>
         <ng-template #normalPrice>
-          <span class="item-price">{{ price * quantity }} USD</span>
+          <span class="item-price">{{ price * quantity | number:'1.2-2' }} USD</span>
         </ng-template>
         <img src="../../../../assets/icons/plus.svg" alt="Remove" class="remove-icon" (click)="removeItem()" />
       </div>
