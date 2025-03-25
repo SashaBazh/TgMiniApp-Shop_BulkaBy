@@ -1,39 +1,47 @@
 <div class="profile-info-container">
-  <!-- Аватар пользователя -->
-  <div class="profile-avatar">
-      <img [src]="avatarUrl" alt="User Avatar" />
+    <!-- Аватар пользователя -->
+    <div class="profile-avatar">
+        <img [src]="avatarUrl" alt="User Avatar" />
+    </div>
+  
+    <!-- Основной блок с информацией (очки, статус, реферальная ссылка) -->
+    <div class="profile-main">
+        <div class="profile-details">
+            <span class="username">{{ username }}</span>
+            <span class="points">{{ points }} {{ 'POINTS' | translate }}</span>
+            <span class="status" [ngClass]="getStatusClass(status)">
+                {{ status }} - Ваша скидка: {{ getDiscount(status) }}%
+            </span>
+            <button routerLink="/profile/my-purchases" class="my-purchases-button" (click)="navigateToPurchases()">
+                {{ 'MY_PURCHASES' | translate }}
+            </button>
+        </div>
+        
+  
+        <!-- <div class="referral-link-container" (click)="copyReferralLink($event)">
+            <span class="referral-label">{{ 'REFERRAL_LINK' | translate }}</span>
+            <a [href]="referralLink" target="_blank" class="referral-link">
+                {{ referralLink | slice:0:24 }}...
+            </a>
+        </div> -->
+        
+    </div>
   </div>
+  
+  <!-- Остальные блоки (кнопка покупок и список друзей) остаются без изменений -->
 
-  <!-- Имя пользователя и количество баллов -->
-  <div class="profile-details">
-      <span class="username">{{ username }}</span>
-      <span class="points">{{ points }} {{ 'POINTS' | translate }}</span>
-      <!-- Статус с динамическим классом -->
-      <span class="status" [ngClass]="getStatusClass(status)">{{ status }}</span>
-  </div>
 
-  <!-- Блок реферальной ссылки -->
-  <div class="referral-link-container">
-      <span class="referral-label">{{ 'REFERRAL_LINK' | translate }}</span>
-      <a [href]="referralLink" target="_blank" class="referral-link">{{ referralLink | slice:0:24 }}...</a>
-      <button class="copy-button" (click)="copyReferralLink()">
-          <img src="../../../../assets/icons/ref.svg" alt="Copy icon" />
-      </button>
-  </div>
+<div class="friends-list-container">
+    <button class="invite-button" (click)="copyReferralLink($event)">
+        <svg width="22" height="28" viewBox="0 0 22 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="1" y="1" width="13.8889" height="18.6957" rx="2" stroke="#FFF8F2" stroke-width="2"/>
+            <rect x="7.11111" y="7.08696" width="13.8889" height="19.913" rx="2" stroke="#FFF8F2" stroke-width="2"/>
+        </svg>
+        {{ 'REFERRAL_LINK' | translate }}
+    </button>
 
-  <button routerLink="/profile/my-purchases" class="my-purchases-button" (click)="navigateToPurchases()">
-    {{ 'MY_PURCHASES' | translate }}
-  </button>
-
-  <!-- Блок списка друзей -->
-  <div class="friends-list-container">
-      <div class="friends-header">
-          <span>{{ 'FRIENDS' | translate }} {{ friends.length }}</span>
-          <span class="total-points">+{{ totalFriendPoints }} {{ 'POINTS' | translate }}</span>
-      </div>
-      <div *ngFor="let friend of friends" class="friend-item">
-          <span class="friend-username">{{ friend.username }}</span>
-          <span class="friend-points">+{{ friend.points }} {{ 'POINTS' | translate }}</span>
-      </div>
-  </div>
+    <div *ngFor="let friend of friends" class="friend-item">
+        <span class="friend-username">{{ friend.username }}</span>
+        <span class="friend-points">+{{ friend.points }} {{ 'POINTS' | translate }}</span>
+    </div>
 </div>

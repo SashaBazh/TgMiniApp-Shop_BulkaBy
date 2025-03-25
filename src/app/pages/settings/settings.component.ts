@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import { OptionsComponent } from '../../components/_Settings/options/options.component';
 import { HeadersettingsComponent } from '../../components/_Settings/headersettings/headersettings.component';
 import { OptionsService } from '../../services/_Options/option.service';
+import { HeaderComponent } from '../../components/_General/header/header.component';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-settings',
   standalone: true,
-  imports: [HeadersettingsComponent, OptionsComponent],
+  imports: [HeadersettingsComponent, OptionsComponent, HeaderComponent, TranslateModule],
   templateUrl: './settings.component.html',
   styleUrl: './settings.component.css'
 })

@@ -1,109 +1,83 @@
 .dynamic-list {
   display: flex;
-  overflow-x: auto; /* Горизонтальный скроллинг */
-  overflow-y: visible; /* Разрешаем вертикальное перекрытие */
-  gap: 8px;
-  padding-bottom: 150px;
-  scrollbar-width: none; /* Убираем скроллбар в Firefox */
-  -ms-overflow-style: none; /* Убираем скроллбар в IE10+ */
-  position: relative; /* Для позиционирования дочерних элементов */
-  z-index: 1; /* Устанавливаем контекст наложения */
+  flex-direction: column; /* Changed to column layout */
+  width: 100%; /* Full width */
+  overflow-y: visible; /* Allow vertical overflow */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  position: relative;
+  z-index: 1;
 }
 
 .dynamic-list::-webkit-scrollbar {
-  display: none; /* Убираем скроллбар в Chrome */
+  display: none;
 }
 
 .list-item {
-  position: relative; /* Для позиционирования .item-options */
-  flex: 0 0 auto;
-  min-width: 150px;
-  padding: 12px;
-  border-radius: 12px;
-  background-color: #e5e7f6;
-  font-family: 'Montserrat', sans-serif;
+  position: relative;
+  width: 100%; /* Full width */
+  padding: 12px 16px; /* Added horizontal padding */
+  font-family: 'TrajanPro3', sans-serif;
   font-size: 16px;
   font-weight: 400;
-  color: #000;
-  text-align: center; /* Текст по центру */
+  color: #23262F;
+  text-align: left; /* Left aligned text */
   display: flex;
   flex-direction: column;
-  justify-content: center;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  z-index: 1; /* Чтобы элемент не обрезался */
-}
-
-.list-item:hover {
-  background-color: #d1d5f0; /* Цвет при наведении */
+  z-index: 1;
+  border-bottom: 1px solid #E6E8EC; /* Add bottom border */
 }
 
 .item-title {
   position: relative;
   display: flex;
-  justify-content: center;
+  justify-content: space-between; /* Changed to space between for arrow on right */
   align-items: center;
-  text-align: center;
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 500;
-  font-family: 'Montserrat', sans-serif;
-  cursor: pointer;
-  padding-right: 24px; /* Отступ для стрелки */
+  color: #777E91; /* Grey color like in the image */
+  text-transform: uppercase; /* Uppercase as shown in image */
+  letter-spacing: 0.5px; /* Slight letter spacing */
 }
 
 .toggle-icon {
-  position: absolute;
-  right: 8px; /* Располагаем стрелку справа */
-  top: 50%;
-  transform: translateY(-50%);
-  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   transition: transform 0.3s ease;
 }
 
 .toggle-icon.expanded {
-  transform: translateY(-50%) rotate(180deg); /* Поворот стрелки */
+  transform: rotate(180deg);
+}
+
+.toggle-icon svg {
+  width: 16px;
+  height: 16px;
+}
+
+.toggle-icon svg path {
+  fill: #777E91; /* Match text color */
 }
 
 .item-options {
-  position: absolute; /* Абсолютное позиционирование */
-  top: 100%; /* Расположить ниже заголовка */
-  left: 0;
-  width: 100%; /* Чтобы совпадало с шириной родителя */
-  background-color: #ffffff; /* Белый фон для видимости */
-  border: 1px solid #d1d5f0; /* Лёгкая граница */
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Тень для улучшения визуала */
-  border-radius: 8px; /* Радиус для стилистики */
-  z-index: 1000; /* Увеличиваем z-index для отображения поверх */
-  padding: 8px; /* Отступы внутри */
-  animation: fade-in 0.3s ease forwards; /* Анимация появления */
-  overflow-y: auto; /* Вертикальный скроллинг */
-  max-height: 300px; /* Максимальная высота окна */
-  overflow-x: hidden; /* Убираем горизонтальный скроллинг */
-  height: 150px;
-}
-
-.item-options::-webkit-scrollbar {
-  width: 8px; /* Ширина полосы прокрутки */
-}
-
-.item-options::-webkit-scrollbar-thumb {
-  background-color: #c4c4c4; /* Цвет бегунка */
-  border-radius: 4px; /* Радиус бегунка */
-}
-
-.item-options::-webkit-scrollbar-thumb:hover {
-  background-color: #a8a8a8; /* Цвет бегунка при наведении */
-}
-
-.item-options::-webkit-scrollbar-track {
-  background-color: #f0f0f0; /* Цвет фона полосы прокрутки */
-  border-radius: 4px;
+  font-family: 'TrajanPro3', sans-serif;
+  position: relative; /* Changed to relative positioning */
+  width: 100%;
+  z-index: 2;
+  padding: 8px 0px 12px; /* Padding for options */
+  overflow-y: auto;
+  max-height: 300px;
+  overflow-x: hidden;
+  animation: fade-in 0.2s ease forwards;
 }
 
 @keyframes fade-in {
   from {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(-5px);
   }
   to {
     opacity: 1;
@@ -111,8 +85,26 @@
   }
 }
 
+.item-options::-webkit-scrollbar {
+  width: 4px;
+}
+
+.item-options::-webkit-scrollbar-thumb {
+  background-color: #E6E8EC;
+  border-radius: 4px;
+}
+
+.item-options::-webkit-scrollbar-thumb:hover {
+  background-color: #B1B5C3;
+}
+
+.item-options::-webkit-scrollbar-track {
+  background-color: #FFFFFF;
+  border-radius: 4px;
+}
+
 .option-item {
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   font-size: 14px;
   font-weight: 400;
 }
@@ -124,8 +116,9 @@
   font-size: 14px;
   font-weight: 400;
   position: relative;
-  padding-left: 25px; /* Пространство для чекбокса */
+  padding-left: 28px; /* Space for checkbox */
   cursor: pointer;
+  color: #23262F;
 }
 
 .checkbox-container input {
@@ -138,17 +131,15 @@
   position: absolute;
   top: 0;
   left: 0;
-  height: 20px;
-  width: 20px;
-  background-color: #e5e7f6;
-  border: 1px solid #d1d5f0;
-  border-radius: 4px;
-  transition: all 0.3s ease;
+  height: 18px;
+  width: 18px;
+  border: 1px solid #a58a83;
+  transition: all 0.2s ease;
 }
 
 .checkbox-container input:checked ~ .checkmark {
-  background-color: #6366f1;
-  border-color: #6366f1;
+  background-color: #a58a83; /* Blue color similar to image reference */
+  border-color: #a58a83;
 }
 
 .checkbox-container .checkmark:after {
@@ -162,20 +153,11 @@
 }
 
 .checkbox-container .checkmark:after {
-  left: 7px;
-  top: 3px;
+  left: 6px;
+  top: 2px;
   width: 5px;
   height: 10px;
   border: solid white;
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
-}
-
-.toggle-icon svg path {
-  fill: #8d8b8b; /* Цвет стрелки */
-  transition: fill 0.3s ease;
-}
-
-.list-item:hover .toggle-icon svg path {
-  fill: #6366f1; /* Цвет стрелки при наведении */
 }

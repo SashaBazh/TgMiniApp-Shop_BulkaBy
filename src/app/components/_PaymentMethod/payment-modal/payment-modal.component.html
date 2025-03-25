@@ -1,73 +1,84 @@
-<div class="payment-modal-container">
-    <h2>Заполните данные для оплаты</h2>
-    <form (ngSubmit)="submitPayment()">
+<form (submit)="submitPayment()">
+  <label for="email">Email:</label>
+  <input id="email" type="email" name="email" [(ngModel)]="paymentData.email" required />
 
-        <ng-container *ngIf="paymentData.payment_type === 'fiat' || paymentData.payment_type === 'coinpayments'; else fullPaymentForm">
-            <fieldset>
-                <legend>Введите Email для оплаты</legend>
-                <div>
-                    <label for="buyer-email">Email:</label>
-                    <input id="buyer-email" name="buyer-email" [(ngModel)]="paymentData.email" type="email" required />
-                </div>
-            </fieldset>
-        </ng-container>
-
-
-        <ng-template #fullPaymentForm>
-            <fieldset>
-                <legend>Информация о покупателе</legend>
-                <div>
-                    <label for="buyer-id">ID заказа:</label>
-                    <input id="buyer-id" name="buyer-id" [value]="paymentData.buyer.id" readonly />
-                </div>
-                <div>
-                    <label for="buyer-name">Имя:</label>
-                    <input id="buyer-name" name="buyer-name" [(ngModel)]="paymentData.buyer.name" required />
-                </div>
-                <div>
-                    <label for="buyer-surname">Фамилия:</label>
-                    <input id="buyer-surname" name="buyer-surname" [(ngModel)]="paymentData.buyer.surname" required />
-                </div>
-                <div>
-                    <label for="buyer-identity-number">Идентификационный номер:</label>
-                    <input id="buyer-identity-number" name="buyer-identity-number"
-                        [(ngModel)]="paymentData.buyer.identity_number" required />
-                </div>
-                <div>
-                    <label for="buyer-email">Email:</label>
-                    <input id="buyer-email" name="buyer-email" [(ngModel)]="paymentData.buyer.email" type="email"
-                        required />
-                </div>
-                <div>
-                    <label for="buyer-phone">Телефон:</label>
-                    <input id="buyer-phone" name="buyer-phone" [(ngModel)]="paymentData.buyer.gsm_number" required />
-                </div>
-                <div>
-                    <label for="buyer-address">Адрес регистрации:</label>
-                    <input id="buyer-address" name="buyer-address" [(ngModel)]="paymentData.buyer.registration_address"
-                        required />
-                </div>
-                <div>
-                    <label for="buyer-city">Город:</label>
-                    <input id="buyer-city" name="buyer-city" [(ngModel)]="paymentData.buyer.city" required />
-                </div>
-                <div>
-                    <label for="buyer-country">Страна:</label>
-                    <input id="buyer-country" name="buyer-country" [(ngModel)]="paymentData.buyer.country" required />
-                </div>
-                <div>
-                    <label for="buyer-zip">Почтовый индекс:</label>
-                    <input id="buyer-zip" name="buyer-zip" [(ngModel)]="paymentData.buyer.zip_code" required />
-                </div>
-                <div>
-                    <label for="buyer-ip">IP-адрес:</label>
-                    <input id="buyer-ip" name="buyer-ip" [value]="paymentData.buyer.ip" readonly />
-                </div>
-            </fieldset>
-        </ng-template>
-        <div>
-            <button type="submit">Подтвердить</button>
-            <button type="button" (click)="closePage()">Отмена</button>
+  <div *ngIf="isCardPayment">
+    <div class="payment-container">
+      <div class="card-preview">
+        <div class="card-inner">
+          <div class="card-front">
+            <div class="card-chip"></div>
+            <div class="card-number">
+              <span>{{ formattedCardNumber }}</span>
+            </div>
+            <div class="card-info">
+              <div class="card-holder">
+                {{ paymentData.cardHolder || 'ИМЯ ВЛАДЕЛЬЦА' }}
+              </div>
+              <div class="card-expiry">
+                {{ formattedCardExpiry }}
+              </div>
+            </div>
+          </div>
         </div>
-    </form>
-</div>
+      </div>
+    
+      <h2>Данные платежа</h2>
+  
+      <div class="form-group">
+        <label for="cardNumber">Номер карты</label>
+        <input 
+          id="cardNumber" 
+          type="text" 
+          name="cardNumber"
+          [(ngModel)]="paymentData.cardNumber" 
+          (input)="onCardNumberChange($event)"
+          maxlength="19" 
+          placeholder="0000 0000 0000 0000" 
+          required />
+      </div>
+  
+      <div class="card-details">
+        <div class="form-group half">
+          <label for="cardHolder">Имя владельца</label>
+          <input 
+            id="cardHolder" 
+            type="text" 
+            name="cardHolder"
+            [(ngModel)]="paymentData.cardHolder" 
+            placeholder="ИМЯ ФАМИЛИЯ" 
+            required />
+        </div>
+        
+        <div class="form-row">
+          <div class="form-group small">
+            <label for="cardExpiry">Срок действия</label>
+            <input 
+              id="cardExpiry" 
+              type="text" 
+              name="cardExpiry"
+              [(ngModel)]="paymentData.cardExpiry"
+              (input)="onCardExpiryChange($event)"
+              maxlength="5" 
+              placeholder="MM/ГГ" 
+              required />
+          </div>
+  
+          <div class="form-group small">
+            <label for="cardCvc">CVC</label>
+            <input 
+              id="cardCvc" 
+              type="text" 
+              name="cardCvc"
+              [(ngModel)]="paymentData.cardCvc" 
+              maxlength="3" 
+              placeholder="000" 
+              required />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button type="submit">Оплатить</button>
+</form>

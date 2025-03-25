@@ -11,13 +11,25 @@ import { ImageStreamService } from '../../services/_Image/image-stream.service';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
 import { ProfileService } from '../../services/_Profile/profile.service';
+import { ImagesSlidersComponent } from '../../components/_Home/images-sliders/images-sliders.component';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [NavigationComponent, HeaderComponent, ImageSliderComponent, CartItemComponent, RouterModule, CommonModule, TranslateModule, CommonModule, FormsModule],
+  imports: [
+    NavigationComponent,
+    HeaderComponent,
+    ImageSliderComponent,
+    CartItemComponent,
+    RouterModule,
+    CommonModule,
+    TranslateModule,
+    CommonModule,
+    FormsModule,
+    ImagesSlidersComponent,
+  ],
   templateUrl: './cart.component.html',
-  styleUrl: './cart.component.css'
+  styleUrl: './cart.component.css',
 })
 export class CartComponent implements OnInit {
   cart: CartResponse | null = null;
@@ -25,10 +37,14 @@ export class CartComponent implements OnInit {
   usedPoints: number = 0; // Используемые баллы
   initialTotalPrice: number = 0; // Исходная общая сумма
 
-  max_points_usage: number = 0; 
+  max_points_usage: number = 0;
   points_balance: number = 0;
 
-  constructor(private cartService: CartService, private imageService: ImageStreamService,  private userService: ProfileService) {}
+  constructor(
+    private cartService: CartService,
+    private imageService: ImageStreamService,
+    private userService: ProfileService
+  ) {}
 
   ngOnInit() {
     this.loadCart();
@@ -41,9 +57,10 @@ export class CartComponent implements OnInit {
           ...data,
           items: data.items.map((item) => ({
             ...item,
-            image: item.product.media && item.product.media.length > 0
-              ? this.imageService.getImageUrl(item.product.media[0])
-              : 'assets/default-image.png',
+            image:
+              item.product.media && item.product.media.length > 0
+                ? this.imageService.getImageUrl(item.product.media[0])
+                : 'assets/default-image.png',
             discounted_price: item.discounted_price ?? null, // Гарантируем, что undefined заменяется на null
           })),
         };
@@ -55,7 +72,7 @@ export class CartComponent implements OnInit {
         console.error('Ошибка при загрузке корзины:', err);
       },
     });
-  }  
+  }
 
   loadUserStatus() {
     this.userService.getUserStatus().subscribe({
@@ -64,15 +81,16 @@ export class CartComponent implements OnInit {
         this.points_balance = statusInfo.points_balance;
 
         // Рассчитываем максимально доступное количество поинтов
-        const potentialMaxPoints = this.initialTotalPrice * this.max_points_usage; 
+        const potentialMaxPoints =
+          this.initialTotalPrice * this.max_points_usage;
         this.maxPoints = Math.min(potentialMaxPoints, this.points_balance);
       },
       error: (err) => {
         console.error('Ошибка при получении статуса пользователя:', err);
-      }
+      },
     });
   }
-  
+
   onItemRemoved(productId: number) {
     console.log(`Товар с ID ${productId} удален`);
     this.loadCart(); // Перезагружаем данные корзины
@@ -88,12 +106,13 @@ export class CartComponent implements OnInit {
   //       console.error('Ошибка при обновлении корзины:', err);
   //     },
   //   });
-  // }  
-
+  // }
 
   onQuantityChanged(event: { productId: number; quantity: number }) {
     if (this.cart) {
-      const item = this.cart.items.find(i => i.product_id === event.productId);
+      const item = this.cart.items.find(
+        (i) => i.product_id === event.productId
+      );
       if (item) {
         item.quantity = event.quantity; // Обновляем количество локально
         this.updateTotalPrice(); // Пересчитываем итоговую цену
@@ -101,11 +120,13 @@ export class CartComponent implements OnInit {
       }
     }
   }
-  
-  
+
   updateTotalPrice() {
     if (this.cart) {
-      this.cart.total_price = this.cart.items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+      this.cart.total_price = this.cart.items.reduce(
+        (sum, item) => sum + item.price * item.quantity,
+        0
+      );
     }
   }
 
@@ -127,15 +148,27 @@ export class CartComponent implements OnInit {
   validatePointsInput(event: Event): void {
     const inputElement = event.target as HTMLInputElement;
     let value = inputElement.value;
-  
+
     // Убираем все символы, кроме цифр
     value = value.replace(/[^0-9]/g, '');
-  
+
     // Преобразуем в число и проверяем диапазон
     const numericValue = Math.min(Math.max(Number(value), 0), this.maxPoints);
-  
+
     // Обновляем значение инпута и переменной
     inputElement.value = numericValue.toString();
     this.usedPoints = numericValue;
+  }
+
+  usePoints: boolean = false;
+
+  togglePointsUsage() {
+    if (this.usePoints) {
+      this.usedPoints = this.maxPoints;
+      this.cart!.total_price = this.initialTotalPrice - this.usedPoints;
+    } else {
+      this.usedPoints = 0;
+      this.cart!.total_price = this.initialTotalPrice;
+    }
   }
 }

@@ -1,10 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-payment-method-item',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './payment-method-item.component.html',
   styleUrls: ['./payment-method-item.component.css']
 })

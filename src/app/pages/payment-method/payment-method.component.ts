@@ -62,14 +62,14 @@ export class PaymentMethodComponent implements OnInit {
     });
   }
   
-  handlePaymentMethodClick(paymentMethod: string): void {
-    if (['RUB', 'USD', 'LIRE'].includes(paymentMethod)) {
-      // Переходим на модалку оплаты
+  handlePaymentMethodClick(paymentMethod: string, isCard: boolean): void {
+    if (paymentMethod === 'RUB') {
       this.router.navigate(['/cart/address/payment/modal'], {
         queryParams: {
           orderId: this.orderId,
-          payment_type: 'fiat', // Указываем тип как 'fiat'
-          currency: paymentMethod, // Передаем выбранную валюту
+          payment_type: 'fiat',
+          currency: paymentMethod,
+          isCard: isCard ? 'true' : 'false', // Теперь корректно передаём
         },
       });
     } else if (paymentMethod === 'iyzipay') {
@@ -83,6 +83,8 @@ export class PaymentMethodComponent implements OnInit {
       console.error('[PaymentMethodComponent] Ошибка: Неподдерживаемый метод оплаты.');
     }
   }
+  
+  
   
   
   

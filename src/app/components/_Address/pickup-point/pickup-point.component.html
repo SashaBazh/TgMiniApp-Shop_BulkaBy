@@ -1,31 +1,15 @@
-<div class="pickup-point" [ngClass]="{ 'selected': pickupPoint.selected }">
+<div class="pickup-point">
     <div class="pickup-point-info">
-        <div class="pickup-point-name">
-            <a [href]="pickupPoint.link" target="_blank" rel="noopener noreferrer" class="link-black">
-                {{ pickupPoint.name }}
-            </a>
-        </div>  
-        <div class="pickup-point-name">
-            <a [href]="pickupPoint.link" target="_blank" rel="noopener noreferrer" class="link-black">
-                {{ pickupPoint.address }}
-            </a>
+        <div class="pickup-point-address" [ngClass]="{ 'selected': pickupPoint.selected }" (click)="selectPickupPoint()">
+            <div class="pickup-point-label">Адрес:</div>
+            <div class="pickup-point-location">{{ pickupPoint.address }}</div>
+            <div class="pickup-point-label">Время работы:</div>
+            <div class="pickup-point-hours">{{ pickupPoint.description }}</div>
+            <div class="pickup-point-image">
+                <img src="../../../../assets/payments/address.jpg" alt="Пункт выдачи" />
+            </div>
+            <div class="pickup-point-phone">{{ pickupPoint.name }}</div>
+            <div class="pickup-point-strip"></div>
         </div>
-        <div class="pickup-point-rating">
-            <span class="rating-value">{{ pickupPoint.rating.toFixed(1) }}</span>
-            <ng-container *ngFor="let offset of starOffsets; let i = index">
-                <svg class="star" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <!-- Фон звезды -->
-                    <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
-                        fill="#CCCCCC" />
-                    <!-- Закрашенная часть звезды -->
-                    <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
-                        fill="#FFB730" [attr.style]="'clip-path: ' + getClipPath(offset)" />
-                </svg>
-            </ng-container>
-        </div>
-        <div class="pickup-point-hours">{{ pickupPoint.description }}</div>
-    </div>
-    <div class="pickup-point-selector">
-        <div class="circle" [ngClass]="{ 'selected': pickupPoint.selected }"></div>
     </div>
 </div>

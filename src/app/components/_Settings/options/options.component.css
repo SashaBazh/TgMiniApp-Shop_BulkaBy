@@ -1,120 +1,111 @@
-/* Существующие стили */
 .options-container {
     display: flex;
     flex-direction: column;
-    gap: 8px; /* Отступ между кнопками */
+    gap: 8px;
 }
 
 .option-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #F3EBDA;
-    border-radius: 16px;
-    padding: 19px;
-    box-sizing: border-box;
+    padding: 12px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s, border-color 0.3s;
-    height: 70px; /* Фиксированная высота */
-    font-family: 'Montserrat', sans-serif;
+    transition: background-color 0.3s;
+    font-family: 'TrajanPro3', sans-serif;
     font-size: 18px;
     font-weight: 500;
-    color: #000000;
+    color: #a58a83;
 }
 
-.option-item:hover {
-    background-color: #EBDFC7; /* Цвет фона при наведении */
-}
-
-.option-title {
-    font-size: 21px;
-    font-weight: 500; /* Жирный текст */
-}
-
-.right-text {
-    color: #DCA74B;
+.option-item-admin {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-family: 'TrajanPro3', sans-serif;
     font-size: 18px;
-    font-weight: 500; /* Жирный текст */
-}
-
-/* Обновленные стили модального окна */
-.modal {
+    font-weight: 500;
+    color: #a58a83;
     position: fixed;
-    top: 0;
+    bottom: 0;
     left: 0;
     right: 0;
-    bottom: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.5);
+    margin: 0;
+    box-sizing: border-box;
     z-index: 1000;
 }
 
-.modal-content {
-    background-color: #F4EEE1; /* Такой же фон, как у .option-item */
-    padding: 20px;
-    border-radius: 16px; /* Такой же радиус скругления */
-    width: 320px;
-    text-align: center;
-    font-family: 'Montserrat', sans-serif;
-}
-
-.modal-content h3 {
-    font-size: 22px;
-    font-weight: 600;
-    margin-bottom: 20px;
-    color: #333;
-}
-
-.modal-content input[type="date"] {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #90A2CA;
-    border-radius: 8px;
-    font-size: 16px;
-    font-family: 'Montserrat', sans-serif;
-    box-sizing: border-box;
-    margin-bottom: 20px;
-}
-
-.modal-actions {
+.left-content {
     display: flex;
-    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
 }
 
-.modal-actions button {
-    flex: 1;
+.option-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.option-title {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.right-text {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.arrow-icon {
+    width: 16px;
+    height: 16px;
+    margin-left: 8px;
+    transition: transform 0.3s ease; /* Плавная анимация для поворота */
+}
+
+/* Стили для контейнера выбора даты */
+.date-picker-container {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
     padding: 12px;
-    margin: 0 5px;
-    background-color: #90A2CA;
-    color: #fff;
-    border: none;
+    border-radius: 8px;
+    font-family: 'TrajanPro3', sans-serif;
+    margin-top: 8px;
+}
+
+/* Стили для инпута даты */
+.date-picker-container input[type="date"] {
+    padding: 8px;
     border-radius: 8px;
     font-size: 16px;
-    font-family: 'Montserrat', sans-serif;
-    cursor: pointer;
-    transition: background-color 0.3s;
+    border: 1px solid #ccc;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-.modal-actions button:hover {
-    background-color: #7f90b3;
-}
-
-/* Общие стили для кнопок */
-button {
-    padding: 8px 16px;
-    margin: 5px;
+/* Стили для кнопки сохранения */
+.date-picker-container button {
+    padding: 10px 16px;
     border-radius: 8px;
-    cursor: pointer;
-    background-color: #90A2CA;
+    background-color: #a58a83;
     color: #fff;
     border: none;
-    font-family: 'Montserrat', sans-serif;
+    cursor: pointer;
     font-size: 16px;
     transition: background-color 0.3s;
+    align-self: flex-start; /* Кнопка по левому краю */
 }
 
-button:hover {
-    background-color: #7f90b3;
+.date-picker-container button:hover {
+    background-color: #b88b36;
+}
+
+/* Когда дата_picker открыт, поворачиваем стрелочку */
+.option-item .arrow-icon.rotated {
+    transform: rotate(180deg);
 }

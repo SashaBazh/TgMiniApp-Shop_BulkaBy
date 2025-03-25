@@ -1,98 +1,180 @@
-.payment-modal-container {
-  max-width: 800px;
-  margin: 0 auto;
-  background-color: #E9DABC; /* Цвет фона */
-  border-radius: 16px;
-  padding: 20px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  font-family: 'Montserrat', sans-serif;
+* {
+  box-sizing: border-box;
+  font-family: 'TrajanPro3', sans-serif;
 }
 
-.payment-modal-container h2 {
+.payment-container {
+  max-width: 500px;
+  margin: 30px auto;
+  padding: 0;
+}
+
+/* Card Preview Styles */
+.card-preview {
+  height: 200px;
+  perspective: 1000px;
+  margin-bottom: 30px;
+}
+
+.card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+}
+
+.card-front {
+  position: absolute;
+  width: 320px;
+  height: 200px;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  padding: 20px;
+  border-radius: 15px;
+  background: linear-gradient(135deg, #8a6a5d 0%, #a58a83 50%, #c0a99f 100%);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-chip {
+  width: 50px;
+  height: 40px;
+  background-color: rgba(255, 248, 242, 0.8);
+  border-radius: 8px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.card-chip::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 30px;
+  height: 20px;
+  background-color: rgba(165, 138, 131, 0.6);
+  transform: translate(-50%, -50%);
+  border-radius: 4px;
+}
+
+.card-number {
+  font-size: 22px;
+  letter-spacing: 2px;
   text-align: center;
-  font-size: 24px;
+  margin-bottom: 20px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.card-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Form Styles */
+form {
+  background-color: #fff8f2;
+  padding: 30px;
+  border-radius: 15px;
+}
+
+h2 {
+  color: #8a6a5d;
+  margin-top: 0;
+  margin-bottom: 20px;
+  text-align: center;
   font-weight: 600;
-  color: #333;
+}
+
+.form-group {
   margin-bottom: 20px;
 }
 
-.payment-modal-container form {
+.form-row {
   display: flex;
-  flex-direction: column;
-  gap: 16px;
+  gap: 15px;
 }
 
-.payment-modal-container fieldset {
-  border: 1px solid #D4DCFF;
-  border-radius: 12px;
-  padding: 15px;
-  margin-bottom: 16px;
-  background-color: #fff; /* Белый фон для полей */
-}
-
-.payment-modal-container legend {
-  font-size: 18px;
-  font-weight: 500;
-  color: #4A67A7;
-  padding: 0 10px;
-}
-
-.payment-modal-container label {
-  font-size: 14px;
-  font-weight: 500;
-  color: #333;
-  margin-bottom: 8px;
-  display: block;
-}
-
-.payment-modal-container input {
+.half {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #D4DCFF;
-  border-radius: 8px;
+}
+
+.small {
+  flex: 1;
+}
+
+label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #8a6a5d;
   font-size: 14px;
-  box-sizing: border-box;
-  margin-bottom: 10px;
-  background-color: #f9f9f9;
-  transition: border-color 0.3s;
 }
 
-.payment-modal-container input:focus {
-  border-color: #4A67A7;
-  outline: none;
-}
-
-.payment-modal-container button {
-  padding: 12px 20px;
+input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 2px solid #e0d3cc;
   border-radius: 8px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
+  background: #ffffff;
+  color: #555;
+  font-size: 15px;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input:focus {
+  outline: none;
+  border-color: #a58a83;
+  box-shadow: 0 0 0 3px rgba(165, 138, 131, 0.2);
+}
+
+input::placeholder {
+  color: #ccc;
+}
+
+button {
+  width: 100%;
+  padding: 14px;
+  background-color: #8a6a5d;
+  color: white;
   border: none;
-  transition: background-color 0.3s, color 0.3s;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 16px;
+  transition: background-color 0.3s, transform 0.1s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
 }
 
-.payment-modal-container button[type="submit"] {
-  background-color: #4A67A7;
-  color: #fff;
+button:hover {
+  background-color: #7d5d50;
 }
 
-.payment-modal-container button[type="submit"]:hover {
-  background-color: #3a5590;
+button:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
 }
 
-.payment-modal-container button[type="button"] {
-  background-color: #E9DABC;
-  color: #4A67A7;
+/* Card Details section */
+.card-details {
+  margin-bottom: 20px;
+  border-top: 1px solid #e0d3cc;
+  padding-top: 20px;
 }
 
-.payment-modal-container button[type="button"]:hover {
-  background-color: #d4dcff;
-  color: #333;
-}
 
-.payment-modal-container div {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-}
+
+
+
+
+
+
+

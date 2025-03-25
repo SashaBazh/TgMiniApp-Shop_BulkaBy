@@ -1,198 +1,136 @@
 .profile-info-container {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  font-family: 'Montserrat', sans-serif;
+  gap: 20px;
+  font-family: 'TrajanPro3', sans-serif;
   color: #333;
   margin-top: 60px;
 }
 
 .profile-avatar img {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
+  width: 105px;
+  height: 105px;
   object-fit: cover;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+}
+
+.profile-main {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .profile-details {
-  margin-top: 10px;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
 }
 
 .username {
-  font-size: 30px;
-  font-weight: bold;
-
+  font-size: 24px;
+  font-weight: 500;
 }
 
 .points {
-  display: block;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status {
   font-size: 14px;
-  font-weight: bold;
+  font-weight: 500;
 }
 
 .referral-link-container {
   display: flex;
+  flex-direction: column; /* Размещение элементов в столбец */
   align-items: center;
-  background-color: #F4EEE1;
-  border-radius: 8px;
-  padding: 16px 12px;
-  margin-top: 16px;
+  justify-content: center;
+  background: rgba(240, 209, 161, 0.3);
   width: 100%;
-  justify-content: space-between;
-  box-sizing: border-box;
-}
-
-.referral-label {
-  font-size: 14px;
-  font-weight: bold;
+  max-width: 300px;
+  height: auto;
+  padding: 10px;
+  border-radius: 8px;
+  cursor: pointer; /* Указатель, чтобы показать кликабельность */
 }
 
 .referral-link {
-  color: #5294FF;
+  color: #ffce52;
   text-decoration: none;
   font-size: 14px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-  max-width: 160px;
+  max-width: 190px;
 }
 
-.copy-button {
+
+
+/* .copy-button {
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0;
-  display: flex;
-  align-items: center;
 }
 
 .copy-button img {
   width: 25px;
   height: 25px;
-}
+} */
+
+/* Остальные стили остаются без изменений */
 
 .friends-list-container {
-  background-color: #F4EEE1;
-  border-radius: 8px;
+  background: #a58a83;
+  font-family: 'TrajanPro3', sans-serif;
   width: 100%;
-  margin-top: 8px;
-  padding: 12px;
+  margin-top: 12px;
   box-sizing: border-box;
+  border-radius: 2px;
 }
 
 .friends-header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   font-weight: bold;
-  font-size: 14px;
-  color: #333;
-  background-color: #E6D8BA;
-  /* Цвет фона верхней части */
-  padding: 12px;
-  border-radius: 8px 8px 0 0;
-  /* Скругленные верхние углы */
-  margin: -12px -12px 8px -12px;
-  /* Убираем внутренний отступ, чтобы совпало с фоном контейнера */
+  font-size: 15px;
+  color: #222;
+  background: linear-gradient(135deg, #F0D1A1, #E6B87E); /* Градиентный фон */
+  padding: 14px;
+  border-radius: 12px 12px 0 0;
 }
 
 .friend-item {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   font-size: 14px;
-  color: #333;
-  padding: 8px 0;
-  border-bottom: 1px solid #d4dcff;
-}
-
-.friend-item:last-child {
-  border-bottom: none;
-  /* Убираем нижнюю границу у последнего элемента */
+  color: #222;
+  padding: 12px 0;
+  padding: 16px;
+  transition: background 0.3s ease-in-out;
+  background: #EFE5E1;
 }
 
 .friend-username {
-  color: #333;
+  font-weight: 500;
+  color: #444;
 }
 
 .friend-points {
-  color: #5294FF;
+  font-weight: 500;
+  color: #a58a83; /* Новый цвет очков */
 }
 
-
-/* Общие стили для статуса */
-.status {
-  font-size: 18px;
-  font-weight: bold;
-  font-family: 'Montserrat', sans-serif;
-  text-transform: uppercase;
-  display: inline-block;
-  white-space: nowrap;
-}
-
-/* Градиент текста с анимацией */
-.status-gold {
-  background: linear-gradient(90deg, #ffd700, #ffcc00, #e6b800, #ffd700); /* Повтор градиента для плавности */
-  background-size: 200% 200%; /* Увеличение размеров для плавного движения */
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -moz-background-clip: text;
-  -moz-text-fill-color: transparent;
-  animation: gradient-move 3s infinite linear;
-}
-
-.status-black {
-  background: linear-gradient(90deg, #333333, #666666, #333333);
-  background-size: 200% 200%;
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -moz-background-clip: text;
-  -moz-text-fill-color: transparent;
-  animation: gradient-move 3s infinite linear;
-}
-
-.status-diamond {
-  background: linear-gradient(90deg, #a9f1ff, #ffffff, #d4fc79, #a9f1ff);
-  background-size: 200% 200%;
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -moz-background-clip: text;
-  -moz-text-fill-color: transparent;
-  animation: gradient-move 3s infinite linear;
-}
-
-.status-silver {
-  background: linear-gradient(90deg, #c0c0c0, #e0e0e0, #b0b0b0, #c0c0c0);
-  background-size: 200% 200%;
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  -moz-background-clip: text;
-  -moz-text-fill-color: transparent;
-  animation: gradient-move 3s infinite linear;
-}
-
-/* Анимация движения градиента */
-@keyframes gradient-move {
-  0% {
-    background-position: 0% 50%;
-  }
-  100% {
-    background-position: 100% 50%;
-  }
-}
 
 .my-purchases-button {
-  background-color: #F4EEE1;
-  color: #000000;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 18px;
+  background: #a58a83;
+  color: #fff8f2;
+  font-family: 'TrajanPro3', sans-serif;
+  font-size: 16px;
   font-weight: 500;
-  border-radius: 8px;
-  padding: 15px 20px;
+  padding: 5px 10px;
+  border-radius: 2px;
   text-align: center;
   cursor: pointer;
   outline: none; /* Убирает стандартный outline */
@@ -200,4 +138,16 @@
   width: 100%;
   margin-top: 8px;
   border: none; /* Убирает возможную черную рамку от границы */
+}
+
+.invite-button {
+  background-color: #a58a83;
+  color: #fff8f2;
+  border: none;
+  padding: 10px 15px;
+  font-size: 18px;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.3s;
 }

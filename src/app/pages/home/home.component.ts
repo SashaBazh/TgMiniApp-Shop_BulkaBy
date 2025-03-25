@@ -9,6 +9,7 @@ import { CataloggeneralComponent } from '../../components/_General/cataloggenera
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ProfileService } from '../../services/_Profile/profile.service';
 import { TelegramService } from '../../services/_Telegram/telegram.service';
+import { RecomendationsComponent } from '../../components/_Catalog/recomendations/recomendations.component';
 
 @Component({
   selector: 'app-home',
@@ -22,6 +23,7 @@ import { TelegramService } from '../../services/_Telegram/telegram.service';
     CatalogButtonComponent,
     CataloggeneralComponent,
     TranslateModule,
+    RecomendationsComponent
   ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],

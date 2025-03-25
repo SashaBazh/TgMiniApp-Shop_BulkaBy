@@ -1,0 +1,74 @@
+.catalog {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding-left: 8px;
+    padding-right: 8px;
+    height: 100vh;
+    padding-bottom: 4px; /* Отступ снизу */
+    overflow-y: auto; /* Вертикальная прокрутка */
+}
+
+.section-title {
+    font-family: 'TrajanPro3', sans-serif;
+    font-size: 24px;
+    font-weight: 400;
+    color: #000000;
+    margin: 8px 0 8px 8px;
+}
+
+.catalog-items {
+    display: flex;
+    flex-direction: column; /* Располагаем элементы в столбец */
+    gap: 12px; /* Отступ между элементами */
+    overflow-y: auto; /* Вертикальная прокрутка */
+    scroll-snap-type: y mandatory; /* Прокрутка по фрагментам */
+    -webkit-overflow-scrolling: touch; /* Плавная прокрутка на мобильных устройствах */
+    padding-bottom: 60px; /* Отступ снизу */
+}
+
+.catalog-items::-webkit-scrollbar {
+    width: 4px; /* Ширина полосы прокрутки */
+}
+
+.catalog-items::-webkit-scrollbar-thumb {
+    background: #a58a83; /* Цвет полосы прокрутки */
+    border-radius: 10px;
+}
+
+.catalog-item {
+    width: 100%; /* Полная ширина контейнера */
+    height: 220px; /* Увеличенная высота */
+    background-color: #E5E7F6;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    padding: 12px;
+    scroll-snap-align: start; /* Фиксация элемента при прокрутке */
+}
+
+.item-image {
+    width: 100%;
+    height: 70%;
+    background-color: #e0e0e0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.item-name {
+    font-family: 'TrajanPro3', serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: #3b3434;
+    text-align: center;
+}
+
+.item-line {
+    width: 80%;
+    height: 2px;
+    background-color: #3b3434;
+    margin-top: 4px;
+}

@@ -4,7 +4,7 @@
 }
 
 .section-title {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'TrajanPro3', serif;
   font-size: 24px;
   font-weight: 500;
   color: #000000;
@@ -13,7 +13,7 @@
 }
 
 .section-title2 {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'TrajanPro3', serif;
   font-size: 24px;
   font-weight: 500;
   color: #000000;
@@ -28,4 +28,14 @@
 .newjeverly {
   /* margin-top: -150px; */
   padding-bottom: 24px;
+}
+
+.bakery-description {
+  font-family: 'TrajanPro3', serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #000000;
+  margin: 16px;
+  text-align: left;
+  line-height: 1.5;
 }

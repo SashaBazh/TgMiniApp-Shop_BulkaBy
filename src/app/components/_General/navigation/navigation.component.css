@@ -41,7 +41,7 @@
     justify-content: space-around;
     align-items: center;
     z-index: 1000;
-    background-color: white;
+    background-color: #fff8f2;
     border-top: 1px solid #E5E7F6;
 }
 
@@ -54,6 +54,8 @@
 }
 
 .nav-item.active img {
-    filter: invert(72%) sepia(50%) saturate(643%) hue-rotate(176deg) brightness(97%) contrast(95%);
+    filter: invert(25%) sepia(50%) saturate(100%) hue-rotate(340deg) brightness(110%) contrast(85%);
 }
+
+
 

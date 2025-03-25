@@ -79,7 +79,7 @@ export class ImageSliderComponent implements OnInit, OnDestroy {
     this.intervalId = window.setInterval(() => {
       this.next();
       this.cdr.detectChanges();
-    }, 5000);
+    }, 3000);
   }
 
   private stopSlideshow() {

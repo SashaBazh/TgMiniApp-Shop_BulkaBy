@@ -1,56 +1,71 @@
 .catalog {
-    max-width: 1440px;
-    margin: 0 auto;
-    padding-left: 8px;
-    padding-right: 8px;
-    height: 90%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding-left: 8px;
+  padding-right: 8px;
+  height: 90%;
+  padding-bottom: 4px; /* Отступ снизу */
 }
 
 .section-title {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 24px;
-    font-weight: 400;
-    color: #000000;
-    margin: 8px 0 8px 8px; /* Отступ снизу - 8px */
+  font-family: 'TrajanPro3', sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  color: #000000;
+  margin: 8px 0 8px 8px;
 }
 
 .catalog-items {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Два столбца */
-    gap: 8px; /* Отступ между элементами */
-    padding-bottom: 8px; /* Отступ снизу для секции */
+  display: flex; /* Используем flex для горизонтальной раскладки */
+  gap: 8px; /* Отступ между элементами */
+  overflow-x: auto; /* Разрешаем горизонтальную прокрутку */
+  scroll-snap-type: x mandatory; /* Прокрутка по фрагментам */
+  -webkit-overflow-scrolling: touch; /* Плавная прокрутка на мобильных устройствах */
+  padding-bottom: 4px; /* Отступ снизу */
 }
 
+.catalog-items::-webkit-scrollbar {
+  height: 2px; /* Толщина полосы прокрутки */
+}
 
-.loading-indicator {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100px;
-  }
-  
-  .loader {
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid #e0e0e0;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    animation: spin 1s linear infinite;
-  }
-  
-  @keyframes spin {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-  
-  .error-message {
-    text-align: center;
-    color: red;
-    font-size: 16px;
-    margin-top: 20px;
-  }
-  
+.catalog-items::-webkit-scrollbar-thumb {
+  background: #a58a83; /* Цвет полосы прокрутки */
+  border-radius: 10px;
+}
+
+.catalog-item {
+  flex: 0 0 auto; /* Категории не будут растягиваться, а будут иметь фиксированную ширину */
+  width: 140px; /* Ширина каждого элемента */
+  height: 186px; /* Высота каждого элемента */
+  background-color: #E5E7F6;
+  border-radius: 12px 12px 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.item-image {
+  width: 100%;
+  height: 70%;
+  background-color: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.item-name {
+  font-family: 'TrajanPro3', serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #3b3434;
+  text-align: center;
+}
+
+.item-line {
+  width: 80%;
+  height: 2px;
+  background-color: #3b3434;
+  margin-top: 4px;
+}

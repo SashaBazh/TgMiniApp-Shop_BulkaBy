@@ -1,24 +1,63 @@
+<!-- products.component.html -->
 <app-headerback [pageTitle]="'CATALOG' | translate"></app-headerback>
-<section class="category-page">
-  <h2 class="category-title">{{ categoryName | capitalize }}</h2>
+
+<!-- New filters and search toolbar -->
+<div class="toolbar">
+  <div class="toolbar-left" (click)="toggleFilters()">
+    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <rect width="30" height="30" fill="url(#pattern0_31_9)"/>
+      <defs>
+      <pattern id="pattern0_31_9" patternContentUnits="objectBoundingBox" width="1" height="1">
+      <use xlink:href="#image0_31_9" transform="scale(0.0333333)"/>
+      </pattern>
+      <image id="image0_31_9" width="30" height="30" preserveAspectRatio="none" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAACXBIWXMAAAsTAAALEwEAmpwYAAABeElEQVR4nO2Wv0vDQBSAT0FEHMVBcHBw6OAgiJOLi4tTNycnF3Fx0zHkvab2XVKhbtm0uWeh4OroYJcu/gMODoKIIIggomiNNLkWKVTbmlSw+SBDkvfuux8vlxMiYaBQEios0Y/jUhIqfyJmieffjrq0Z8ww4V0QTFDoefYIDkIh3BezxmxnSdJcUgQvodzc6lpq40Y4vfjq2bjcZY9xTRF8KIJ3JljtNO84Z64oiW9hLq532+kAJcEKR42PRduaEz/AjpViwodgtIQZ0Su+7w8pwpJe76uyZU22iz3KZieUxEtdSCeGYQyL31DO58cUYbXxSZwWCqOtMa7rjrDEM11MF0XbHhdR4O1nphTBtW74sPU9S3R1Md14OWNaRImSmXkmeNKCnaaUYDdcU3j2bHMxUmkDJkjrNaw1n0ms6RpIizhhvRO1u0/EkcHJVMtBKS5F5mZzH++nmL8eawhv+yOm+gkFykywzQ4s1P9i8YsdKxW7JOFf8AmY9ag9jn3ZywAAAABJRU5ErkJggg=="/>
+      </defs>
+      </svg>
+      
+    <span >{{ 'FILTERS' | translate }}</span>
+  </div>
+  <div class="toolbar-right" (click)="toggleSearch()">
+    <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <rect width="30" height="30" fill="url(#pattern0_30_8)"/>
+      <defs>
+      <pattern id="pattern0_30_8" patternContentUnits="objectBoundingBox" width="1" height="1">
+      <use xlink:href="#image0_30_8" transform="scale(0.0333333)"/>
+      </pattern>
+      <image id="image0_30_8" width="30" height="30" preserveAspectRatio="none" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAACXBIWXMAAAsTAAALEwEAmpwYAAACAElEQVR4nO2WwWoVMRSGB23vxtadQl+h9h2s+y6saF+htFSrvkCYnBmYcwJClwOubnKmMC/hUhA3tkIr1e5dtwtdVU4m046b60xuuQjtgcDA5M+XnOT8SZLcxv8StVKjyugNR7pigmNGfe6b/waWf9LnWqGu0M+Y4AcTXExqDvV3S9n61ECl1B1HQJ2BvziTvbImXx4bc09aVehHjHqXCQ46kyhEG79SaqAO9S8m2Jw0mPxjgq3Q18OnSe+FHwjTx3111sDqJRz100HQWqlRZ083h06aMd0O2pOyLOd7CyujN9o9jdmruq7vMupDGcMW+nlvoUPYF1FF8DKJDEvZaz950m4AWH/zszX5cizYn/Ym3cf9wQRnIqqVWogFv0dcbFYMZzMF2z11fzgYp0/12OQr7cnuLWIEDnW4GwtmgrdNZYAdXE5McBBbTo7gazNG9qK/UKmRGH6Abw0Fc5HuhIydflBqbpDYUrbeWqbYYF+dw/SJI/gdtGtJTDBB0fHrbUnhRLcq0p0Wygg/6zx/EAVWzY3j4SF1h+JIYg5SatLk9DrUb672tIG2/cdGPYyCS8gtI2Xxr4eA7KmkV1baevXU8LIs58XwxXsd6iNvMs3T50RKRk5v9yAJ7NrgQ8OvPLxMZLL2XbaU3Aj4+K+0w6eZga/g8JlJf5wp+DaSEH8ApJTlQq2coVAAAAAASUVORK5CYII="/>
+      </defs>
+      </svg>
+      
+  </div>
+</div>
+
+<!-- Collapsible search panel -->
+<div class="search-panel" [class.active]="isSearchActive">
   <app-search (search)="onSearch($event)"></app-search>
-  <div class="filters">
-    <app-filters [items]="filters" [preselectedFilters]="selectedFilters" (filtersChanged)="onFiltersChanged($event)">
-    </app-filters>
-  </div>
+</div>
 
-  <div class="products-container">
-    <!-- <p *ngIf="isLoading" class="loading-text">{{ 'ENTER_QUERY' | translate }}</p> -->
-    <div *ngIf="isLoading" class="loading-indicator">
-      <div class="loader"></div>
-    </div>
+<!-- Collapsible filters panel -->
+<div class="filters-panel" [class.active]="isFiltersActive">
+  <app-filters [items]="filters" [preselectedFilters]="selectedFilters" (filtersChanged)="onFiltersChanged($event)">
+  </app-filters>
+</div>
 
-    <p *ngIf="!isLoading && !products?.length" class="no-results-text">
-      {{ 'NOT_FOUND_FOR_CATEGORY' | translate }} "{{ categoryName }}" 😞
-    </p>
-    <div class="product-row" *ngFor="let row of getRows(products)">
-      <app-product-card *ngFor="let product of row" [product]="product" (click)="openProduct(product.id)">
-      </app-product-card>
-    </div>
+<!-- Loading indicator -->
+<div class="loading-indicator" *ngIf="isLoading">
+  <div class="loader"></div>
+</div>
+
+<!-- No results message -->
+<div class="no-results-text" *ngIf="!isLoading && products.length === 0">
+  {{ 'PRODUCT_LIST.NO_PRODUCTS' | translate }}
+</div>
+
+<!-- Products container -->
+<div class="products-container" *ngIf="!isLoading && products.length > 0">
+  <div class="product-row" *ngFor="let row of getRows(products)">
+    <app-product-card 
+      *ngFor="let product of row" 
+      [product]="product" 
+      (click)="openProduct(product.id)">
+    </app-product-card>
   </div>
-</section>
+</div>

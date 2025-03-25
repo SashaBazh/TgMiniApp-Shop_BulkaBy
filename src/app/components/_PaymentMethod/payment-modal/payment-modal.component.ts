@@ -6,26 +6,37 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { PaymentService } from '../../../services/_Payment/payment.service';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { TelegramService } from '../../../services/_Telegram/telegram.service';
+import { IonicModule } from '@ionic/angular';
 
 @Component({
   selector: 'app-payment-modal',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, IonicModule],
   templateUrl: './payment-modal.component.html',
-  styleUrl: './payment-modal.component.css'
+  styleUrl: './payment-modal.component.css',
 })
 export class PaymentModalComponent implements OnInit {
+  isCardPayment = false;
+  
+  // Добавим свойства для форматированного отображения
+  formattedCardNumber = '•••• •••• •••• ••••';
+  formattedCardExpiry = 'MM/ГГ';
+  
   paymentData = {
     order_id: null as number | null,
     currency: 'USD',
-    payment_type: 'iyzipay',
-    email: '', // Добавлено поле email на верхнем уровне
+    payment_type: 'fiat',
+    email: '',
+    cardNumber: '',
+    cardExpiry: '',
+    cardCvc: '',
+    cardHolder: '',
     buyer: {
-      id: '', // ID заказа будет установлен автоматически
+      id: '',
       name: '',
       surname: '',
       identity_number: '',
-      email: '', // Это значение будет дублироваться на верхнем уровне
+      email: '',
       gsm_number: '',
       registration_date: '',
       last_login_date: '',
@@ -33,7 +44,7 @@ export class PaymentModalComponent implements OnInit {
       city: '',
       country: '',
       zip_code: '',
-      ip: '', // IP будет установлен автоматически
+      ip: '',
     },
     shipping_address: {
       contact_name: '',
@@ -51,126 +62,153 @@ export class PaymentModalComponent implements OnInit {
     },
   };
 
-  isCoinpayments = false;
-  paymentUrl: SafeResourceUrl | null = null;
-
   constructor(
     private route: ActivatedRoute,
     private http: HttpClient,
     private router: Router,
     private paymentService: PaymentService,
     private telegramService: TelegramService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.route.queryParamMap.subscribe((params) => {
       const orderId = params.get('orderId');
       const paymentType = params.get('payment_type');
       const currency = params.get('currency');
+      const isCard = params.get('isCard') === 'true';
 
       if (orderId) {
         this.paymentData.order_id = Number(orderId);
-        this.paymentData.buyer.id = `${orderId}`;
-        console.log('Order ID установлен:', orderId);
-      } else {
-        console.error('Не удалось получить идентификатор заказа из маршрута.');
       }
 
       if (paymentType === 'fiat' && currency) {
-        this.isCoinpayments = false;
+        this.isCardPayment = isCard;
         this.paymentData.payment_type = 'fiat';
         this.paymentData.currency = currency;
-
-        this.paymentData.buyer = {
-          id: `${orderId}`,
-          name: '',
-          surname: '',
-          identity_number: '',
-          email: '', // Оставляем только email
-          gsm_number: '',
-          registration_date: '',
-          last_login_date: '',
-          registration_address: '',
-          city: '',
-          country: '',
-          zip_code: '',
-          ip: '',
-      };
-      }
-
-      if (paymentType === 'coinpayments' && currency) {
-        // Для coinpayments оставляем только email
-        this.isCoinpayments = true;
-        this.paymentData.payment_type = 'coinpayments';
-        this.paymentData.currency = currency;
-        // Очищаем лишние поля, если хотите
-        // Можно просто их игнорировать при сабмите
-      } else {
-        // Обычный сценарий iyzipay, если таковой есть
       }
     });
-
-    // Устанавливаем даты и IP, если нужно
-    const currentDate = this.formatDateToIyzico(new Date());
-    this.paymentData.buyer.registration_date = currentDate;
-    this.paymentData.buyer.last_login_date = currentDate;
+    
     this.fetchIpAddress();
   }
 
+  // Метод форматирования номера карты (ввод: "1234567812345678", вывод: "1234 5678 1234 5678")
+  formatCardNumber(value: string): string {
+    // Удаляем все нецифровые символы
+    const val = value.replace(/\D/g, '');
+    
+    // Ограничиваем длину до 16 цифр
+    const cardNumber = val.substring(0, 16);
+    
+    // Форматируем по 4 цифры с пробелами
+    const parts = [];
+    for (let i = 0; i < cardNumber.length; i += 4) {
+      parts.push(cardNumber.substring(i, i + 4));
+    }
+    
+    // Обновляем отформатированное значение для отображения
+    this.formattedCardNumber = parts.join(' ');
+    if (this.formattedCardNumber.trim() === '') {
+      this.formattedCardNumber = '•••• •••• •••• ••••';
+    }
+    
+    // Возвращаем неформатированное значение (только цифры) для хранения в модели
+    return cardNumber;
+  }
+
+  // Обработчик изменения номера карты
+  onCardNumberChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.paymentData.cardNumber = this.formatCardNumber(input.value);
+    
+    // Устанавливаем курсор в правильную позицию после форматирования
+    const cursorPosition = input.selectionStart || 0;
+    setTimeout(() => {
+      input.value = this.formattedCardNumber;
+      // Рассчитываем новую позицию курсора (добавляем пробелы)
+      const newPosition = Math.min(
+        this.formattedCardNumber.length,
+        cursorPosition + Math.floor((cursorPosition - 1) / 4)
+      );
+      input.setSelectionRange(newPosition, newPosition);
+    }, 0);
+  }
+
+  // Метод форматирования срока действия (ввод: "1234", вывод: "12/34")
+  formatCardExpiry(value: string): string {
+    // Удаляем все нецифровые символы
+    const val = value.replace(/\D/g, '');
+    
+    // Ограничиваем длину до 4 цифр
+    const expiry = val.substring(0, 4);
+    
+    // Форматируем как MM/YY
+    let formattedExpiry = '';
+    if (expiry.length > 0) {
+      formattedExpiry = expiry.substring(0, 2);
+      if (expiry.length > 2) {
+        formattedExpiry += '/' + expiry.substring(2);
+      }
+    }
+    
+    // Обновляем отформатированное значение для отображения
+    this.formattedCardExpiry = formattedExpiry || 'MM/ГГ';
+    
+    // Возвращаем неформатированное значение для хранения в модели
+    return expiry;
+  }
+
+  // Обработчик изменения срока действия карты
+  onCardExpiryChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    this.paymentData.cardExpiry = this.formatCardExpiry(input.value);
+    
+    // Устанавливаем курсор в правильную позицию после форматирования
+    const cursorPosition = input.selectionStart || 0;
+    setTimeout(() => {
+      input.value = this.formattedCardExpiry === 'MM/ГГ' ? '' : this.formattedCardExpiry;
+      // Рассчитываем новую позицию курсора (учитываем символ '/')
+      const newPosition = Math.min(
+        (this.formattedCardExpiry === 'MM/ГГ' ? 0 : this.formattedCardExpiry.length),
+        cursorPosition + (cursorPosition > 2 ? 1 : 0)
+      );
+      input.setSelectionRange(newPosition, newPosition);
+    }, 0);
+  }
+
   fetchIpAddress(): void {
-    this.http.get<{ ip: string }>('https://api.ipify.org?format=json').subscribe({
-      next: (response) => {
-        this.paymentData.buyer.ip = response.ip;
-        console.log('IP-адрес установлен:', response.ip);
-      },
-      error: (err) => {
-        console.error('Ошибка получения IP-адреса:', err);
-      },
-    });
+    this.http
+      .get<{ ip: string }>('https://api.ipify.org?format=json')
+      .subscribe({
+        next: (response) => {
+          this.paymentData.buyer.ip = response.ip;
+          console.log('IP-адрес установлен:', response.ip);
+        },
+        error: (err) => {
+          console.error('Ошибка получения IP-адреса:', err);
+        },
+      });
   }
 
   closePage(): void {
     console.log('Отмена ввода данных');
-    this.router.navigate(['/cart/address/payment'], { queryParams: { orderId: this.paymentData.order_id } });
+    this.router.navigate(['/cart/address/payment'], {
+      queryParams: { orderId: this.paymentData.order_id },
+    });
   }
 
   submitPayment(): void {
+    console.log('Email перед отправкой:', this.paymentData.email);
+  
     if (!this.paymentData.order_id) {
       console.error('Ошибка: Идентификатор заказа не задан!');
       return;
     }
   
-    // Для CoinPayments
-    if (this.isCoinpayments) {
-      const paymentRequest = {
-        order_id: this.paymentData.order_id,
-        currency: this.paymentData.currency,
-        payment_type: 'coinpayments',
-        email: this.paymentData.email, // Берем email с верхнего уровня
-      };
-  
-      console.log('[PaymentModalComponent] Отправка запроса для CoinPayments:', paymentRequest);
-  
-      this.paymentService.createPayment(paymentRequest).subscribe({
-        next: (response) => {
-          console.log('Ответ сервера для CoinPayments:', response);
-  
-          if (response.payment_url) {
-            // Открываем ссылку в новой вкладке
-            window.location.href = response.payment_url;
-          } else {
-            console.error('Ошибка: Ссылка на оплату отсутствует.');
-          }
-        },
-        error: (error) => {
-          console.error('Ошибка при создании платежа для CoinPayments:', error);
-        },
-      });
-  
-      return; // Прекращаем выполнение, так как обработали CoinPayments
+    if (!this.paymentData.email) {
+      console.error('Ошибка: Email не задан!');
+      return;
     }
   
-    // Для фиатных платежей (RUB, USD, LIRE)
     if (this.paymentData.payment_type === 'fiat') {
       const paymentRequest = {
         order_id: this.paymentData.order_id,
@@ -179,78 +217,55 @@ export class PaymentModalComponent implements OnInit {
         email: this.paymentData.email,
       };
   
-      console.log('[PaymentModalComponent] Отправка запроса для Fiat:', paymentRequest);
+      console.log(
+        '[PaymentModalComponent] Отправка запроса для Fiat:',
+        paymentRequest
+      );
   
       this.paymentService.createPayment(paymentRequest).subscribe({
         next: (response) => {
           console.log('Фиатный платеж успешно создан:', response);
+          this.router.navigate(['/home']);
   
           if (this.telegramService.isTelegramWebAppAvailable()) {
-            this.telegramService.showTelegramAlert('Платеж успешно создан. Ожидайте подтверждения от менеджера.');
+            this.telegramService.showTelegramAlert(
+              'Платеж успешно создан. Ожидайте подтверждения от менеджера.'
+            );
           } else {
-            alert('Платеж успешно создан. Ожидайте подтверждения от менеджера.');
+            alert(
+              'Платеж успешно создан. Ожидайте подтверждения от менеджера.'
+            );
           }
   
-          // Перенаправление на страницу с заказом
           this.router.navigate(['/home']);
         },
         error: (error) => {
           console.error('Ошибка при создании фиатного платежа:', error);
           if (this.telegramService.isTelegramWebAppAvailable()) {
-            this.telegramService.showTelegramAlert('Ошибка при создании платежа. Попробуйте еще раз.');
+            this.telegramService.showTelegramAlert(
+              'Ошибка при создании платежа. Попробуйте еще раз.'
+            );
           } else {
             alert('Ошибка при создании платежа. Попробуйте еще раз.');
           }
         },
       });
-      return; // Завершаем выполнение для фиатных платежей
+      return;
     }
-  
-    // Для Iyzico
-    this.paymentData.email = this.paymentData.buyer.email; // Копируем email из buyer в верхний уровень
-    console.log('[PaymentModalComponent] Отправка данных для Iyzico:', this.paymentData);
-  
-    this.paymentService.createPayment(this.paymentData).subscribe({
-      next: (response) => {
-        console.log('Ответ сервера для Iyzico:', response);
-  
-        if (response.payment_page_url) {
-          // Перенаправляем на компонент payment-link
-          this.router.navigate(['/payment-link'], {
-            queryParams: {
-              url: response.payment_page_url,
-              orderId: this.paymentData.order_id,
-            },
-          });
-        } else {
-          console.error('Ошибка: Ссылка на оплату отсутствует.');
-        }
-      },
-      error: (error) => {
-        console.error('Ошибка при создании платежа для Iyzico:', error);
-      },
-    });
   }
-  
 
   showSuccessNotification(): void {
     if (this.paymentData.payment_type === 'fiat') {
-      this.paymentData.currency && alert(`Платеж в валюте ${this.paymentData.currency} успешно создан.`);
+      this.paymentData.currency &&
+        alert(`Платеж в валюте ${this.paymentData.currency} успешно создан.`);
     }
   }
-  
+
   showErrorNotification(): void {
     alert('Ошибка при создании фиатного платежа. Попробуйте еще раз.');
   }
-  
 
-  private formatDateToIyzico(date: Date): string {
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    const hours = String(date.getHours()).padStart(2, '0');
-    const minutes = String(date.getMinutes()).padStart(2, '0');
-    const seconds = String(date.getSeconds()).padStart(2, '0');
-    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+  confirmOrder(): void {
+    this.router.navigate(['/home']);
   }
 }

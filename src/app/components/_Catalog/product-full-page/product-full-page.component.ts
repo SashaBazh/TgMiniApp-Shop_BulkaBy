@@ -20,6 +20,7 @@ export class ProductFullPageComponent {
   product: any = null;
   mainAttributes: { name: string; value: any }[] = [];
   extraAttributes: { name: string; value: any }[] = [];
+  allAttributes: { name: string; value: any }[] = [];
   showDetails = false;
   showMoreInfo: boolean = false;
   videoLoading: boolean = false;
@@ -92,23 +93,21 @@ export class ProductFullPageComponent {
 
     this.isLoadingAttributes = true; // Начинаем подготовку
 
-    const allAttributes = Array.isArray(this.product.attribute_values)
+    this.allAttributes = Array.isArray(this.product.attribute_values)
       ? this.product.attribute_values.map((attr: any) => ({
         name: attr.attribute?.name || 'Unknown Attribute',
         value: attr.value || 'N/A',
       }))
       : [];
 
-    this.mainAttributes = allAttributes.slice(0, 3);
-    this.extraAttributes = allAttributes.slice(3);
-
-    if (this.product.description) {
-      const descriptionLabel = this.translate.instant('DESCRIPTION');
-      this.extraAttributes.unshift({ name: descriptionLabel, value: this.product.description });
-    }
+    // if (this.product.description) {
+    //   const descriptionLabel = this.translate.instant('DESCRIPTION');
+    //   this.allAttributes.unshift({ name: descriptionLabel, value: this.product.description });
+    // }
 
     this.isLoadingAttributes = false; // Завершаем подготовку
-  }
+}
+
 
 
 

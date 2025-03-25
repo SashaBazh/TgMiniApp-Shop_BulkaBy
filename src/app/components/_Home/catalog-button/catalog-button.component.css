@@ -1,17 +1,19 @@
 .catalog-button {
-    background-color: #EBEDF7;
-    font-family: 'Montserrat', sans-serif;
+    background: #a58a83; /* Полупрозрачный фон */
+    font-family: 'TrajanPro3', serif;
     font-size: 20px;
     font-weight: 500;
-    border-radius: 16px;
+    border-radius: 8px;
     padding: 15px 20px;
     text-align: center;
     width: 96%;
     box-sizing: border-box; /* Учитывает padding при вычислении ширины */
-    color: #000000;
-    border: none;
+    color: #fff8f2;
+    border: 1px solid rgba(240, 209, 161, 0.3); /* Полупрозрачная граница */
     outline: none;
-    border: 1px solid #C3C9E6;
-    margin-left: 8px; /* Убирает боковые отступы */
+    margin-left: 8px; 
     margin-right: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
 }
+

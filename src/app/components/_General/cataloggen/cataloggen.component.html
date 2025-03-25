@@ -1,0 +1,13 @@
+<section class="catalog">
+    <div class="catalog-container">
+        <div *ngIf="isLoading" class="loading-indicator">
+            <div class="loader"></div>
+        </div>
+        <div *ngIf="!isLoading && !error" class="catalog-items">
+            <app-catalog-item2 *ngFor="let category of categories" [id]="category.id" [name]="category.name"
+                [imageSrc]="category.image || '../../../../assets/catalog/1.png'"
+                (click)="navigateToCategory(category.id)">
+            </app-catalog-item2>
+        </div>
+    </div>
+</section>

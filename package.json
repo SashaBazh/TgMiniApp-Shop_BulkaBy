@@ -1,5 +1,5 @@
 {
-  "name": "jewelry-store",
+  "name": "bakery-store",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:jewelry_store": "node dist/jewelry_store/server/server.mjs"
+    "serve:ssr:bakery_store": "node dist/bakery_store/server/server.mjs"
   },
   "private": true,
   "dependencies": {
@@ -22,6 +22,7 @@
     "@angular/router": "^18.0.0",
     "@angular/ssr": "^18.0.4",
     "@ffmpeg/ffmpeg": "^0.12.12",
+    "@ionic/angular": "^8.5.1",
     "@ngx-translate/core": "^16.0.3",
     "@ngx-translate/http-loader": "^16.0.0",
     "bootstrap": "^5.3.0",

@@ -3,11 +3,12 @@ import { NavigationComponent } from '../../components/_General/navigation/naviga
 import { HeaderComponent } from '../../components/_General/header/header.component';
 import { CataloggeneralComponent } from '../../components/_General/cataloggeneral/cataloggeneral.component';
 import { TranslateModule } from '@ngx-translate/core';
+import { CataloggenComponent } from '../../components/_General/cataloggen/cataloggen.component';
 
 @Component({
   selector: 'app-catalog',
   standalone: true,
-  imports: [NavigationComponent, HeaderComponent, CataloggeneralComponent, TranslateModule],
+  imports: [NavigationComponent, HeaderComponent, CataloggeneralComponent, TranslateModule, CataloggenComponent],
   templateUrl: './catalog.component.html',
   styleUrl: './catalog.component.css'
 })

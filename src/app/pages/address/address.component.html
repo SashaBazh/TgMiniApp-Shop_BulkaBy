@@ -1,4 +1,4 @@
-<app-headerback [pageTitle]="'ADDRESS' | translate"></app-headerback>
+<app-headerback [pageTitle]="'CART' | translate"></app-headerback>
 
 <div class="pickup-points-list">
     <app-pickup-point
@@ -7,6 +7,8 @@
         (click)="selectPickupPoint(point)">
     </app-pickup-point>
 </div>
+
+<p *ngIf="!isPickupPointSelected" class="warning-text"> {{ 'SEL' | translate }}</p>
 
 <button
   class="button"

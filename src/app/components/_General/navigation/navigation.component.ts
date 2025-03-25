@@ -14,22 +14,22 @@ export class NavigationComponent {
     { 
       path: '/home',
       label: 'Главная',
-      icon: '../../../../assets/icons/home.svg'
+      icon: '../../../../assets/icons/Home Page.svg'
     },
     {
       path: '/catalog',
       label: 'Каталог',
-      icon: '../../../../assets/icons/catalog.svg'
+      icon: '../../../../assets/icons/Medium Icons.svg'
     },
     {
       path: '/cart',
       label: 'Корзина',
-      icon: '../../../../assets/icons/cart.svg'
+      icon: '../../../../assets/icons/Shopping Cart.svg'
     },
     {
       path: '/profile',
       label: 'Профиль',
-      icon: '../../../../assets/icons/profile.svg'
+      icon: '../../../../assets/icons/Person.svg'
     }
   ];
 }

@@ -1,13 +1,14 @@
 <div class="product-card">
-  <div class="product-image-container" [class.loading]="product.imageLoading">
+  <div class="product-image-container">
     <img *ngIf="!product.imageLoading" [src]="product.image" alt="{{ product.name }}" class="product-image" />
   </div>
   <div class="product-info">
     <h3 class="product-title">{{ product.name }}</h3>
     <p class="product-price">
-      <span *ngIf="product.discounted_price !== null" class="old-price">{{ product.price }} USD</span>
-      <span *ngIf="product.discounted_price !== null" class="new-price">{{ product.discounted_price | number:'1.2-2' }} USD</span>
-      <span *ngIf="product.discounted_price === null">{{ product.price }} USD</span>
+      <span *ngIf="product.discounted_price !== null" class="old-price">{{ product.price }} р.</span>
+      <span *ngIf="product.discounted_price !== null" class="new-price">{{ product.discounted_price | number:'1.2-2' }} р.</span>
+      <span *ngIf="product.discounted_price === null">{{ product.price }} р.</span>
     </p>
+    <button class="product-button">Подробнее</button>
   </div>
 </div>

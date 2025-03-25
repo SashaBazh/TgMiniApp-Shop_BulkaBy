@@ -1,31 +1,31 @@
 <div class="options-container">
   <div class="option-item" (click)="toggleLanguage()">
-    <span class="option-title">{{ 'SELECT_LANGUAGE' | translate }}</span>
+    <div class="left-content">
+      <img src="../../../../assets/icons/language.svg" alt="Language Icon" class="option-icon" />
+      <span class="option-title">{{ 'SELECT_LANGUAGE' | translate }}</span>
+    </div>
     <span class="right-text">{{ language }}</span>
   </div>
-  <div class="option-item" (click)="openDatePicker()">
-    <span class="option-title">{{ 'BIRTH_DATE' | translate }}</span>
+  
+  <div class="option-item" (click)="toggleDatePicker()">
+    <div class="left-content">
+      <img src="../../../../assets/icons/calendar.svg" alt="Calendar Icon" class="option-icon" />
+      <span class="option-title">{{ 'BIRTH_DATE' | translate }}</span>
+    </div>
     <span class="right-text">
-      {{ birthday || ('CHOOSE_DATE' | translate) }}
+      <img src="../../../../assets/icons/arrow-down.svg" alt="Expand" class="arrow-icon" [class.rotated]="isDatePickerOpen" />
     </span>
-  </div>  
-
-  <div class="option-item" (click)="contactManager()">
-    <span class="option-title">{{ 'CONTACT_MANAGER' | translate }}</span>
   </div>
-  <div class="option-item" *ngIf="isAdmin" [routerLink]="['/admin']">
-    <span class="option-title">{{ 'ADMINPNAEL' | translate }}</span>
-  </div>
-</div>
 
-<!-- Modal for Date Picker -->
-<div class="modal" *ngIf="isDatePickerOpen">
-  <div class="modal-content">
-    <h3>{{ 'BIRTH_DATE' | translate }}</h3>
+  <div class="date-picker-container" *ngIf="isDatePickerOpen">
     <input type="date" [(ngModel)]="selectedDate" max="{{ todayDate | date: 'yyyy-MM-dd' }}" />
-    <div class="modal-actions">
-      <button (click)="saveDate()">{{ 'SAVE' | translate }}</button>
-      <button (click)="closeDatePicker()">{{ 'CANCEL' | translate }}</button>
+    <button (click)="saveDate()">{{ 'SAVE' | translate }}</button>
+  </div>
+
+  <div class="option-item-admin" *ngIf="isAdmin" [routerLink]="['/admin']">
+    <div class="left-content">
+      <img src="../../../../assets/icons/admin.svg" alt="Admin Icon" class="option-icon" />
+      <span class="option-title">{{ 'ADMINPNAEL' | translate }}</span>
     </div>
   </div>
 </div>

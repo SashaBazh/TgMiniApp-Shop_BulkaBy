@@ -1,8 +1,6 @@
 <div class="payment-method-item" (click)="selectPaymentMethod()">
-    <div class="method-image">
-        <img [src]="imageSrc" alt="Payment Method Image" />
-    </div>
     <div class="method-details">
+        <img *ngIf="imageSrc" [src]="imageSrc" alt="Payment Icon" class="payment-icon" />
         <span class="method-title">{{ title }}</span>
     </div>
 </div>

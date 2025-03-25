@@ -1,115 +1,74 @@
 <div class="product-full-page" *ngIf="product; else loadingBlock">
     <!-- Основной контент, отображается после загрузки продукта -->
-    <div class="media-gallery">
-        <div class="slider">
-          <!-- Контейнер для всех слайдов -->
-          <div 
-            class="media-container"
-            [style.transform]="'translateX(' + (-currentMediaIndex * 100) + '%)'"
-            (touchstart)="onTouchStart($event)"
-            (touchmove)="onTouchMove($event)"
-            (touchend)="onTouchEnd()"
-          >
-            <!-- Генерируем слайды по количеству медиа -->
-            <div class="slide" *ngFor="let media of mediaItems; let i = index">
-              
-              <!-- Если это изображение -->
-              <img 
-                *ngIf="isImage(media)"
-                [src]="media"
-                alt="Media Content"
-                class="slider-media"
-              />
-      
-              <!-- Если это видео -->
-              <ng-container *ngIf="isVideo(media)">
-                <video
-                  controls
-                  autoplay
-                  loop
-                  playsinline
-                  class="slider-media"
-                  (loadedmetadata)="muteVideo($event)"
-                >
-                  <source [src]="media" type="video/mp4" />
-                  Ваш браузер не поддерживает видео.
-                </video>
-              </ng-container>
-      
-              <!-- Индикатор загрузки видео -->
-              <div *ngIf="videoLoading && isVideo(media)" class="loading-spinner"></div>
-            </div>
-          </div>
-      
-          <!-- Навигационные точки -->
-          <div class="dots">
-            <button
-              *ngFor="let media of mediaItems; let i = index"
-              class="dot"
-              [class.active]="i === currentMediaIndex"
-              (click)="selectMedia(i)"
-            >
-            </button>
+    <div class="gallery">
+      <div class="gallery-slider">
+        <div
+          class="gallery-track"
+          [style.transform]="'translateX(' + (-currentMediaIndex * 100) + '%)'"
+          (touchstart)="onTouchStart($event)"
+          (touchmove)="onTouchMove($event)"
+          (touchend)="onTouchEnd()"
+        >
+          <div class="gallery-item" *ngFor="let media of mediaItems">
+            <img *ngIf="isImage(media)" [src]="media" alt="Media" class="gallery-media" />
+            <ng-container *ngIf="isVideo(media)">
+              <video controls autoplay loop playsinline class="gallery-media">
+                <source [src]="media" type="video/mp4" />
+                Ваш браузер не поддерживает видео.
+              </video>
+            </ng-container>
           </div>
         </div>
       </div>
+    
+      <div class="gallery-nav">
+        <button *ngFor="let media of mediaItems; let i = index"
+                class="gallery-dot"
+                [class.active]="i === currentMediaIndex"
+                (click)="selectMedia(i)">
+        </button>
+      </div>
+    </div>
+    
+    
       
 
     <!-- Product Info -->
     <div class="product-info">
         <h2 class="product-title">{{ product.name }}</h2>
-        <p class="availability">{{ 'IS_AVALIBLE' | translate }}</p>
+        <!-- <p class="availability">{{ 'IS_AVALIBLE' | translate }}</p> -->
 
         <div class="price-container">
-            <span *ngIf="product.discounted_price !== null" class="old-price">{{ product.price }} USD</span>
-            <span *ngIf="product.discounted_price !== null" class="new-price">{{ product.discounted_price | number:'1.2-2' }} USD</span>
-            <span *ngIf="product.discounted_price === null">{{ product.price }} USD</span>
+            <span *ngIf="product.discounted_price !== null" class="old-price">{{ product.price }} BYN</span>
+            <span *ngIf="product.discounted_price !== null" class="new-price">{{ product.discounted_price | number:'1.2-2' }} BYN</span>
+            <span *ngIf="product.discounted_price === null">{{ product.price }} BYN</span>
         </div>
 
-        <div class="product-details">
-            <!-- Main Attributes -->
-            <ng-container *ngIf="!isLoadingAttributes; else loadingAttributesBlock">
-                <div class="detail" *ngFor="let attr of mainAttributes">
-                    <span class="detail-title">{{ attr.name }}</span>
-                    <span class="detail-value">{{ attr.value }}</span>
-                </div>
+      <div class="product-details">
+        <div class="details-content">
 
-                <!-- Extra Attributes -->
-                <div class="detail-extra" *ngIf="showDetails">
-                    <div class="detail" *ngFor="let attr of extraAttributes">
-                        <span class="detail-title">{{ attr.name }}</span>
-                        <span class="detail-value">{{ attr.value }}</span>
-                    </div>
-                </div>
-            </ng-container>
-
-            <ng-template #loadingAttributesBlock>
-                <p>Loading attributes...</p>
-            </ng-template>
-
-            <!-- Toggle Details Arrow -->
-            <div class="arrow-container" (click)="toggleDetails()">
-                <svg [class.open]="showDetails" xmlns="http://www.w3.org/2000/svg" width="37" height="37"
-                    viewBox="0 0 37 37" fill="none">
-                    <path fill-rule="evenodd" clip-rule="evenodd"
-                        d="M12.014 15.0974C12.6161 14.4953 13.5922 14.4953 14.1943 15.0974L18.5 19.4031L22.8057 15.0974C23.4078 14.4953 24.3839 14.4953 24.986 15.0974C25.588 15.6994 25.588 16.6756 24.986 17.2776L19.5901 22.6735C18.9881 23.2755 18.0119 23.2755 17.4099 22.6735L12.014 17.2776C11.412 16.6756 11.412 15.6994 12.014 15.0974Z"
-                        fill="#4A67A7" />
-                </svg>
+          <div class="detail-value">{{ product.description }}</div>
+          <ng-container *ngIf="!isLoadingAttributes; else loadingAttributesBlock">
+            <div class="detail" *ngFor="let attr of allAttributes">
+              <!-- <span class="detail-title">{{ attr.name }}</span> -->
+              <span class="detail-value">{{ attr.value }}</span>
             </div>
+          </ng-container>
         </div>
+      
+        <ng-template #loadingAttributesBlock>
+          <p>Loading attributes...</p>
+        </ng-template>
+      </div>
 
-        <!-- Buttons -->
-        <div class="actions">
-            <button class="add-to-cart" (click)="addToCartFast()">{{ 'BUY_NOW' | translate }}</button>
-            <button class="add-to-cart" (click)="addToCart()">{{ 'ADD_TO_CART' | translate }}</button>
-            <button class="contact-manager" (click)="contactManager()">{{ 'CONTACT_MANAGER_BUTTON' | translate
-                }}</button>
-            <button class="contact-manager" (click)="toggleExpandableInfo()">
-                {{ showMoreInfo ? ('HIDE_INFO' | translate) : ('MORE_INFO' | translate) }}
-            </button>
-        </div>
+      <!-- Buttons -->
+      <div class="actions">
+        <button class="action-button" (click)="addToCartFast()">{{ 'BUY_NOW' | translate }}</button>
+        <button class="action-button" (click)="addToCart()">{{ 'ADD_TO_CART' | translate }}</button>
+    </div>    
+      
 
-        <div class="expandable-info">
+        <!-- <div class="expandable-info">
             <div *ngIf="showMoreInfo" class="info-content">
                 <p>{{ 'BRAND_DESCRIPTION' | translate }}</p>
                 <p>{{ 'JEWELRY_MEANING' | translate }}</p>
@@ -117,13 +76,13 @@
                 <p>{{ 'AUTHENTICITY_CERTIFICATION' | translate }}</p>
                 <p>{{ 'DELIVERY_INFORMATION' | translate }}</p>
             </div>
-        </div>
+        </div> -->
     </div>
 
     <!-- Recommendations -->
-    <div class="jewelry-wrapper">
+    <!-- <div class="jewelry-wrapper">
         <app-recomendations></app-recomendations>
-    </div>
+    </div> -->
 </div>
 
 <!-- Блок загрузки -->

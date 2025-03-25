@@ -1,136 +1,177 @@
 /* Container Styles */
 .container {
-    border-radius: 16px;
-    font-family: 'Montserrat', sans-serif;
-    padding: 0;
-  }
-  
-  .title {
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-    text-align: left;
-    margin-bottom: 16px;
-  }
-  
-  .products-container {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  
-  /* Cart Item Styles */
-  .cart-item {
-    display: flex;
-    align-items: flex-start;
-    background-color: #f4eee1;
-    border-radius: 16px;
-    padding: 8px;
-    gap: 16px;
-    box-sizing: border-box;
-    position: relative;
-  }
-  
-  .item-image {
-    flex: 0 0 25%;
-    border-radius: 12px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  
-  .item-image img {
-    width: 100%;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 12px;
-  }
-  
-  .item-details {
-    flex: 1 1 75%;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-    padding-left: 0;
-  }
-  
-  .item-title {
-    font-size: clamp(15px, 2vw, 20px);
-    font-weight: 600;
-    color: #333;
-    margin: 0;
-    text-align: left;
-  }
-  
-  .item-footer {
-    position: absolute;
-    bottom: 12px;
-    left: 30%;
-    right: 15px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 60px;
-  }
-  
-  .quantity-selector {
-    background-color: #8892f6;
-    border-radius: 8px;
-    padding: 8px 16px;
-    color: #ffffff;
-    font-size: 16px;
-    text-align: center;
-  }
-  
-  .price-and-status {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 4px;
-  }
-  
-  .item-price {
-    font-size: clamp(15px, 1.5vw, 20px);
-    color: #000000;
-    text-align: right;
-  }
-  
-  /* Status Styles */
-  .status {
-    font-size: clamp(13px, 1.2vw, 16px);
-    font-weight: bold;
-  }
-  
-  .status-pending {
-    color: #ffd900c5; /* Yellow for pending */
-    display: flex;
-    align-items: center;
-    gap: 6px;
-  }
-  
-  .status-success {
-    color: #28a745; /* Green for success */
-  }
-  
-  /* Loading Spinner */
-  .loading-spinner {
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    border: 2px solid #ffd700; /* Yellow border */
-    border-radius: 50%;
-    border-top-color: transparent;
-    animation: spin 1s linear infinite;
-  }
-  
-  @keyframes spin {
-    from {
-      transform: rotate(0deg);
-    }
-    to {
-      transform: rotate(360deg);
-    }
-  }
-  
+  border-radius: 16px;
+  font-family: 'Montserrat', sans-serif;
+  padding: 0;
+  margin-top: 10px;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  text-align: left;
+  margin-bottom: 16px;
+}
+
+.status {
+  margin-top: -10px;
+}
+
+/* Cart Item Styles */
+.cart-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 8px;
+  gap: 16px;
+  box-sizing: border-box;
+  position: relative;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.item-image {
+  flex: 0 0 25%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.item-image img.loading {
+  background-color: #e0e0e0;
+  width: 70px;
+  height: 70px;
+  border-radius: 12px;
+}
+
+.item-image img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+}
+
+.item-details {
+  flex: 1 1 75%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: -10px; /* Приподнимает блок */
+}
+
+.item-title {
+  font-family: 'TrajanPro3', sans-serif;
+  font-size: clamp(15px, 2vw, 20px);
+  font-weight: 700;
+  color: #333;
+  margin: 0;
+  text-align: left;
+  margin-top: 10px;
+}
+
+.item-footer {
+  position: absolute;
+  bottom: 12px;
+  left: 30%;
+  right: 15px;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  height: 60px;
+  min-height: 60px;
+}
+
+/* Блок выбора количества */
+.quantity-selector {
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(50px, 10vw, 80px);
+  color: #000000;
+  font-family: 'TrajanPro3', sans-serif;
+  font-size: clamp(14px, 1.5vw, 16px);
+  margin-top: 30px;
+}
+
+/* Число количества */
+.quantity-number {
+  font-size: 16px;
+  margin-top: 10px;
+}
+
+/* Контейнер для кнопок вверх и вниз */
+.quantity-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  color: #000000;
+}
+
+.quantity-controls button {
+  background: none;
+  border: none;
+  color: #000000;
+  font-size: clamp(10px, 1.2vw, 14px);
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* Новый блок для цены и крестика */
+.price-and-remove {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: 'TrajanPro3', sans-serif;
+}
+
+.old-price {
+  text-decoration: line-through;
+  color: #a0a0a0;
+  font-size: 14px;
+}
+
+.new-price {
+  color: #a58a83;
+  font-size: 16px;
+  font-weight: bold;
+  margin-left: 3px;
+}
+
+.item-price {
+  color: #000;
+  font-family: 'TrajanPro3', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+/* Иконка удаления */
+.remove-icon {
+  width: clamp(16px, 2vw, 24px);
+  height: clamp(16px, 2vw, 24px);
+  cursor: pointer;
+  transform: rotate(45deg);
+  margin-top: -80px;
+}
+
+.quantity-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 6px;
+  font-weight: bold;
+  color: #a58a83;
+}
+
+.quantity-btn:hover {
+  color: #8a6d65;
+}
+
+.quantity-number {
+  font-size: 16px;
+  min-width: 24px;
+  text-align: center;
+}

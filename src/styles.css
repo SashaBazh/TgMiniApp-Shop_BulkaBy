@@ -1,6 +1,14 @@
+@font-face {
+    font-family: 'TrajanPro3';
+    src: url('assets/fonts/trajan/TrajanPro3Regular.woff') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
 body {
     margin: 8px !important;
-    background-color: #ffffff !important;
+    background-color: #fff8f2 !important;
 }
 
 html, body {

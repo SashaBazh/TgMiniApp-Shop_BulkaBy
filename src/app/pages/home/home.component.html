@@ -2,20 +2,29 @@
 
 <div class="home">
     <app-image-slider [bannerId]="1"></app-image-slider>
-    <app-images-sliders></app-images-sliders>
+    <!-- <app-images-sliders></app-images-sliders> -->
+    <p class="bakery-description">
+        BylkaBy — это не только пекарня — кондитерская, но и кафе во французском стиле. 
+        Сюда можно прийти на обед, попробовать крем-суп либо киш, а также посидеть с друзьями 
+        за чашкой кофе с десертом. Вы можете попробовать всю нашу продукцию в любой пекарне — 
+        кондитерской BylkaBy или заказать доставку прямо домой или в офис.
+    </p>
 
     <div class="jewelry-wrapper">
         <h2 class="section-title">{{ 'CATALOG' | translate }}</h2>
-        <app-cataloggeneral [displayCount]="2"></app-cataloggeneral>
+        <app-cataloggeneral [displayCount]="4"></app-cataloggeneral>
         <app-catalog-button></app-catalog-button>
-        <h2 class="section-title2">{{ 'NEW_JEWELRY' | translate }}</h2>
+        <h2 class="section-title">{{ 'NEW_JEWELRY' | translate }}</h2>
         <!-- <div class="filters">
             <app-filters [items]="items"></app-filters>
         </div> -->
         <div class="newjeverly">
             <app-new-jewelry></app-new-jewelry>
         </div>
+        <div class="newjeverly">
+            <app-recomendations></app-recomendations>
+        </div>
     </div>
 </div>
 
-<app-navigation></app-navigation>
+<!-- <app-navigation></app-navigation> -->

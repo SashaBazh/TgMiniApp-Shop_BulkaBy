@@ -5,11 +5,12 @@ import { CategoryService } from '../../../services/_Catalog/category.service';
 import { Product } from '../../../interfaces/_General/product.interface';
 import { ImageStreamService } from '../../../services/_Image/image-stream.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-recomendations',
   standalone: true,
-  imports: [ProductCardRecomendationComponent, CommonModule],
+  imports: [ProductCardRecomendationComponent, CommonModule, TranslateModule],
   templateUrl: './recomendations.component.html',
   styleUrls: ['./recomendations.component.css']
 })
@@ -57,11 +58,8 @@ export class RecomendationsComponent implements OnInit {
     });
   }
 
-  openProduct(productId: number) {
-    if (this.categoryId !== null) {
-      this.router.navigate([`/catalog/${this.categoryId}/${productId}`]); // Переход на детальную страницу товара
-    } else {
-      console.error('Category ID отсутствует, невозможно открыть страницу продукта.');
-    }
+  openProduct(product: Product) {
+    this.router.navigate([`/catalog/${product.category_id}/${product.id}`]);
   }
+  
 }

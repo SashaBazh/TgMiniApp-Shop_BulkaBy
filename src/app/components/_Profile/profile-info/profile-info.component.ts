@@ -36,6 +36,9 @@ export class ProfileInfoComponent implements OnInit {
       this.username = user.username || `${user.first_name} ${user.last_name}` || 'Unknown User';
       this.avatarUrl = user.photo_url || ''; // Фото из Telegram
     }
+    else{
+      this.username = 'Sasha';
+    }
 
     // Загружаем данные профиля с сервера
     this.loadUserProfile();
@@ -62,20 +65,25 @@ export class ProfileInfoComponent implements OnInit {
     });
   }
 
-  copyReferralLink() {
-    // Копирование реальной реферальной ссылки в буфер обмена
+  copyReferralLink(event: Event): void {
+    event.preventDefault(); // Предотвращает открытие ссылки
+  
+    if (!this.referralLink) {
+      console.error('Реферальная ссылка отсутствует');
+      return;
+    }
+  
     navigator.clipboard.writeText(this.referralLink).then(() => {
-      if (this.telegramService.isTelegramWebAppAvailable()) {
-        // Используем Telegram alert
+      if (this.telegramService?.isTelegramWebAppAvailable?.()) {
         this.telegramService.showTelegramAlert('Ссылка скопирована в буфер обмена!');
       } else {
-        // Fallback на стандартный alert
         alert('Ссылка скопирована в буфер обмена!');
       }
-    }).catch(() => {
-      console.error('Ошибка при копировании ссылки');
+    }).catch((error) => {
+      console.error('Ошибка при копировании ссылки:', error);
     });
   }
+  
   
 
   getStatusClass(status: string): string {
@@ -92,6 +100,17 @@ export class ProfileInfoComponent implements OnInit {
         return '';
     }
   }
+
+  getDiscount(status: string): number {
+    switch (status) {
+        case 'Дегустатор 🍩': return 5;
+        case 'Сладкоежка 🍪': return 10;
+        case 'Гурман выпечки 🍰': return 15;
+        case 'Пекарный король 👑': return 20;
+        default: return 0;
+    }
+}
+
 
   navigateToPurchases(): void {
     this.router.navigate(['profile/my-purchases']);

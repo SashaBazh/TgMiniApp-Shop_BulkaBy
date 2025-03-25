@@ -1,122 +1,66 @@
-.pickup-point {
-  display: flex;
-  justify-content: space-between;
-  background-color: #F3EBDA;
-  border-radius: 16px;
+.pickup-point-address {
+  font-family: 'TrajanPro3', serif;
+  background: #fff8f2;
   padding: 16px;
+  border-radius: 8px;
+  text-align: center;
+  border: 1px solid #a58a83;
   margin-bottom: 8px;
-  cursor: pointer;
-}
-
-.pickup-point.selected {
-  background-color: #E9DABC;
-}
-
-.pickup-point-info {
-  display: flex;
-  flex-direction: column;
-}
-
-.pickup-point-name {
-  font-family: 'Montserrat', sans-serif;
-  font-weight: bold;
-  font-size: 14px;
-  margin-bottom: 4px;
-}
-
-.rating-value {
-  font-family: 'Montserrat', sans-serif;
-  /* Шрифт Montserrat */
-  font-size: 18px;
-  /* Размер текста */
-  font-weight: bold;
-  /* Жирное начертание */
-  margin-right: 8px;
-  /* Отступ справа перед звёздами */
-  color: #000000;
-  /* Цвет текста */
-}
-
-
-.pickup-point-rating {
-  display: flex;
-  align-items: center;
-  /* Выравнивание по центру с рейтингом */
-  gap: 1px;
-  /* Отступ между звездами */
-}
-
-.star {
-  width: 24px;
-  height: 24px;
-}
-
-
-.star.filled path {
-  fill: #FFB730;
-  /* Золотой цвет для заполненных звезд */
-}
-
-.star.empty path {
-  stroke: #CCCCCC;
-  /* Серый контур для пустых звезд */
 }
 
 .pickup-point-hours {
-  font-weight: 400;
-  font-family: 'Montserrat', sans-serif;
-  font-size: 14px;
-  color: #555;
-  margin-top: 4px;
+  font-family: 'TrajanPro3', serif;
+  font-size: 16px;
+  font-weight: bold;
+  color: black;
+  margin-bottom: 8px;
 }
 
-.pickup-point-selector {
-  display: flex;
-  align-items: center;
+.pickup-point-phone {
+  font-family: 'TrajanPro3', serif;
+  font-size: 16px;
+  color: black;
+  font-weight: bold;
+  margin-bottom: 8px;
+  margin-top: 8px;
+}
+
+.pickup-point-image img {
+  width: 220px;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.pickup-point-strip {
+  width: 100%;
+  height: 4px;
+  background-color: #a58a83;
+  margin-top: 8px;
+  border-radius: 2px;
+}
+
+.pickup-point-label {
+  font-size: 14px;
+  font-weight: bold;
+  color: black;
+  margin-bottom: 4px;
+}
+
+.pickup-point {
+  transition: background 0.3s ease;
+  border-radius: 8px;
+}
+
+.pickup-point-address.selected {
+  background: #f8ebe0;
 }
 
 .circle {
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  border: 3px solid #8B8B8B;
-  /* Начальный серый цвет границы */
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 100%;
+  height: 20px;
+  border-radius: 6px;
+  border: 2px solid #a58a83;
   background-color: transparent;
-  /* Прозрачный фон по умолчанию */
-  transition: border-color 0.3s, background-color 0.3s;
-  /* Плавный переход цвета */
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
-
-.circle.selected {
-  border-color: #F2A056;
-  /* Синий цвет границы при выборе */
-  background-color: #DADFFF;
-  /* Синий полупрозрачный фон для выбранного состояния */
-}
-
-.circle.selected::after {
-  content: '';
-  width: 14px;
-  /* Размер внутреннего круга */
-  height: 14px;
-  border-radius: 50%;
-  background-color: #F2A056;
-  /* Синий цвет внутреннего круга */
-}
-
-
-.link-black {
-  color: black; /* Цвет текста */
-  text-decoration: underline; /* Добавляем подчеркивание */
-  text-decoration-color: black; /* Цвет подчеркивания совпадает с цветом текста */
-}
-
-.link-black:hover {
-  text-decoration: underline;
-  text-decoration-thickness: 2px; /* Увеличиваем толщину подчеркивания при наведении */
-}
-
-

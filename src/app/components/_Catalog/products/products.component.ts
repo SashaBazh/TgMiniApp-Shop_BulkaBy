@@ -26,6 +26,8 @@ export class ProductsComponent implements OnInit {
   filters: any[] = [];
   selectedFilters: any = {}; // Храним выбранные фильтры
   isLoading = false;
+  isSearchActive = false; // Для контроля отображения поиска
+  isFiltersActive = false; // Для контроля отображения фильтров
   private languageSubscription!: Subscription;
 
   constructor(
@@ -47,6 +49,20 @@ export class ProductsComponent implements OnInit {
         this.loadProducts(this.categoryId);
       }
     });
+  }
+
+  toggleSearch() {
+    this.isSearchActive = !this.isSearchActive;
+    if (this.isSearchActive) {
+      this.isFiltersActive = false; // Закрываем фильтры, если открываем поиск
+    }
+  }
+
+  toggleFilters() {
+    this.isFiltersActive = !this.isFiltersActive;
+    if (this.isFiltersActive) {
+      this.isSearchActive = false; // Закрываем поиск, если открываем фильтры
+    }
   }
 
   private loadCategoryName(categoryId: number) {
@@ -149,8 +165,6 @@ export class ProductsComponent implements OnInit {
     }
   }
   
-  
-  
   private loadImage(imageUrl: string): Promise<string> {
     return new Promise((resolve, reject) => {
       const img = new Image();
@@ -163,32 +177,30 @@ export class ProductsComponent implements OnInit {
       };
     });
   } 
-  
-
 
   private loadProducts(categoryId: number, search?: string) {
     this.loadProductsSequentially(categoryId, search);
   }
-  
 
   onFiltersChanged(filters: any) {
     console.log('Выбранные фильтры:', filters);
     this.selectedFilters = filters;
     this.saveFiltersToUrl(); // Сохраняем выбранные фильтры в URL
+    // this.isFiltersActive = false; // Закрываем панель фильтров после применения
 
     if (this.categoryId !== null) {
       this.loadProducts(this.categoryId); // Загружаем продукты с выбранными фильтрами
     }
   }
 
-
-
   onSearch(query: string) {
     console.log('Поисковый запрос:', query);
     if (this.categoryId !== null) {
-      this.loadProducts(this.categoryId, query); // Передаём query для фильтрации
+        this.loadProducts(this.categoryId, query);
     }
-  }
+    // this.isSearchActive = false; // Уберите эту строку
+}
+
 
   getRows(products: any[]): any[][] {
     const rows = [];

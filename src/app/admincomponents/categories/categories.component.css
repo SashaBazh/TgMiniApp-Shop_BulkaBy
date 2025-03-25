@@ -10,16 +10,19 @@
   align-items: center;
   justify-content: space-between;
   min-width: 300px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: rgba(240, 209, 161, 0.3); /* Полупрозрачный фон */
+  color: #A2836E; /* Цвет мокко */
+  font-family: 'TrajanPro3', sans-serif;
 }
 
 .notification.success {
-  background-color: #4CAF50;
+  background-color: #8FBC8F; /* Мягкий зеленый */
   color: white;
 }
 
 .notification.error {
-  background-color: #f44336;
+  background-color: #D2691E; /* Коричневый (оттенок мокко) */
   color: white;
 }
 

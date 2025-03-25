@@ -127,6 +127,9 @@ export class OptionsComponent implements OnInit {
     });
   }
 
+  toggleDatePicker() {
+    this.isDatePickerOpen = !this.isDatePickerOpen;
+  }
 
 
 }
