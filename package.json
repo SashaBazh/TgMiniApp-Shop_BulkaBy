@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --configuration=production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "serve:ssr:bakery_store": "node dist/bakery_store/server/server.mjs"
@@ -35,7 +35,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^18.0.4",
-    "@angular/cli": "^18.0.4",
+    "@angular/cli": "^18.2.16",
     "@angular/compiler-cli": "^18.0.0",
     "@eslint/js": "^9.15.0",
     "@types/express": "^4.17.17",
