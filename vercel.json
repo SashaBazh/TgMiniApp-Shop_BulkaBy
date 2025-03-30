@@ -1,15 +1,13 @@
 {
-    "rewrites": [
-      {
-        "source": "/(.*)",
-        "destination": "/index.html"
+    "functions": {
+      "api/index.js": {
+        "runtime": "nodejs18.x"
       }
-    ],
-    "redirects": [
+    },
+    "routes": [
       {
-        "source": "/sitemap.xml",
-        "destination": "https://api.monobuket-mk.by/api/sitemap.xml", 
-        "permanent": true
+        "src": "/(.*)",
+        "dest": "/api/index.js"
       }
     ]
   }
