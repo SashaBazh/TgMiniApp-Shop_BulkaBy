@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-product-full-page',
   standalone: true,
-  imports: [CommonModule, RecomendationsComponent, TranslateModule],
+  imports: [CommonModule, TranslateModule],
   templateUrl: './product-full-page.component.html',
   styleUrls: ['./product-full-page.component.css'],
 })

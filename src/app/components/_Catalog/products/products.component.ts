@@ -15,7 +15,7 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-products',
   standalone: true,
-  imports: [CommonModule, CapitalizePipe, HeaderbackComponent, SearchComponent, FiltersComponent, ProductCardComponent, TranslateModule],
+  imports: [CommonModule, HeaderbackComponent, SearchComponent, FiltersComponent, ProductCardComponent, TranslateModule],
   templateUrl: './products.component.html',
   styleUrls: ['./products.component.css'],
 })

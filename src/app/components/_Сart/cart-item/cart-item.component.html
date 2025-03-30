@@ -17,11 +17,11 @@
       </div>
       <div class="price-and-remove">
         <span *ngIf="discountedPrice !== null; else normalPrice">
-          <span class="old-price">{{ price * quantity }} р.</span>
-          <span class="new-price">{{ discountedPrice * quantity | number:'1.2-2' }} р.</span>
+          <span class="old-price">{{ price * quantity }} {{ 'CURRENCY' | translate }}</span>
+          <span class="new-price">{{ discountedPrice * quantity | number:'1.2-2' }} {{ 'CURRENCY' | translate }}</span>
         </span>
         <ng-template #normalPrice>
-          <span class="item-price">{{ price * quantity | number:'1.2-2' }} р.</span>
+          <span class="item-price">{{ price * quantity | number:'1.2-2' }} {{ 'CURRENCY' | translate }}</span>
         </ng-template>
         <img src="../../../../assets/icons/plus.svg" alt="Remove" class="remove-icon" (click)="removeItem()" />
       </div>

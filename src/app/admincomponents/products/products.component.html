@@ -1,320 +1,517 @@
 <div class="products-page container">
-    <!-- Уведомление -->
-    <div *ngIf="message" class="notification" [ngClass]="{'success': isSuccess, 'error': !isSuccess}">
-        <span>{{ message }}</span>
-        <button class="close-btn" (click)="closeNotification()">×</button>
-    </div>
+  <!-- Уведомление -->
+  <div
+    *ngIf="message"
+    class="notification"
+    [ngClass]="{ success: isSuccess, error: !isSuccess }"
+  >
+    <span>{{ message }}</span>
+    <button class="close-btn" (click)="closeNotification()">×</button>
+  </div>
 
-    <!-- Форма создания продукта -->
-    <section class="create-product bg-light rounded mb-4 p-4">
-        <h1 class="mb-4">Создание продукта</h1>
-        <form [formGroup]="createProductForm" (ngSubmit)="submitProductForm()" class="needs-validation" novalidate>
-            <!-- Выбор категории -->
-            <div class="form-group mb-3">
-                <label for="category" class="form-label">Категория</label>
-                <select id="category" class="form-control" formControlName="category_id"
-                    [ngClass]="{'is-invalid': createProductForm.get('category_id')?.invalid && createProductForm.get('category_id')?.touched}">
-                    <option value="">Выберите категорию</option>
-                    <option *ngFor="let category of categories" [value]="category.id">
-                        {{ category.name }}
-                    </option>
-                </select>
-                <div class="invalid-feedback">
-                    Выбор категории обязателен
-                </div>
-            </div>
+  <!-- Форма создания продукта -->
+  <section class="create-product bg-light rounded mb-4 p-4">
+    <h1 class="mb-4">Создать продукт</h1>
+    <form
+      [formGroup]="createProductForm"
+      (ngSubmit)="submitProductForm()"
+      class="needs-validation"
+      novalidate
+    >
+      <!-- Выбор категории -->
+      <div class="form-group mb-3">
+        <label for="category" class="form-label">Категория</label>
+        <select
+          id="category"
+          class="form-control"
+          formControlName="category_id"
+          [ngClass]="{
+            'is-invalid':
+              createProductForm.get('category_id')?.invalid &&
+              createProductForm.get('category_id')?.touched
+          }"
+        >
+          <option value="">Выберите категорию</option>
+          <option *ngFor="let category of categories" [value]="category.id">
+            {{ category.name }}
+          </option>
+        </select>
+        <div class="invalid-feedback">Выбор категории обязателен</div>
+      </div>
 
-            <!-- Название продукта -->
-            <!-- Название продукта на русском -->
-            <div class="form-group mb-3">
-                <label for="nameRu" class="form-label">Название (Русский)</label>
-                <input id="nameRu" class="form-control" formControlName="nameRu"
-                    placeholder="Введите название продукта на русском" />
-            </div>
+      <!-- Название продукта -->
+      <!-- Название продукта на русском -->
+      <div class="form-group mb-3">
+        <label for="nameRu" class="form-label">Название_ru</label>
+        <input
+          id="nameRu"
+          class="form-control"
+          formControlName="nameRu"
+          placeholder="Введите название продукта на русском"
+        />
+      </div>
 
-            <!-- Название продукта на английском -->
-            <div class="form-group mb-3">
-                <label for="nameEn" class="form-label">Название (Английский)</label>
-                <input id="nameEn" class="form-control" formControlName="nameEn"
-                    placeholder="Введите название продукта на английском" />
-            </div>
+      <!-- Название продукта на английском -->
+      <div class="form-group mb-3">
+        <label for="nameEn" class="form-label">Название_en</label>
+        <input
+          id="nameEn"
+          class="form-control"
+          formControlName="nameEn"
+          placeholder="Введите название продукта на английском"
+        />
+      </div>
 
-            <!-- Описание продукта на русском -->
-            <div class="form-group mb-3">
-                <label for="descriptionRu" class="form-label">Описание (Русский)</label>
-                <textarea id="descriptionRu" class="form-control" formControlName="descriptionRu"
-                    placeholder="Введите описание продукта на русском"></textarea>
-            </div>
+      <!-- Описание продукта на русском -->
+      <div class="form-group mb-3">
+        <label for="descriptionRu" class="form-label">Описание_ru</label>
+        <textarea
+          id="descriptionRu"
+          class="form-control"
+          formControlName="descriptionRu"
+          placeholder="Введите описание продукта на русском"
+        ></textarea>
+      </div>
 
-            <!-- Описание продукта на английском -->
-            <div class="form-group mb-3">
-                <label for="descriptionEn" class="form-label">Описание (Английский)</label>
-                <textarea id="descriptionEn" class="form-control" formControlName="descriptionEn"
-                    placeholder="Введите описание продукта на английском"></textarea>
-            </div>
+      <!-- Описание продукта на английском -->
+      <div class="form-group mb-3">
+        <label for="descriptionEn" class="form-label">Описание_en</label>
+        <textarea
+          id="descriptionEn"
+          class="form-control"
+          formControlName="descriptionEn"
+          placeholder="Введите описание продукта на английском"
+        ></textarea>
+      </div>
 
-            <!-- Цена продукта -->
-            <div class="form-group mb-3">
-                <label for="price" class="form-label">Цена</label>
-                <input id="price" type="number" class="form-control" formControlName="price" placeholder="Введите цену"
-                    [ngClass]="{'is-invalid': createProductForm.get('price')?.invalid && createProductForm.get('price')?.touched}" />
-                <div class="invalid-feedback">
-                    Цена должна быть указана и быть не менее 0
-                </div>
-            </div>
+      <!-- Цена продукта -->
+      <div class="form-group mb-3">
+        <label for="price" class="form-label">Цена</label>
+        <input
+          id="price"
+          type="number"
+          class="form-control"
+          formControlName="price"
+          placeholder="Введите цену"
+          [ngClass]="{
+            'is-invalid':
+              createProductForm.get('price')?.invalid &&
+              createProductForm.get('price')?.touched
+          }"
+        />
+        <div class="invalid-feedback">
+          Цена должна быть указана и быть не менее 0
+        </div>
+      </div>
 
-            <!-- Inside the form, after the price input -->
-            <!-- Внутри формы, после поля ввода цены -->
-            <ng-container *ngIf="categoryAttributes.length > 0">
-                <div formGroupName="attributes">
-                    <div *ngFor="let attribute of categoryAttributes" class="form-group mb-3">
-                        <label [for]="'attribute_' + attribute.id" class="form-label">
-                            {{ attribute.name }}
-                        </label>
+      <!-- Inside the form, after the price input -->
+      <!-- Внутри формы, после поля ввода цены -->
+      <ng-container *ngIf="categoryAttributes.length > 0">
+        <div formGroupName="attributes">
+          <div
+            *ngFor="let attribute of categoryAttributes"
+            class="form-group mb-3"
+          >
+            <label [for]="'attribute_' + attribute.id" class="form-label">
+              {{ attribute.name }}
+            </label>
 
-                        <!-- Выпадающий список для атрибутов с опциями -->
-                        <ng-container *ngIf="attribute.options && attribute.options.length > 0">
-                            <div *ngFor="let option of attribute.options" class="form-check">
-                                <input type="checkbox" class="form-check-input"
-                                    [checked]="(createProductForm.get('attributes')?.get('attribute_' + attribute.id)?.value || []).includes(option.id)"
-                                    (change)="onOptionCheckboxChange(attribute.id, option.id, $event)" />
-                                <label class="form-check-label">{{ option.title || option.value }}</label>
-                            </div>
-                        </ng-container>
-
-
-
-
-                        <!-- Поле ввода для строковых атрибутов без опций -->
-                        <input
-                            *ngIf="attribute.data_type === 'string' && (!attribute.options || attribute.options.length === 0)"
-                            [id]="'attribute_' + attribute.id" type="text" class="form-control"
-                            [formControlName]="'attribute_' + attribute.id" placeholder="Введите {{ attribute.name }}"
-                            [ngClass]="{ 'is-invalid': isAttributeInvalid(attribute) }" />
-
-                        <!-- Поле ввода для целочисленных атрибутов без опций -->
-                        <input
-                            *ngIf="attribute.data_type === 'integer' && (!attribute.options || attribute.options.length === 0)"
-                            [id]="'attribute_' + attribute.id" type="number" class="form-control"
-                            [formControlName]="'attribute_' + attribute.id" placeholder="Введите {{ attribute.name }}"
-                            [ngClass]="{ 'is-invalid': isAttributeInvalid(attribute) }" />
-
-                        <!-- Поле ввода для дробных атрибутов без опций -->
-                        <input
-                            *ngIf="attribute.data_type === 'float' && (!attribute.options || attribute.options.length === 0)"
-                            [id]="'attribute_' + attribute.id" type="number" step="0.01" class="form-control"
-                            [formControlName]="'attribute_' + attribute.id" placeholder="Введите {{ attribute.name }}"
-                            [ngClass]="{ 'is-invalid': isAttributeInvalid(attribute) }" />
-
-                        <!-- Чекбокс для булевых атрибутов -->
-                        <div *ngIf="attribute.data_type === 'boolean'" class="form-check">
-                            <input [id]="'attribute_' + attribute.id" type="checkbox" class="form-check-input"
-                                [formControlName]="'attribute_' + attribute.id" />
-                            <label class="form-check-label" [for]="'attribute_' + attribute.id">
-                                {{ attribute.name }}
-                            </label>
-                        </div>
-
-                        <!-- Отображение ошибок валидации -->
-                        <div *ngIf="isAttributeInvalid(attribute)" class="invalid-feedback">
-                            Пожалуйста, заполните поле "{{ attribute.name }}"
-                        </div>
-                    </div>
-                </div>
+            <!-- Выпадающий список для атрибутов с опциями -->
+            <ng-container
+              *ngIf="attribute.options && attribute.options.length > 0"
+            >
+              <div *ngFor="let option of attribute.options" class="form-check">
+                <input
+                  type="checkbox"
+                  class="form-check-input"
+                  [checked]="
+                    (
+                      createProductForm
+                        .get('attributes')
+                        ?.get('attribute_' + attribute.id)?.value || []
+                    ).includes(option.id)
+                  "
+                  (change)="
+                    onOptionCheckboxChange(attribute.id, option.id, $event)
+                  "
+                />
+                <label class="form-check-label">{{
+                  option.title || option.value
+                }}</label>
+              </div>
             </ng-container>
 
+            <!-- Поле ввода для строковых атрибутов без опций -->
+            <input
+              *ngIf="
+                attribute.data_type === 'string' &&
+                (!attribute.options || attribute.options.length === 0)
+              "
+              [id]="'attribute_' + attribute.id"
+              type="text"
+              class="form-control"
+              [formControlName]="'attribute_' + attribute.id"
+              placeholder="Введите {{ attribute.name }}"
+              [ngClass]="{ 'is-invalid': isAttributeInvalid(attribute) }"
+            />
 
-            <!-- Загрузка изображений -->
-            <div class="form-group mb-3">
-                <label for="images" class="form-label">Изображения</label>
-                <input type="file" id="images" class="form-control" (change)="onImagesSelected($event)" multiple />
+            <!-- Поле ввода для целочисленных атрибутов без опций -->
+            <input
+              *ngIf="
+                attribute.data_type === 'integer' &&
+                (!attribute.options || attribute.options.length === 0)
+              "
+              [id]="'attribute_' + attribute.id"
+              type="number"
+              class="form-control"
+              [formControlName]="'attribute_' + attribute.id"
+              placeholder="Введите {{ attribute.name }}"
+              [ngClass]="{ 'is-invalid': isAttributeInvalid(attribute) }"
+            />
+
+            <!-- Поле ввода для дробных атрибутов без опций -->
+            <input
+              *ngIf="
+                attribute.data_type === 'float' &&
+                (!attribute.options || attribute.options.length === 0)
+              "
+              [id]="'attribute_' + attribute.id"
+              type="number"
+              step="0.01"
+              class="form-control"
+              [formControlName]="'attribute_' + attribute.id"
+              placeholder="Введите {{ attribute.name }}"
+              [ngClass]="{ 'is-invalid': isAttributeInvalid(attribute) }"
+            />
+
+            <!-- Чекбокс для булевых атрибутов -->
+            <div *ngIf="attribute.data_type === 'boolean'" class="form-check">
+              <input
+                [id]="'attribute_' + attribute.id"
+                type="checkbox"
+                class="form-check-input"
+                [formControlName]="'attribute_' + attribute.id"
+              />
+              <label
+                class="form-check-label"
+                [for]="'attribute_' + attribute.id"
+              >
+                {{ attribute.name }}
+              </label>
             </div>
 
-            <!-- Предварительный просмотр изображений -->
-            <div *ngIf="imagePreviews && imagePreviews.length > 0" class="image-preview mb-3">
-                <p>Предварительный просмотр:</p>
-                <div class="image-preview-list">
-                    <img *ngFor="let preview of imagePreviews" [src]="preview" alt="Image Preview"
-                        class="img-fluid rounded" style="max-height: 300px; margin: 5px;" />
-                </div>
+            <!-- Отображение ошибок валидации -->
+            <div *ngIf="isAttributeInvalid(attribute)" class="invalid-feedback">
+              Пожалуйста, заполните поле "{{ attribute.name }}"
             </div>
-
-            <!-- Кнопка создания продукта -->
-            <button type="submit" class="btn btn-primary"
-                [disabled]="createProductForm.invalid || selectedImages.length === 0">
-                Создать продукт
-            </button>
-        </form>
-    </section>
-
-    <!-- Список продуктов -->
-    <section class="product-list mt-4">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h2>Товары в выбранной категории</h2>
-            <div>
-                <button class="btn btn-primary" (click)="toggleCategorySelection()">Выбрать категорию</button>
-            </div>
+          </div>
         </div>
+      </ng-container>
 
-        <!-- Выпадающий список выбора категории -->
-        <!-- Выпадающий список выбора категории -->
-        <div *ngIf="showCategorySelector" class="mb-3">
-            <select class="form-select" [value]="categoryId || ''" (change)="onCategoryChange($event)">
-                <option value="" disabled [selected]="!categoryId">Выберите категорию</option>
-                <option *ngFor="let category of categories" [value]="category.id">
-                    {{ category.name }}
-                </option>
-            </select>
+      <!-- Загрузка изображений -->
+      <div class="form-group mb-3">
+        <label for="images" class="form-label">Изображения</label>
+        <input
+          type="file"
+          id="images"
+          class="form-control"
+          (change)="onImagesSelected($event)"
+          multiple
+        />
+      </div>
+
+      <!-- Предварительный просмотр изображений -->
+      <div
+        *ngIf="imagePreviews && imagePreviews.length > 0"
+        class="image-preview mb-3"
+      >
+        <p>Предварительный просмотр:</p>
+        <div class="image-preview-list">
+          <img
+            *ngFor="let preview of imagePreviews"
+            [src]="preview"
+            alt="Image Preview"
+            class="img-fluid rounded"
+            style="max-height: 300px; margin: 5px"
+          />
         </div>
+      </div>
 
+      <!-- Кнопка создания продукта -->
+      <button
+        type="submit"
+        class="mocha-button"
+        [disabled]="createProductForm.invalid || selectedImages.length === 0"
+      >
+        Создать продукт
+      </button>
+    </form>
+  </section>
 
-        <app-search (search)="onSearch($event)"></app-search>
-
-        <!-- Список продуктов -->
-        <div class="product-grid row g-4">
-            <div *ngFor="let product of products" class="col-12 col-md-6 col-lg-4">
-                <div class="product-item card h-100">
-                    <!-- Обновлённый путь для загрузки изображения -->
-                    <img [src]="product.mediaUrl" class="card-img-top" alt="Product Image"
-                        style="height: 250px; object-fit: cover;" />
-                    <div class="card-body">
-                        <h5 class="card-title">{{ product.name }}</h5>
-                        <p class="card-text">{{ product.description }}</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <span class="badge bg-primary">{{ product.price }} $</span>
-                            <div>
-                                <button class="btn btn-info btn-sm me-2" (click)="viewProduct(product.id)">
-                                    Редактировать
-                                </button>
-                                <button class="btn btn-danger btn-sm" (click)="deleteProduct(product.id)">
-                                    Удалить
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <ng-template #noProducts>
-            <div class="alert alert-info text-center" role="alert">
-                Нет доступных товаров в этой категории.
-            </div>
-        </ng-template>
-    </section>
-
-    <!-- Модальное окно для просмотра и редактирования продукта -->
-    <div class="modal" tabindex="-1" [ngClass]="{ 'show': isViewingProduct }" style="display: block;"
-        *ngIf="isViewingProduct && viewingProduct">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Редактирование продукта: {{ viewingProduct.name || 'Товар' }}</h5>
-                    <button type="button" class="btn-close" aria-label="Закрыть" (click)="closeViewModal()"></button>
-                </div>
-                <div class="modal-body">
-                    <form [formGroup]="viewingProductForm" (ngSubmit)="submitViewingProductForm()">
-
-                        <div class="media-gallery">
-                            <div class="slider">
-                                <div class="media-container">
-                                    <ng-container *ngIf="currentMedia">
-                                        <!-- Изображение -->
-                                        <img *ngIf="isImage(currentMedia)" [src]="currentMedia" alt="Media Content"
-                                            class="slider-media" />
-                                        <!-- Видео -->
-                                        <video *ngIf="isVideo(currentMedia)" [src]="currentMedia" controls
-                                            class="slider-media"></video>
-                                    </ng-container>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="edit-images" class="form-label">Загрузить новые изображения</label>
-                                    <input type="file" id="edit-images" class="form-control"
-                                        (change)="onEditImagesSelected($event)" multiple />
-                                </div>
-
-                                <!-- Предварительный просмотр новых изображений -->
-                                <div class="image-preview mb-3"
-                                    *ngIf="editedImagesPreview && editedImagesPreview.length > 0">
-                                    <p>Предварительный просмотр новых изображений:</p>
-                                    <div class="image-preview-list">
-                                        <img *ngFor="let preview of editedImagesPreview" [src]="preview"
-                                            alt="Image Preview" class="img-fluid rounded"
-                                            style="max-height: 300px; margin: 5px;" />
-                                    </div>
-                                </div>
-
-
-
-                                <!-- Навигационные точки -->
-                                <div class="dots">
-                                    <button *ngFor="let media of mediaItems; let i = index" class="dot"
-                                        [class.active]="i === currentMediaIndex" (click)="selectMedia(i)">
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Название -->
-                        <div class="form-group mb-3">
-                            <label for="edit-name" class="form-label">Название</label>
-                            <input id="edit-name" class="form-control" formControlName="name" readonly />
-                        </div>
-
-                        <!-- Описание -->
-                        <div class="form-group mb-3">
-                            <label for="edit-description" class="form-label">Описание</label>
-                            <textarea id="edit-description" class="form-control" formControlName="description"
-                                readonly></textarea>
-                        </div>
-
-                        <!-- Цена -->
-                        <div class="form-group mb-3">
-                            <label for="edit-price" class="form-label">Цена</label>
-                            <input id="edit-price" type="number" class="form-control" formControlName="price" />
-                        </div>
-
-                        <!-- Атрибуты -->
-                        <div
-                            *ngIf="viewingProduct && viewingProduct.attribute_values && viewingProduct.attribute_values.length > 0">
-                            <h5>Атрибуты</h5>
-                            <div *ngFor="let attribute of viewingProduct.attribute_values" class="mb-3">
-                                <label>{{ attribute.attribute.name }}</label>
-
-                                <!-- Выпадающий список для атрибутов с опциями -->
-                                <select *ngIf="attribute.attribute.options && attribute.attribute.options.length > 0"
-                                    [value]="attribute.value"
-                                    (change)="updateAttributeValue(attribute.attribute.id, $event)"
-                                    class="form-control">
-                                    <option value="">Выберите {{ attribute.attribute.name }}</option>
-                                    <option *ngFor="let option of attribute.attribute.options" [value]="option.id">
-                                        {{ option.title || option.value }}
-                                    </option>
-                                </select>
-
-                                <!-- Поле ввода для атрибутов без опций -->
-                                <input *ngIf="!attribute.attribute.options || attribute.attribute.options.length === 0"
-                                    type="text" class="form-control" [value]="attribute.value"
-                                    (input)="updateAttributeValue(attribute.attribute.id, $event)" />
-                            </div>
-                        </div>
-
-
-
-                        <!-- Кнопки -->
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary"
-                                [disabled]="viewingProductForm.invalid">Сохранить изменения</button>
-                            <button type="button" class="btn btn-secondary" (click)="closeViewModal()">Закрыть</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
+  <!-- Список продуктов -->
+  <section class="product-list mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <h2>Товары в выбранной категории</h2>
+      <div>
+        <button class="mocha-button" (click)="toggleCategorySelection()">
+          Выбрать категорию
+        </button>
+      </div>
     </div>
 
+    <!-- Выпадающий список выбора категории -->
+    <!-- Выпадающий список выбора категории -->
+    <div *ngIf="showCategorySelector" class="mb-3">
+      <select
+        class="form-select"
+        [value]="categoryId || ''"
+        (change)="onCategoryChange($event)"
+      >
+        <option value="" disabled [selected]="!categoryId">
+          Выберите категорию
+        </option>
+        <option *ngFor="let category of categories" [value]="category.id">
+          {{ category.name }}
+        </option>
+      </select>
+    </div>
 
+    <app-search (search)="onSearch($event)"></app-search>
 
+    <!-- Список продуктов -->
+    <div class="mocha-product-grid">
+      <div *ngFor="let product of products" class="mocha-product-item">
+        <div class="mocha-product-card">
+          <img
+            [src]="product.mediaUrl"
+            class="mocha-product-image"
+            alt="Product Image"
+          />
+          <div class="mocha-product-content">
+            <h3 class="mocha-product-title">{{ product.name }}</h3>
+            <p class="mocha-product-description">{{ product.description }}</p>
+            <div class="mocha-product-footer">
+              <span class="mocha-product-price">{{ product.price }} $</span>
+              <div class="mocha-product-actions">
+                <button
+                  class="mocha-edit-btn"
+                  (click)="viewProduct(product.id)"
+                >
+                  Редактировать
+                </button>
+                <button
+                  class="mocha-delete-btn"
+                  (click)="deleteProduct(product.id)"
+                >
+                  Удалить
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
+    <ng-template #noProducts>
+      <div class="alert alert-info text-center" role="alert">
+        Нет доступных товаров в этой категории.
+      </div>
+    </ng-template>
+  </section>
+
+  <!-- Модальное окно для просмотра и редактирования продукта -->
+  <div
+    class="modal"
+    tabindex="-1"
+    [ngClass]="{ show: isViewingProduct }"
+    style="display: block"
+    *ngIf="isViewingProduct && viewingProduct"
+  >
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">
+            Редактирование продукта: {{ viewingProduct.name || "Товар" }}
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            aria-label="Закрыть"
+            (click)="closeViewModal()"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form
+            [formGroup]="viewingProductForm"
+            (ngSubmit)="submitViewingProductForm()"
+          >
+            <div class="media-gallery">
+              <div class="slider">
+                <div class="media-container">
+                  <ng-container *ngIf="currentMedia">
+                    <!-- Изображение -->
+                    <img
+                      *ngIf="isImage(currentMedia)"
+                      [src]="currentMedia"
+                      alt="Media Content"
+                      class="slider-media"
+                    />
+                    <!-- Видео -->
+                    <video
+                      *ngIf="isVideo(currentMedia)"
+                      [src]="currentMedia"
+                      controls
+                      class="slider-media"
+                    ></video>
+                  </ng-container>
+                </div>
+                <div class="form-group mb-3">
+                  <label for="edit-images" class="form-label"
+                    >Загрузить новые изображения</label
+                  >
+                  <input
+                    type="file"
+                    id="edit-images"
+                    class="form-control"
+                    (change)="onEditImagesSelected($event)"
+                    multiple
+                  />
+                </div>
+
+                <!-- Предварительный просмотр новых изображений -->
+                <div
+                  class="image-preview mb-3"
+                  *ngIf="editedImagesPreview && editedImagesPreview.length > 0"
+                >
+                  <p>Предварительный просмотр новых изображений:</p>
+                  <div class="image-preview-list">
+                    <img
+                      *ngFor="let preview of editedImagesPreview"
+                      [src]="preview"
+                      alt="Image Preview"
+                      class="img-fluid rounded"
+                      style="max-height: 300px; margin: 5px"
+                    />
+                  </div>
+                </div>
+
+                <!-- Навигационные точки -->
+                <div class="dots">
+                  <button
+                    *ngFor="let media of mediaItems; let i = index"
+                    class="dot"
+                    [class.active]="i === currentMediaIndex"
+                    (click)="selectMedia(i)"
+                  ></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Название -->
+            <div class="form-group mb-3">
+              <label for="edit-name" class="form-label">Название</label>
+              <input
+                id="edit-name"
+                class="form-control"
+                formControlName="name"
+                readonly
+              />
+            </div>
+
+            <!-- Описание -->
+            <div class="form-group mb-3">
+              <label for="edit-description" class="form-label">Описание</label>
+              <textarea
+                id="edit-description"
+                class="form-control"
+                formControlName="description"
+                readonly
+              ></textarea>
+            </div>
+
+            <!-- Цена -->
+            <div class="form-group mb-3">
+              <label for="edit-price" class="form-label">Цена</label>
+              <input
+                id="edit-price"
+                type="number"
+                class="form-control"
+                formControlName="price"
+              />
+            </div>
+
+            <!-- Атрибуты -->
+            <div
+              *ngIf="
+                viewingProduct &&
+                viewingProduct.attribute_values &&
+                viewingProduct.attribute_values.length > 0
+              "
+            >
+              <h5>Атрибуты</h5>
+              <div
+                *ngFor="let attribute of viewingProduct.attribute_values"
+                class="mb-3"
+              >
+                <label>{{ attribute.attribute.name }}</label>
+
+                <!-- Выпадающий список для атрибутов с опциями -->
+                <select
+                  *ngIf="
+                    attribute.attribute.options &&
+                    attribute.attribute.options.length > 0
+                  "
+                  [value]="attribute.value"
+                  (change)="
+                    updateAttributeValue(attribute.attribute.id, $event)
+                  "
+                  class="form-control"
+                >
+                  <option value="">
+                    Выберите {{ attribute.attribute.name }}
+                  </option>
+                  <option
+                    *ngFor="let option of attribute.attribute.options"
+                    [value]="option.id"
+                  >
+                    {{ option.title || option.value }}
+                  </option>
+                </select>
+
+                <!-- Поле ввода для атрибутов без опций -->
+                <input
+                  *ngIf="
+                    !attribute.attribute.options ||
+                    attribute.attribute.options.length === 0
+                  "
+                  type="text"
+                  class="form-control"
+                  [value]="attribute.value"
+                  (input)="updateAttributeValue(attribute.attribute.id, $event)"
+                />
+              </div>
+            </div>
+
+            <!-- Кнопки -->
+            <div class="mocha-modal-footer">
+              <button
+                type="submit"
+                class="mocha-save-btn"
+                [disabled]="viewingProductForm.invalid"
+              >
+                Сохранить изменения
+              </button>
+              <button
+                type="button"
+                class="mocha-close-btn"
+                (click)="closeViewModal()"
+              >
+                Закрыть
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

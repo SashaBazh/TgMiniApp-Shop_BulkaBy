@@ -35,3 +35,159 @@
   .notification .close-btn:hover {
     opacity: 0.8;
   }
+
+
+  .mocha-button {
+    padding: 12px 24px;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: #8B5A2B;
+    color: #FFF8F0;
+    box-shadow: 0 2px 8px rgba(101, 67, 33, 0.2);
+    position: relative;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  /* Стили для раздела акций */
+.mocha-discount-section {
+  margin-top: 2rem;
+  padding: 0 1rem;
+}
+
+.mocha-section-title {
+  font-size: 1.5rem;
+  color: #4A2C12;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(165, 137, 119, 0.2);
+}
+
+/* Сетка акций */
+.mocha-discount-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Карточка акции */
+.mocha-discount-card {
+  background: rgba(245, 240, 235, 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  border: 1px solid rgba(165, 137, 119, 0.2);
+  box-shadow: 0 4px 12px rgba(101, 67, 33, 0.08);
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.mocha-discount-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(101, 67, 33, 0.12);
+  border-color: rgba(165, 137, 119, 0.3);
+}
+
+/* Контент карточки */
+.mocha-discount-content {
+  padding: 1.5rem;
+}
+
+.mocha-discount-title {
+  font-size: 1.1rem;
+  color: #4A2C12;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.mocha-discount-percentage {
+  margin-bottom: 0.8rem;
+}
+
+.mocha-percentage-badge {
+  display: inline-block;
+  background: linear-gradient(135deg, #A2836E 0%, #8B5A2B 100%);
+  color: white;
+  padding: 0.3rem 1rem;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.mocha-discount-dates {
+  color: #6F4E37;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.mocha-date-icon {
+  font-size: 0.8rem;
+}
+
+/* Кнопки действий */
+.mocha-discount-actions {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.mocha-edit-btn, .mocha-delete-btn {
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  flex: 1;
+}
+
+.mocha-edit-btn {
+  background: rgba(210, 180, 140, 0.2);
+  color: #8B5A2B;
+  border: 1px solid rgba(139, 90, 43, 0.3);
+}
+
+.mocha-edit-btn:hover {
+  background: rgba(210, 180, 140, 0.3);
+  border-color: rgba(139, 90, 43, 0.5);
+}
+
+.mocha-delete-btn {
+  background: rgba(205, 92, 92, 0.2);
+  color: #8B3E3E;
+  border: 1px solid rgba(139, 62, 62, 0.3);
+}
+
+.mocha-delete-btn:hover {
+  background: rgba(205, 92, 92, 0.3);
+  border-color: rgba(139, 62, 62, 0.5);
+}
+
+/* Пустое состояние */
+.mocha-empty-state {
+  background: rgba(245, 240, 235, 0.6);
+  backdrop-filter: blur(5px);
+  border-radius: 12px;
+  padding: 2rem;
+  text-align: center;
+  color: #6F4E37;
+  border: 1px dashed rgba(165, 137, 119, 0.3);
+}
+
+/* Анимации */
+@keyframes mocha-card-float {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+  100% { transform: translateY(0); }
+}
+
+.mocha-discount-card:hover {
+  animation: mocha-card-float 3s ease infinite;
+}

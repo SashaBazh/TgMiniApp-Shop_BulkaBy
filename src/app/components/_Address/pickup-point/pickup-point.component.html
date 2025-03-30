@@ -1,15 +1,16 @@
 <div class="pickup-point">
     <div class="pickup-point-info">
-        <div class="pickup-point-address" [ngClass]="{ 'selected': pickupPoint.selected }" (click)="selectPickupPoint()">
-            <div class="pickup-point-label">Адрес:</div>
-            <div class="pickup-point-location">{{ pickupPoint.address }}</div>
-            <div class="pickup-point-label">Время работы:</div>
-            <div class="pickup-point-hours">{{ pickupPoint.description }}</div>
-            <div class="pickup-point-image">
-                <img src="../../../../assets/payments/address.jpg" alt="Пункт выдачи" />
-            </div>
-            <div class="pickup-point-phone">{{ pickupPoint.name }}</div>
-            <div class="pickup-point-strip"></div>
-        </div>
+      <div class="pickup-point-address" [ngClass]="{ 'selected': pickupPoint.selected }" (click)="selectPickupPoint()">
+        <div class="pickup-point-label">{{ 'PICKUP_POINT_ADDRESS' | translate }}</div>
+        <div class="pickup-point-location">{{ pickupPoint.address }}</div>
+        <div class="pickup-point-label">{{ 'PICKUP_POINT_HOURS' | translate }}</div>
+        <div class="pickup-point-hours">{{ pickupPoint.description }}</div>
+        <div class="pickup-point-image">
+            <img [src]="getPickupImage(pickupPoint.id)" [alt]="'PICKUP_POINT_IMAGE_ALT' | translate" />
+          </div>          
+        <div class="pickup-point-phone">{{ pickupPoint.name }}</div>
+        <div class="pickup-point-strip"></div>
+      </div>
     </div>
-</div>
+  </div>
+  

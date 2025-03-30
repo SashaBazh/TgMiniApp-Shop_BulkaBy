@@ -1,11 +1,12 @@
 import { Component, Input } from '@angular/core';
 import { Product } from '../../../interfaces/_General/product.interface';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-product-card-recomendation',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule],
   templateUrl: './product-card-recomendation.component.html',
   styleUrls: ['./product-card-recomendation.component.css']
 })

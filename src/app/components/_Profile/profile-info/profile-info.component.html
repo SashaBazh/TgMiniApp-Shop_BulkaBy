@@ -10,8 +10,8 @@
             <span class="username">{{ username }}</span>
             <span class="points">{{ points }} {{ 'POINTS' | translate }}</span>
             <span class="status" [ngClass]="getStatusClass(status)">
-                {{ status }} - Ваша скидка: {{ getDiscount(status) }}%
-            </span>
+                {{ 'STATUS_DISCOUNT' | translate:{ status: status, discount: getDiscount(status) } }}
+              </span>              
             <button routerLink="/profile/my-purchases" class="my-purchases-button" (click)="navigateToPurchases()">
                 {{ 'MY_PURCHASES' | translate }}
             </button>

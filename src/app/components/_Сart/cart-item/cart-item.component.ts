@@ -2,11 +2,12 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CartService } from '../../../services/_Cart/cart.service';
 import { ImageStreamService } from '../../../services/_Image/image-stream.service';
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-cart-item',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule],
   templateUrl: './cart-item.component.html',
   styleUrls: ['./cart-item.component.css'],
 })

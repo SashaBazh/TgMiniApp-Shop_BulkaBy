@@ -28,3 +28,20 @@
     height: auto;
   }
   
+  .mocha-button {
+    padding: 12px 24px;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: #8B5A2B;
+    color: #FFF8F0;
+    box-shadow: 0 2px 8px rgba(101, 67, 33, 0.2);
+    position: relative;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  

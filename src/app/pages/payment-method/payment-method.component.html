@@ -1,13 +1,17 @@
 <app-headerback [pageTitle]="'PAYMENTMETHOD' | translate"></app-headerback>
 
 <div class="payment-methods-container">
-    <div class="payment-method" (click)="handlePaymentMethodClick('RUB', false)">
-      <app-payment-method-item imageSrc="../../../assets/payments/cash.svg" title="Наличная оплата">
-      </app-payment-method-item>
-    </div>
-    
-    <div class="payment-method" (click)="handlePaymentMethodClick('RUB', true)">
-      <app-payment-method-item imageSrc="../../../assets/payments/card.svg" title="Оплата картой">
-      </app-payment-method-item>
-    </div>
+  <div class="payment-method" (click)="handlePaymentMethodClick('RUB', false)">
+    <app-payment-method-item 
+      imageSrc="../../../assets/payments/cash.svg" 
+      [title]="'CASH_PAYMENT' | translate">
+    </app-payment-method-item>
+  </div>
+  
+  <div class="payment-method" (click)="handlePaymentMethodClick('RUB', true)">
+    <app-payment-method-item 
+      imageSrc="../../../assets/payments/card.svg" 
+      [title]="'CARD_PAYMENT' | translate">
+    </app-payment-method-item>
+  </div>
 </div>

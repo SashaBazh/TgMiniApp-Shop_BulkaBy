@@ -12,35 +12,36 @@ import { Subscription } from 'rxjs';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
-  @Input() pageTitle: string = 'Главная';
+  @Input() pageTitle: string = 'HOME';
 
   isExpanded = false;
   menuItems = [
-    { path: '/home', label: 'Главная' },
-    { path: '/catalog', label: 'Меню' },
-    { path: '/cart', label: 'Корзина' },
-    { path: '/profile', label: 'Профиль' },
-    { path: '/settings', label: 'Настройки' },
+    { path: '/home', label: 'HOME' },
+    { path: '/catalog', label: 'MENU' },
+    { path: '/cart', label: 'CART' },
+    { path: '/profile', label: 'PROFILE' },
+    { path: '/settings', label: 'SETTINGS' },
   ];
+
+  translatedMenuItems = this.menuItems.map(item => ({
+    path: item.path,
+    label: this.translate.instant(item.label),
+  }));
 
   private langChangeSubscription: Subscription | null = null;
 
   constructor(private translate: TranslateService) {}
 
   ngOnInit(): void {
-    // Подписка на событие смены языка
-    this.langChangeSubscription = this.translate.onLangChange.subscribe(
-      (event: LangChangeEvent) => {
-        this.updatePageTitle();
-      }
-    );
+    this.translateMenu();
+    this.langChangeSubscription = this.translate.onLangChange.subscribe(() => {
+      this.translateMenu();
+    });
 
-    // Установка заголовка при инициализации
     this.updatePageTitle();
   }
 
   ngOnDestroy(): void {
-    // Отписка от события
     if (this.langChangeSubscription) {
       this.langChangeSubscription.unsubscribe();
     }
@@ -50,8 +51,14 @@ export class HeaderComponent {
     this.pageTitle = this.translate.instant(this.pageTitle);
   }
 
+  private translateMenu(): void {
+    this.translatedMenuItems = this.menuItems.map(item => ({
+      path: item.path,
+      label: this.translate.instant(item.label),
+    }));
+  }
+
   redirectToTelegram(): void {
     window.location.href = 'https://t.me/alenka15em';
   }
-  
 }

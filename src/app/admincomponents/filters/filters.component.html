@@ -5,18 +5,18 @@
   </div>
 
   <section class="create-filter bg-light rounded mb-4 p-4">
-    <h1 class="mb-4">Создание атрибута</h1>
+    <h1 class="mb-4">Создать фильтр</h1>
     <form [formGroup]="createAttributeForm" (ngSubmit)="submitAttributeForm()">
       <!-- Название атрибута -->
       <div class="form-group mb-3">
-        <label for="attribute-name-ru" class="form-label">Название атрибута (Русский)</label>
+        <label for="attribute-name-ru" class="form-label">Название фильтра_ru</label>
         <input id="attribute-name-ru" class="form-control" formControlName="nameRu"
           placeholder="Введите название атрибута на русском" />
       </div>
 
       <!-- Название атрибута на английском -->
       <div class="form-group mb-3">
-        <label for="attribute-name-en" class="form-label">Название атрибута (Английский)</label>
+        <label for="attribute-name-en" class="form-label">Название атрибута_en</label>
         <input id="attribute-name-en" class="form-control" formControlName="nameEn"
           placeholder="Введите название атрибута на английском" />
       </div>
@@ -37,7 +37,7 @@
 
       <!-- Опции для атрибута -->
       <div *ngIf="isChoiceType" class="form-group mb-3" [formGroup]="createAttributeForm">
-        <label for="attribute-options" class="form-label">Опции атрибута</label>
+        <label for="attribute-options" class="form-label">Опции фильтров</label>
         <div formArrayName="options">
           <div *ngFor="let option of optionsArray.controls; let i = index" class="mb-2">
             <div [formGroupName]="i">
@@ -60,7 +60,7 @@
       </div>
 
       <!-- Кнопка создания -->
-      <button type="submit" class="btn btn-primary" [disabled]="createAttributeForm.invalid">
+      <button type="submit" class="mocha-button" [disabled]="createAttributeForm.invalid">
         Создать атрибут
       </button>
     </form>
@@ -69,13 +69,13 @@
 
   <!-- Список атрибутов -->
   <section class="attributes-list">
-    <h2 class="mb-4">Список атрибутов</h2>
+    <h2 class="mb-4">Список фильтров</h2>
     <div *ngFor="let attribute of attributes" class="attribute-item mb-3">
       <div class="d-flex justify-content-between align-items-center">
         <span>{{ attribute.name }} ({{ attribute.data_type }})</span>
-        <div>
-          <button class="btn btn-info btn-sm me-2" (click)="startEditing(attribute)">Редактировать</button>
-          <button class="btn btn-danger btn-sm" (click)="deleteAttribute(attribute)">Удалить</button>
+        <div class="mocha-attribute-actions">
+          <button class="mocha-attribute-edit-btn" (click)="startEditing(attribute)">Редактировать</button>
+          <button class="mocha-attribute-delete-btn" (click)="deleteAttribute(attribute)">Удалить</button>
         </div>
       </div>
     </div>
@@ -83,10 +83,10 @@
 
   <!-- Форма редактирования -->
   <section *ngIf="editingAttribute" class="edit-filter bg-light rounded mb-4 p-4">
-    <h1 class="mb-4">Редактирование атрибута</h1>
+    <h1 class="mb-4">Редактирование фильтра</h1>
     <form [formGroup]="editAttributeForm" (ngSubmit)="updateAttribute()">
       <div class="form-group mb-3">
-        <label for="edit-name" class="form-label">Название атрибута</label>
+        <label for="edit-name" class="form-label">Название фильтра</label>
         <input id="edit-name" class="form-control" formControlName="name" readonly />
       </div>
       <div class="form-group mb-3">
@@ -108,7 +108,7 @@
       <!-- Секция для отображения опций -->
       <!-- Секция для отображения и удаления опций -->
       <div *ngIf="editingAttribute?.options" class="form-group mb-3">
-        <label class="form-label">Опции атрибута</label>
+        <label class="form-label">Опции фильтра</label>
         <ul class="list-group">
           <li *ngFor="let option of editingAttribute.options; let i = index"
             class="list-group-item d-flex justify-content-between align-items-center">
@@ -120,8 +120,10 @@
 
 
 
-      <button type="submit" class="btn btn-success success" [disabled]="editAttributeForm.invalid">Сохранить</button>
-      <button type="button" class="btn btn-secondary" (click)="cancelEditing()">Отмена</button>
+      <div class="mocha-form-actions">
+        <button type="submit" class="mocha-save-btn" [disabled]="editAttributeForm.invalid">Сохранить</button>
+        <button type="button" class="mocha-cancel-btn" (click)="cancelEditing()">Отмена</button>
+      </div>
     </form>
   </section>
 

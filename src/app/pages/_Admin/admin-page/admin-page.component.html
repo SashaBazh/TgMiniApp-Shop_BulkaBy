@@ -1,67 +1,31 @@
 <div class="admin-container">
-  <!-- Tab Navigation -->
+  <!-- Верхняя панель навигации -->
   <div class="tab-navigation">
     <button 
+      *ngFor="let tab of [ActiveTab.CATEGORIES, ActiveTab.PRODUCTS, ActiveTab.FILTERS, ActiveTab.SALES, ActiveTab.BANNERS]" 
       class="tab-button" 
-      [class.active]="currentTab === ActiveTab.CATEGORIES"
-      (click)="setActiveTab(ActiveTab.CATEGORIES)"
-    >
-      Categories
-    </button>
-    <button 
-      class="tab-button" 
-      [class.active]="currentTab === ActiveTab.PRODUCTS"
-      (click)="setActiveTab(ActiveTab.PRODUCTS)"
-    >
-      Products
-    </button>
-    <button 
-      class="tab-button" 
-      [class.active]="currentTab === ActiveTab.FILTERS"
-      (click)="setActiveTab(ActiveTab.FILTERS)"
-    >
-      Filters
-    </button>
-    <button 
-      class="tab-button" 
-      [class.active]="currentTab === ActiveTab.SALES"
-      (click)="setActiveTab(ActiveTab.SALES)"
-    >
-      Sales
-    </button>
-    <button 
-      class="tab-button" 
-      [class.active]="currentTab === ActiveTab.BANNERS"
-      (click)="setActiveTab(ActiveTab.BANNERS)"
-    >
-      Banners
+      [class.active]="currentTab === tab"
+      (click)="setActiveTab(tab)">
+      {{ tab }}
     </button>
   </div>
 
-  <!-- Tab Content -->
+  <!-- Контент -->
   <div class="tab-content">
-    <!-- Categories Tab -->
-    <app-categories 
-      *ngIf="currentTab === ActiveTab.CATEGORIES"
-    ></app-categories>
-
-    <!-- Products Tab -->
-    <app-products 
-      *ngIf="currentTab === ActiveTab.PRODUCTS"
-    ></app-products>
-
-    <!-- Filters Tab -->
-    <app-filters 
-      *ngIf="currentTab === ActiveTab.FILTERS"
-    ></app-filters>
-
-    <!-- Sales Tab -->
-    <app-sales 
-      *ngIf="currentTab === ActiveTab.SALES"
-    ></app-sales>
-
-    <app-banners-admin 
-      *ngIf="currentTab === ActiveTab.BANNERS"
-    ></app-banners-admin>
+    <div class="content-box" *ngIf="currentTab === ActiveTab.CATEGORIES">
+      <app-categories></app-categories>
+    </div>
+    <div class="content-box" *ngIf="currentTab === ActiveTab.PRODUCTS">
+      <app-products></app-products>
+    </div>
+    <div class="content-box" *ngIf="currentTab === ActiveTab.FILTERS">
+      <app-filters></app-filters>
+    </div>
+    <div class="content-box" *ngIf="currentTab === ActiveTab.SALES">
+      <app-sales></app-sales>
+    </div>
+    <div class="content-box" *ngIf="currentTab === ActiveTab.BANNERS">
+      <app-banners-admin></app-banners-admin>
+    </div>
   </div>
 </div>

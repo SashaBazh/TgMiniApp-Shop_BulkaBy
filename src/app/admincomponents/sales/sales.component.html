@@ -7,7 +7,7 @@
   
     <!-- Форма создания скидки -->
     <section class="create-discount bg-light rounded mb-4 p-4">
-      <h1 class="mb-4">{{ isEditing ? 'Редактировать скидку' : 'Создать скидку' }}</h1>
+      <h1 class="mb-4">{{ isEditing ? 'Редактировать акцию' : 'Создать акцию' }}</h1>
       <form [formGroup]="discountForm" (ngSubmit)="submitDiscountForm()">
         <div class="form-group mb-3">
           <label for="name" class="form-label">Название</label>
@@ -59,29 +59,38 @@
           <label for="max_quantity" class="form-label">Максимальное количество</label>
           <input id="max_quantity" type="number" class="form-control" formControlName="max_quantity" />
         </div>
-        <button type="submit" class="btn btn-primary" [disabled]="discountForm.invalid">
-          {{ isEditing ? 'Сохранить изменения' : 'Создать скидку' }}
+        <button type="submit" class="mocha-button" [disabled]="discountForm.invalid">
+          {{ isEditing ? 'Сохранить изменения' : 'Создать акцию' }}
         </button>
       </form>
     </section>
   
     <!-- Список скидок -->
-    <section class="discount-list mt-4">
-      <h2>Список скидок</h2>
-      <div *ngIf="discounts.length > 0; else noDiscounts">
-        <div *ngFor="let discount of discounts" class="discount-item card mb-3">
-          <div class="card-body">
-            <h5 class="card-title">{{ discount.name }}</h5>
-            <p class="card-text">Скидка: {{ discount.discount_percentage * 100 }}%</p>
-            <p class="card-text">Действует с {{ discount.start_date || 'Не указана' }} до {{ discount.end_date || 'Не указана' }}</p>
-            <button class="btn btn-info btn-sm me-2" (click)="editDiscount(discount)">Редактировать</button>
-            <button class="btn btn-danger btn-sm" (click)="deleteDiscount(discount.id)">Удалить</button>
+    <section class="mocha-discount-section">
+      <h2 class="mocha-section-title">Список акций</h2>
+      
+      <div *ngIf="discounts.length > 0; else noDiscounts" class="mocha-discount-grid">
+        <div *ngFor="let discount of discounts" class="mocha-discount-card">
+          <div class="mocha-discount-content">
+            <h3 class="mocha-discount-title">{{ discount.name }}</h3>
+            <p class="mocha-discount-percentage">
+              <span class="mocha-percentage-badge">{{ discount.discount_percentage * 100 }}%</span>
+            </p>
+            <p class="mocha-discount-dates">
+              <i class="mocha-date-icon">📅</i>
+              {{ discount.start_date || 'Не указана' }} — {{ discount.end_date || 'Не указана' }}
+            </p>
+            <div class="mocha-discount-actions">
+              <button class="mocha-edit-btn" (click)="editDiscount(discount)">Редактировать</button>
+              <button class="mocha-delete-btn" (click)="deleteDiscount(discount.id)">Удалить</button>
+            </div>
           </div>
         </div>
       </div>
+    
       <ng-template #noDiscounts>
-        <div class="alert alert-info text-center" role="alert">
-          Скидки отсутствуют.
+        <div class="mocha-empty-state">
+          <p>Акции отсутствуют.</p>
         </div>
       </ng-template>
     </section>

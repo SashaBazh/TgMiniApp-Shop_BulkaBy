@@ -7,11 +7,12 @@ import { PaymentService } from '../../../services/_Payment/payment.service';
 import { SafeResourceUrl } from '@angular/platform-browser';
 import { TelegramService } from '../../../services/_Telegram/telegram.service';
 import { IonicModule } from '@ionic/angular';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-payment-modal',
   standalone: true,
-  imports: [CommonModule, FormsModule, IonicModule],
+  imports: [CommonModule, FormsModule, IonicModule, TranslateModule],
   templateUrl: './payment-modal.component.html',
   styleUrl: './payment-modal.component.css',
 })

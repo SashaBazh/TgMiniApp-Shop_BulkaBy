@@ -3,7 +3,7 @@
   <div class="products-container">
     <div *ngFor="let product of products" class="cart-item">
       <div class="item-image">
-        <img [src]="product.image" alt="Изображение товара" />
+        <img [src]="product.image" [alt]="'ITEM_IMAGE_ALT' | translate" />
       </div>
       <div class="item-details">
         <div class="item-title">{{ product.name }}</div>
@@ -17,19 +17,19 @@
           <ng-container *ngIf="product.status === 'pending'">
             <span class="loading-spinner"></span>
           </ng-container>
-          {{ product.status === "pending" ? "В обработке" : "Успешно" }}
+          {{ product.status === "pending" ? ('STATUS_PENDING' | translate) : ('STATUS_SUCCESS' | translate) }}
         </span>
         <div class="item-footer">
           <div class="quantity-selector">
             <span class="quantity-number">{{ product.quantity }}</span>
           </div>
           <div class="price-and-status">
-            <span class="item-price">{{
-              product.price * product.quantity | currency
-            }}</span>
+            <span class="item-price">
+              {{ product.price * product.quantity | currency }}
+            </span>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </div>  
 </div>

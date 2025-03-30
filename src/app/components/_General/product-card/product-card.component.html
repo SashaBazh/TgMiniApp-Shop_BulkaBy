@@ -5,10 +5,11 @@
   <div class="product-info">
     <h3 class="product-title">{{ product.name }}</h3>
     <p class="product-price">
-      <span *ngIf="product.discounted_price !== null" class="old-price">{{ product.price }} р.</span>
-      <span *ngIf="product.discounted_price !== null" class="new-price">{{ product.discounted_price | number:'1.2-2' }} р.</span>
-      <span *ngIf="product.discounted_price === null">{{ product.price }} р.</span>
+      <span *ngIf="product.discounted_price !== null" class="old-price">{{ product.price }} {{ 'CURRENCY' | translate }}</span>
+      <span *ngIf="product.discounted_price !== null" class="new-price">{{ product.discounted_price | number:'1.2-2' }} {{ 'CURRENCY' | translate }}</span>
+      <span *ngIf="product.discounted_price === null">{{ product.price }} {{ 'CURRENCY' | translate }}</span>
     </p>
-    <button class="product-button">Подробнее</button>
+    <button class="product-button">{{ 'MORE_DETAILS' | translate }}
+    </button>
   </div>
 </div>

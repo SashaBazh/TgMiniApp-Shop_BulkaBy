@@ -6,6 +6,14 @@ import { FiltersComponent } from '../../../admincomponents/filters/filters.compo
 import { SalesComponent } from '../../../admincomponents/sales/sales.component';
 import { BannersAdminComponent } from "../../../admincomponents/banners-admin/banners-admin.component";
 
+enum ActiveTab {
+  CATEGORIES = 'Категории',
+  PRODUCTS = 'Товары',
+  FILTERS = 'Фильтры',
+  SALES = 'Акции',
+  BANNERS = 'Реклама'
+}
+
 @Component({
   selector: 'app-admin-page',
   standalone: true,
@@ -21,20 +29,10 @@ import { BannersAdminComponent } from "../../../admincomponents/banners-admin/ba
   styleUrls: ['./admin-page.component.css'],
 })
 export class AdminPageComponent {
-  // Define an enum for active tabs
-  ActiveTab = {
-    CATEGORIES: 'categories',
-    PRODUCTS: 'products',
-    FILTERS: 'filters',
-    SALES: 'sales', 
-    BANNERS: 'banners'// Добавлено
-  };
+  ActiveTab = ActiveTab; 
+  currentTab: ActiveTab = ActiveTab.CATEGORIES;
 
-  // Track the current active tab
-  currentTab: string = this.ActiveTab.CATEGORIES;
-
-  // Method to switch tabs
-  setActiveTab(tab: string) {
+  setActiveTab(tab: ActiveTab) {
     this.currentTab = tab;
   }
 }

@@ -43,3 +43,199 @@
   .success {
     margin-right: 10px;
   }
+
+  .mocha-button {
+    padding: 12px 24px;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: #8B5A2B;
+    color: #FFF8F0;
+    box-shadow: 0 2px 8px rgba(101, 67, 33, 0.2);
+    position: relative;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+
+  /* Контейнер для кнопок */
+.mocha-attribute-actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* Общие стили кнопок */
+.mocha-attribute-edit-btn,
+.mocha-attribute-delete-btn {
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Кнопка редактирования */
+.mocha-attribute-edit-btn {
+  background: rgba(210, 180, 140, 0.2); /* Прозрачный бежевый */
+  color: #8B5A2B; /* Коричневый мокко */
+  border: 1px solid rgba(139, 90, 43, 0.3);
+}
+
+.mocha-attribute-edit-btn:hover {
+  background: rgba(210, 180, 140, 0.3);
+  border-color: rgba(139, 90, 43, 0.5);
+}
+
+.mocha-attribute-edit-btn:active {
+  background: rgba(210, 180, 140, 0.25);
+  transform: scale(0.98);
+}
+
+/* Кнопка удаления */
+.mocha-attribute-delete-btn {
+  background: rgba(205, 92, 92, 0.2); /* Прозрачный красный */
+  color: #8B3E3E; /* Темно-красный */
+  border: 1px solid rgba(139, 62, 62, 0.3);
+}
+
+.mocha-attribute-delete-btn:hover {
+  background: rgba(205, 92, 92, 0.3);
+  border-color: rgba(139, 62, 62, 0.5);
+}
+
+.mocha-attribute-delete-btn:active {
+  background: rgba(205, 92, 92, 0.25);
+  transform: scale(0.98);
+}
+
+/* Иконки (опционально) */
+.mocha-attribute-edit-btn::before {
+  content: "✏️";
+  margin-right: 5px;
+  font-size: 12px;
+}
+
+.mocha-attribute-delete-btn::before {
+  content: "🗑️";
+  margin-right: 5px;
+  font-size: 12px;
+}
+
+/* Анимация при наведении */
+@keyframes mocha-btn-hover {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-2px); }
+  100% { transform: translateY(0); }
+}
+
+.mocha-attribute-edit-btn:hover,
+.mocha-attribute-delete-btn:hover {
+  animation: mocha-btn-hover 0.5s ease;
+}
+
+
+
+
+/* Контейнер для кнопок формы */
+.mocha-form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+  justify-content: flex-end;
+}
+
+/* Общие стили кнопок */
+.mocha-save-btn,
+.mocha-cancel-btn {
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  border: none;
+  min-width: 100px;
+  text-align: center;
+}
+
+/* Кнопка сохранения */
+.mocha-save-btn {
+  background: linear-gradient(135deg, #8B5A2B 0%, #A2836E 100%);
+  color: #FFF8F0;
+  box-shadow: 0 2px 8px rgba(139, 90, 43, 0.2);
+  position: relative;
+  overflow: hidden;
+}
+
+.mocha-save-btn:not(:disabled):hover {
+  background: linear-gradient(135deg, #7A4A1B 0%, #8B5A2B 100%);
+  box-shadow: 0 4px 12px rgba(139, 90, 43, 0.3);
+  transform: translateY(-1px);
+}
+
+.mocha-save-btn:not(:disabled):active {
+  transform: translateY(0);
+  box-shadow: 0 2px 6px rgba(139, 90, 43, 0.3);
+}
+
+.mocha-save-btn:disabled {
+  background: #D2C1B0;
+  color: #A29384;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Кнопка отмены */
+.mocha-cancel-btn {
+  background: rgba(245, 240, 235, 0.8);
+  color: #5A4A42;
+  border: 1px solid rgba(165, 137, 119, 0.3);
+  backdrop-filter: blur(5px);
+}
+
+.mocha-cancel-btn:hover {
+  background: rgba(234, 224, 213, 0.9);
+  border-color: rgba(165, 137, 119, 0.5);
+}
+
+.mocha-cancel-btn:active {
+  background: rgba(224, 214, 203, 0.9);
+}
+
+/* Эффект кофейных бобов для кнопки сохранения */
+.mocha-save-btn:not(:disabled)::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, 
+    rgba(255,255,255,0.1) 0%, 
+    rgba(255,255,255,0) 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.mocha-save-btn:not(:disabled):hover::after {
+  opacity: 1;
+}
+
+/* Анимация нажатия */
+@keyframes mocha-btn-press {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.98); }
+  100% { transform: scale(1); }
+}
+
+.mocha-save-btn:not(:disabled):active,
+.mocha-cancel-btn:active {
+  animation: mocha-btn-press 0.3s ease;
+}

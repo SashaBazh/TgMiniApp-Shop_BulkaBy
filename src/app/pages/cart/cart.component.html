@@ -13,17 +13,17 @@
 
     <div class="payment-block">
       <span class="payment-text">
-        {{ 'TOTAL_PAYMENT' | translate }} {{ cart.total_price | number:'1.2-2' }} р.
+        {{ 'TOTAL_PAYMENT' | translate }} {{ cart.total_price | number:'1.2-2' }} {{ 'CURRENCY' | translate }}
       </span>   
     </div>
 
     <div class="points-container">
       <div class="points-info">
         <div class="discount-text">
-          Скидка {{ max_points_usage * 100 }}% за бонусы
+          {{ 'DISCOUNT_TEXT' | translate:{ max_points_usage: max_points_usage * 100 } }}
         </div>
         <div class="points-balance">
-          Спишется {{ maxPoints | number:'1.2-2'}} бонусов из {{ points_balance | number:'1.2-2'}}
+          {{ 'POINTS_BALANCE' | translate:{ maxPoints: maxPoints | number:'1.2-2', points_balance: points_balance | number:'1.2-2' } }}
         </div>
       </div>
       <label class="switch">

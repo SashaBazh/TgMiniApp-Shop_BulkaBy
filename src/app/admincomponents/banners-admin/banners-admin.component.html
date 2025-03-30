@@ -1,8 +1,8 @@
 <div class="banners-admin container mt-5">
-  <h1 class="text-center mb-4">Редактирование баннеров</h1>
+  <h1 class="text-center mb-4">Редактирвоание рекламы</h1>
 
   <div class="banner-form card p-4 mb-4" *ngIf="selectedBanner">
-    <h2 class="h4 mb-3">Редактирование банера</h2>
+    <h2 class="h4 mb-3">Редактирвоание рекламы</h2>
     <form>
       <div class="mb-3">
         <label for="image" class="form-label">Загрузи новые изображения которые будут отображаться в банере</label>
@@ -14,7 +14,7 @@
           multiple
         />
       </div>
-      <button class="btn btn-primary w-100" (click)="updateBanner()" type="button">
+      <button class="mocha-button" (click)="updateBanner()" type="button">
         Обновить баннер
       </button>
     </form>

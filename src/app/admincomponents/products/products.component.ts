@@ -304,7 +304,7 @@ export class ProductsComponent implements OnInit {
         'product_data',
         JSON.stringify({
           category_id: formValue.category_id,
-          name: formValue.nameEn,
+          name: formValue.nameRu,
           price: formValue.price,
           attributes: attributeValues,
           translations,

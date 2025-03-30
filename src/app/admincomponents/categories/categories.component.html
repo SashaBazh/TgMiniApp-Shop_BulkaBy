@@ -5,10 +5,10 @@
   </div>
 
   <section class="create-category bg-light rounded mb-4 p-4">
-    <h1 class="mb-4">Создание категории</h1>
+    <h1 class="mb-4">Создать категорию</h1>
     <form [formGroup]="createCategoryForm" (ngSubmit)="submitCategoryForm()" class="needs-validation" novalidate>
       <div class="form-group mb-3">
-        <label for="name" class="form-label">Название (Русский)</label>
+        <label for="name" class="form-label">Название_ru</label>
         <input id="name" class="form-control" formControlName="name" placeholder="Введите название категории на русском"
           [ngClass]="{'is-invalid': createCategoryForm.get('name')?.invalid && createCategoryForm.get('name')?.touched}" />
         <div class="invalid-feedback">
@@ -18,7 +18,7 @@
 
       <!-- Название категории на английском -->
       <div class="form-group mb-3">
-        <label for="nameEn" class="form-label">Название (Английский)</label>
+        <label for="nameEn" class="form-label">Название_en</label>
         <input id="nameEn" class="form-control" formControlName="nameEn"
           placeholder="Введите название категории на английском"
           [ngClass]="{'is-invalid': createCategoryForm.get('nameEn')?.invalid && createCategoryForm.get('nameEn')?.touched}" />
@@ -47,7 +47,7 @@
         <img [src]="imagePreview" alt="Image Preview" class="img-fluid rounded" style="max-height: 300px;" />
       </div>
 
-      <button type="submit" class="btn btn-primary" [disabled]="createCategoryForm.invalid || !selectedImage">
+      <button type="submit" class="mocha-button" [disabled]="createCategoryForm.invalid || !selectedImage">
         Создать категорию
       </button>
     </form>
@@ -94,22 +94,27 @@
                   </div>
 
                   <!-- Блок для атрибутов -->
-                  <div class="mb-3">
-                    <label class="form-label">Атрибуты</label>
-                    <div class="form-check" *ngFor="let attribute of availableAttributes">
-                      <input class="form-check-input" type="checkbox" [value]="attribute.id"
-                        [checked]="selectedAttributes.includes(attribute.id)"
-                        (change)="onAttributeCheckboxChange($event)" id="attributeCheckbox{{ attribute.id }}" />
-                      <label class="form-check-label" [for]="'attributeCheckbox' + attribute.id">
-                        {{ attribute.name }}
-                      </label>
+                  <div class="simple-attributes-container">
+                    <label class="simple-attributes-label">Атрибуты</label>
+                    <div class="simple-attributes-list">
+                      <div class="simple-attribute-item" *ngFor="let attribute of availableAttributes">
+                        <input type="checkbox" 
+                               class="simple-attribute-checkbox" 
+                               [value]="attribute.id"
+                               [checked]="selectedAttributes.includes(attribute.id)"
+                               (change)="onAttributeCheckboxChange($event)" 
+                               id="attributeCheckbox{{ attribute.id }}" />
+                        <label class="simple-attribute-label" [for]="'attributeCheckbox' + attribute.id">
+                          {{ attribute.name }}
+                        </label>
+                      </div>
                     </div>
                   </div>
 
                   <!-- Кнопки сохранения и отмены -->
-                  <div class="d-flex justify-content-between">
-                    <button type="submit" class="btn btn-success btn-sm">Применить</button>
-                    <button type="button" class="btn btn-secondary btn-sm" (click)="cancelEditing()">Отмена</button>
+                  <div class="mocha-action-buttons">
+                    <button type="submit" class="mocha-confirm-button">Применить</button>
+                    <button type="button" class="mocha-cancel-button" (click)="cancelEditing()">Отмена</button>
                   </div>
                 </div>
               </form>
@@ -122,9 +127,9 @@
               <div class="card-body">
                 <h5 class="card-title">{{ category.name }}</h5>
                 <p class="card-text">{{ category.description }}</p>
-                <div class="d-flex justify-content-between mt-3">
-                  <button class="btn btn-warning btn-sm" (click)="startEditing(category)">Редактировать</button>
-                  <button class="btn btn-danger btn-sm" (click)="deleteCategory(category.id)">Удалить</button>
+                <div class="mocha-buttons-container">
+                  <button class="mocha-edit-button" (click)="startEditing(category)">Редактировать</button>
+                  <button class="mocha-delete-button" (click)="deleteCategory(category.id)">Удалить</button>
                 </div>
               </div>
             </ng-template>

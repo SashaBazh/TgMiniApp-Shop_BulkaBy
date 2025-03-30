@@ -1,37 +1,57 @@
+/* Контейнер */
 .admin-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: #f7f7f7;
 }
 
+/* Верхняя навигация */
 .tab-navigation {
   display: flex;
-  overflow-x: auto; /* Включаем горизонтальную прокрутку */
-  white-space: nowrap; /* Запрещаем перенос кнопок на следующую строку */
-  margin-bottom: 20px;
-  border-bottom: 1px solid #A2836E; /* Цвет мокко */
-  padding-bottom: 10px; /* Добавляем небольшой отступ снизу для эстетики */
-  -webkit-overflow-scrolling: touch; /* Плавный скроллинг для мобильных устройств */
+  justify-content: space-around;
+  background: #5e4630;
+  padding: 10px;
+  position: sticky;
+  top: 0;
+  width: 100%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 100;
 }
 
+/* Кнопки навигации */
 .tab-button {
-  padding: 10px 20px;
-  margin-right: 10px;
-  background-color: rgba(240, 209, 161, 0.5); /* Полупрозрачный фон */
+  flex: 1;
+  padding: 12px;
   border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  flex-shrink: 0; /* Запрещаем кнопкам сжиматься */
-  color: #A2836E; /* Цвет мокко */
-}
-
-.tab-button.active {
-  background-color: #A2836E; /* Цвет мокко */
+  background: none;
   color: white;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
+/* Активная кнопка */
+.tab-button.active {
+  background: #a2836e;
+  color: white;
+  border-radius: 8px;
+}
+
+/* Контейнер с контентом */
 .tab-content {
+  flex-grow: 1;
   padding: 20px;
-  background-color: rgba(240, 209, 161, 0.3); /* Полупрозрачный фон */
-  border: 1px solid #A2836E; /* Цвет мокко */
+  overflow-y: auto;
+  margin-top: 60px; /* Отступ под навигацию */
+}
+
+/* Закруглённые блоки */
+.content-box {
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
 }

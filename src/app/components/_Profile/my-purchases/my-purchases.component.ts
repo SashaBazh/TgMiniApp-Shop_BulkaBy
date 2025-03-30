@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { CartService } from '../../../services/_Cart/cart.service';
 import { CommonModule } from '@angular/common';
 import { ImageStreamService } from '../../../services/_Image/image-stream.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-my-purchases',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslateModule],
   templateUrl: './my-purchases.component.html',
   styleUrls: ['./my-purchases.component.css'],
 })

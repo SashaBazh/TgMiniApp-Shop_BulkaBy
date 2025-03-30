@@ -22,7 +22,7 @@ export class ProductService {
     console.log('ID продукта:', productId);
     console.log('Заголовки:', this.headers);
   
-    return this.http.get<ProductDetailResponse>(`${this.apiUrl}/${productId}?timestamp=${new Date().getTime()}`, {
+    return this.http.get<ProductDetailResponse>(`${this.apiUrl}/${productId}/non_filterable?timestamp=${new Date().getTime()}`, {
       headers: this.headers,
     }).pipe(
       tap({

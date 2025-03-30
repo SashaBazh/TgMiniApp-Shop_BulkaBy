@@ -1,5 +1,5 @@
 <form (submit)="submitPayment()">
-  <label for="email">Email:</label>
+  <label for="email">{{ 'EMAIL' | translate }}</label>
   <input id="email" type="email" name="email" [(ngModel)]="paymentData.email" required />
 
   <div *ngIf="isCardPayment">
@@ -13,7 +13,7 @@
             </div>
             <div class="card-info">
               <div class="card-holder">
-                {{ paymentData.cardHolder || 'ИМЯ ВЛАДЕЛЬЦА' }}
+                {{ paymentData.cardHolder || ('CARDHOLDER_NAME' | translate) }}
               </div>
               <div class="card-expiry">
                 {{ formattedCardExpiry }}
@@ -23,10 +23,10 @@
         </div>
       </div>
     
-      <h2>Данные платежа</h2>
+      <h2>{{ 'PAYMENT_DETAILS' | translate }}</h2>
   
       <div class="form-group">
-        <label for="cardNumber">Номер карты</label>
+        <label for="cardNumber">{{ 'CARD_NUMBER' | translate }}</label>
         <input 
           id="cardNumber" 
           type="text" 
@@ -34,25 +34,25 @@
           [(ngModel)]="paymentData.cardNumber" 
           (input)="onCardNumberChange($event)"
           maxlength="19" 
-          placeholder="0000 0000 0000 0000" 
+          [placeholder]="'CARD_NUMBER_PLACEHOLDER' | translate"
           required />
       </div>
   
       <div class="card-details">
         <div class="form-group half">
-          <label for="cardHolder">Имя владельца</label>
+          <label for="cardHolder">{{ 'CARDHOLDER' | translate }}</label>
           <input 
             id="cardHolder" 
             type="text" 
             name="cardHolder"
             [(ngModel)]="paymentData.cardHolder" 
-            placeholder="ИМЯ ФАМИЛИЯ" 
+            [placeholder]="'CARDHOLDER_PLACEHOLDER' | translate"
             required />
         </div>
         
         <div class="form-row">
           <div class="form-group small">
-            <label for="cardExpiry">Срок действия</label>
+            <label for="cardExpiry">{{ 'EXPIRY_DATE' | translate }}</label>
             <input 
               id="cardExpiry" 
               type="text" 
@@ -60,19 +60,19 @@
               [(ngModel)]="paymentData.cardExpiry"
               (input)="onCardExpiryChange($event)"
               maxlength="5" 
-              placeholder="MM/ГГ" 
+              [placeholder]="'EXPIRY_DATE_PLACEHOLDER' | translate"
               required />
           </div>
   
           <div class="form-group small">
-            <label for="cardCvc">CVC</label>
+            <label for="cardCvc">{{ 'CVC' | translate }}</label>
             <input 
               id="cardCvc" 
               type="text" 
               name="cardCvc"
               [(ngModel)]="paymentData.cardCvc" 
               maxlength="3" 
-              placeholder="000" 
+              [placeholder]="'CVC_PLACEHOLDER' | translate"
               required />
           </div>
         </div>
@@ -80,5 +80,5 @@
     </div>
   </div>
 
-  <button type="submit">Оплатить</button>
+  <button type="submit">{{ 'PAY' | translate }}</button>
 </form>
