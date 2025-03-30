@@ -4,11 +4,10 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --configuration=production",
+    "build": "npx ng build --configuration=production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:bakery_store": "node dist/bakery_store/server/server.mjs",
-    "postinstall": "npm install -g @angular/cli"
+    "serve:ssr:bakery_store": "node dist/bakery_store/server/server.mjs"
   },
   "private": true,
   "dependencies": {
