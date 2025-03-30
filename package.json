@@ -7,10 +7,12 @@
     "build": "ng build --configuration=production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "serve:ssr:bakery_store": "node dist/bakery_store/server/server.mjs"
+    "serve:ssr:bakery_store": "node dist/bakery_store/server/server.mjs",
+    "postinstall": "npm install -g @angular/cli"
   },
   "private": true,
   "dependencies": {
+    "@angular/cli": "^18.2.16",
     "@angular/animations": "^18.0.0",
     "@angular/common": "^18.0.0",
     "@angular/compiler": "^18.0.0",
