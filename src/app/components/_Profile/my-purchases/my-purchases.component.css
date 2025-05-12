@@ -15,7 +15,7 @@
 }
 
 .status {
-  margin-top: -10px;
+  margin-top: 0px;
 }
 
 /* Cart Item Styles */
@@ -92,13 +92,13 @@
   color: #000000;
   font-family: 'TrajanPro3', sans-serif;
   font-size: clamp(14px, 1.5vw, 16px);
-  margin-top: 30px;
+  margin-top: 0px;
 }
 
 /* Число количества */
 .quantity-number {
   font-size: 16px;
-  margin-top: 10px;
+  margin-top: 0px;
 }
 
 /* Контейнер для кнопок вверх и вниз */
