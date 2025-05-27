@@ -1,98 +1,165 @@
 <div class="discounts-container">
-    <!-- Уведомление -->
-    <div *ngIf="message" class="notification" [ngClass]="{ 'success': isSuccess, 'error': !isSuccess }">
-      <span>{{ message }}</span>
-      <button class="close-btn" (click)="closeNotification()">×</button>
-    </div>
-  
-    <!-- Форма создания скидки -->
-    <section class="create-discount bg-light rounded mb-4 p-4">
-      <h1 class="mb-4">{{ isEditing ? 'Редактировать акцию' : 'Создать акцию' }}</h1>
-      <form [formGroup]="discountForm" (ngSubmit)="submitDiscountForm()">
-        <div class="form-group mb-3">
-          <label for="name" class="form-label">Название</label>
-          <input id="name" class="form-control" formControlName="name" placeholder="Введите название скидки" />
-        </div>
-        <div class="form-group mb-3">
-          <label for="discount_percentage" class="form-label">Процент скидки</label>
-          <input
-            id="discount_percentage"
-            type="number"
-            class="form-control"
-            formControlName="discount_percentage"
-            step="0.01"
-            placeholder="Введите процент скидки (0-1)"
-          />
-        </div>
-        <div class="form-group mb-3">
-          <label for="start_date" class="form-label">Дата начала</label>
-          <input id="start_date" type="date" class="form-control" formControlName="start_date" />
-        </div>
-        <div class="form-group mb-3">
-          <label for="end_date" class="form-label">Дата окончания</label>
-          <input id="end_date" type="date" class="form-control" formControlName="end_date" />
-        </div>
-  
-        <!-- Выбор категории -->
-        <div class="form-group mb-3">
-          <label for="category_id" class="form-label">Категория</label>
-          <select id="category_id" class="form-control" formControlName="category_id" (change)="onCategoryChange($event)">
-            <option value="">Выберите категорию</option>
-            <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
-          </select>
-        </div>
-  
-        <!-- Выбор товара -->
-        <div class="form-group mb-3">
-          <label for="product_id" class="form-label">Товар</label>
-          <select id="product_id" class="form-control" formControlName="product_id" [disabled]="!products.length">
-            <option value="">Выберите товар</option>
-            <option *ngFor="let product of products" [value]="product.id">{{ product.name }}</option>
-          </select>
-        </div>
-  
-        <div class="form-group mb-3">
-          <label for="min_quantity" class="form-label">Минимальное количество</label>
-          <input id="min_quantity" type="number" class="form-control" formControlName="min_quantity" />
-        </div>
-        <div class="form-group mb-3">
-          <label for="max_quantity" class="form-label">Максимальное количество</label>
-          <input id="max_quantity" type="number" class="form-control" formControlName="max_quantity" />
-        </div>
-        <button type="submit" class="mocha-button" [disabled]="discountForm.invalid">
-          {{ isEditing ? 'Сохранить изменения' : 'Создать акцию' }}
-        </button>
-      </form>
-    </section>
-  
-    <!-- Список скидок -->
-    <section class="mocha-discount-section">
-      <h2 class="mocha-section-title">Список акций</h2>
-      
-      <div *ngIf="discounts.length > 0; else noDiscounts" class="mocha-discount-grid">
-        <div *ngFor="let discount of discounts" class="mocha-discount-card">
-          <div class="mocha-discount-content">
-            <h3 class="mocha-discount-title">{{ discount.name }}</h3>
-            <p class="mocha-discount-percentage">
-              <span class="mocha-percentage-badge">{{ discount.discount_percentage * 100 }}%</span>
-            </p>
-            <p class="mocha-discount-dates">
-              <i class="mocha-date-icon">📅</i>
-              {{ discount.start_date || 'Не указана' }} — {{ discount.end_date || 'Не указана' }}
-            </p>
-            <div class="mocha-discount-actions">
-              <button class="mocha-edit-btn" (click)="editDiscount(discount)">Редактировать</button>
-              <button class="mocha-delete-btn" (click)="deleteDiscount(discount.id)">Удалить</button>
-            </div>
+  <!-- Уведомление -->
+  <div
+    *ngIf="message"
+    class="notification"
+    [ngClass]="{ success: isSuccess, error: !isSuccess }"
+  >
+    <span>{{ message }}</span>
+    <button class="close-btn" (click)="closeNotification()">×</button>
+  </div>
+
+  <!-- Форма создания скидки -->
+  <section class="create-discount bg-light rounded mb-4 p-4">
+    <h1 class="mb-4">
+      {{ isEditing ? "Редактировать акцию" : "Создать акцию" }}
+    </h1>
+    <form [formGroup]="discountForm" (ngSubmit)="submitDiscountForm()">
+      <div class="form-group mb-3">
+        <label for="name" class="form-label">Название</label>
+        <input
+          id="name"
+          class="form-control"
+          formControlName="name"
+          placeholder="Введите название скидки"
+        />
+      </div>
+      <div class="form-group mb-3">
+        <label for="discount_percentage" class="form-label"
+          >Процент скидки</label
+        >
+        <input
+          id="discount_percentage"
+          type="number"
+          class="form-control"
+          formControlName="discount_percentage"
+          step="0.01"
+          placeholder="Введите процент скидки (0-1)"
+        />
+      </div>
+      <div class="form-group mb-3">
+        <label for="start_date" class="form-label">Дата начала</label>
+        <input
+          id="start_date"
+          type="date"
+          class="form-control"
+          formControlName="start_date"
+        />
+      </div>
+      <div class="form-group mb-3">
+        <label for="end_date" class="form-label">Дата окончания</label>
+        <input
+          id="end_date"
+          type="date"
+          class="form-control"
+          formControlName="end_date"
+        />
+      </div>
+
+      <!-- Выбор категории -->
+      <div class="form-group mb-3">
+        <label for="category_id" class="form-label">Категория</label>
+        <select
+          id="category_id"
+          class="form-control"
+          formControlName="category_id"
+          (change)="onCategoryChange($event)"
+        >
+          <option value="">Выберите категорию</option>
+          <option *ngFor="let category of categories" [value]="category.id">
+            {{ category.name }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Выбор товара -->
+      <div class="form-group mb-3">
+        <label for="product_id" class="form-label">Товар</label>
+        <select
+          id="product_id"
+          class="form-control"
+          formControlName="product_id"
+          [disabled]="!products.length"
+        >
+          <option value="">Выберите товар</option>
+          <option *ngFor="let product of products" [value]="product.id">
+            {{ product.name }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="min_quantity" class="form-label"
+          >Минимальное количество</label
+        >
+        <input
+          id="min_quantity"
+          type="number"
+          class="form-control"
+          formControlName="min_quantity"
+        />
+      </div>
+      <div class="form-group mb-3">
+        <label for="max_quantity" class="form-label"
+          >Максимальное количество</label
+        >
+        <input
+          id="max_quantity"
+          type="number"
+          class="form-control"
+          formControlName="max_quantity"
+        />
+      </div>
+      <button
+        type="submit"
+        class="mocha-button"
+        [disabled]="discountForm.invalid"
+      >
+        {{ isEditing ? "Сохранить изменения" : "Создать акцию" }}
+      </button>
+    </form>
+  </section>
+
+  <!-- Список скидок -->
+  <section class="mocha-discount-section">
+    <h2 class="mocha-section-title">Список акций</h2>
+
+    <div
+      *ngIf="discounts.length > 0; else noDiscounts"
+      class="mocha-discount-grid"
+    >
+      <div *ngFor="let discount of discounts" class="mocha-discount-card">
+        <div class="mocha-discount-content">
+          <h3 class="mocha-discount-title">{{ discount.name }}</h3>
+          <p class="mocha-discount-percentage">
+            <span class="mocha-percentage-badge"
+              >{{ discount.discount_percentage * 100 }}%</span
+            >
+          </p>
+          <p class="mocha-discount-dates">
+            <i class="mocha-date-icon">📅</i>
+            {{ formatDisplayDate(discount.start_date) }} —
+            {{ formatDisplayDate(discount.end_date) }}
+          </p>
+          <div class="mocha-discount-actions">
+            <button class="mocha-edit-btn" (click)="editDiscount(discount)">
+              Редактировать
+            </button>
+            <button
+              class="mocha-delete-btn"
+              (click)="deleteDiscount(discount.id)"
+            >
+              Удалить
+            </button>
           </div>
         </div>
       </div>
-    
-      <ng-template #noDiscounts>
-        <div class="mocha-empty-state">
-          <p>Акции отсутствуют.</p>
-        </div>
-      </ng-template>
-    </section>
-  </div>
-  
+    </div>
+
+    <ng-template #noDiscounts>
+      <div class="mocha-empty-state">
+        <p>Акции отсутствуют.</p>
+      </div>
+    </ng-template>
+  </section>
+</div>
