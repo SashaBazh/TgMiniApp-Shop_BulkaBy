@@ -1,6 +1,6 @@
 export const environment = {
     production: false,
-    apiUrl: 'https://fd5c83b9957922313c6eef0c54227816.serveo.net' // Замените на ваш базовый URL API
+    apiUrl: 'https://32beaee0c5ae6467b4d22407fdf296be.serveo.net' // Замените на ваш базовый URL API
   };
 
   // https://api.excellentjewellery.ru/api
