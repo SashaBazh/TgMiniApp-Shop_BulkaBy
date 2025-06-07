@@ -1,6 +1,6 @@
 export const environment = {
     production: false,
-    apiUrl: 'https://21a8dbff60ca0a.lhr.life/api' // Замените на ваш базовый URL API
+    apiUrl: 'https://f2720f32bdd583.lhr.life/api' // Замените на ваш базовый URL API
   };
 
   // https://api.excellentjewellery.ru/api
