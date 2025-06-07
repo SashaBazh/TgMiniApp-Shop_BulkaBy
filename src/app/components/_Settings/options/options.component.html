@@ -13,6 +13,7 @@
       <span class="option-title">{{ 'BIRTH_DATE' | translate }}</span>
     </div>
     <span class="right-text">
+      {{ birthday || 'Не указана' }}
       <img src="../../../../assets/icons/arrow-down.svg" alt="Expand" class="arrow-icon" [class.rotated]="isDatePickerOpen" />
     </span>
   </div>

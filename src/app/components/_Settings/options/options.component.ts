@@ -32,7 +32,7 @@ export class OptionsComponent implements OnInit {
     public optionsService: OptionsService,
     private profileService: ProfileService,
     private languageService: LanguageService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     console.log('ngOnInit вызван');
@@ -47,19 +47,17 @@ export class OptionsComponent implements OnInit {
   loadBirthday(): void {
     this.profileService.getUserProfile().subscribe({
       next: (profile) => {
-        // Устанавливаем дату рождения, если она есть
-        this.birthday = profile.birthday
-          ? profile.birthday.substring(0, 10) // Оставляем первые 10 символов
-          : null;
-
-        console.log('Дата рождения из профиля:', this.birthday);
-
-        // Сохраняем дату рождения в OptionsService
-        if (this.birthday) {
-          this.optionsService.setBirthDate(this.birthday);
+        if (profile.birthday) {
+          // Преобразуем дату в формат, понятный input[type="date"]
+          const dateObj = new Date(profile.birthday);
+          if (!isNaN(dateObj.getTime())) {
+            // Проверяем валидность даты
+            this.birthday = dateObj.toISOString().split('T')[0];
+            this.selectedDate = this.birthday; // Устанавливаем для date picker
+            this.optionsService.setBirthDate(this.birthday);
+          }
         }
-
-        console.log('Дата рождения установлена:', this.birthday);
+        console.log('Loaded birthday:', this.birthday);
       },
       error: (error) => {
         console.error('Ошибка при загрузке даты рождения:', error);
@@ -111,7 +109,6 @@ export class OptionsComponent implements OnInit {
     }
   }
 
-
   contactManager(): void {
     window.location.href = 'https://t.me/alenka15em';
   }
@@ -130,6 +127,4 @@ export class OptionsComponent implements OnInit {
   toggleDatePicker() {
     this.isDatePickerOpen = !this.isDatePickerOpen;
   }
-
-
 }

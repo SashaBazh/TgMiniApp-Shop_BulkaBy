@@ -19,6 +19,7 @@ export class OptionsService {
     'X-Telegram-Init-Data': (window as any).Telegram?.WebApp?.initData || '',
     'authorization': '1'
   });
+  
 
   constructor(private translate: TranslateService, private http: HttpClient) {
     this.translate.addLangs(['en', 'ru']);
