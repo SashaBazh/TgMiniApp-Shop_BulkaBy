@@ -1,6 +1,6 @@
 export const environment = {
     production: false,
-    apiUrl: 'https://94f9ca6e2b39bf.lhr.life/api' // Замените на ваш базовый URL API
+    apiUrl: 'https://api.monobuket-mk.by/bulka/api' // Замените на ваш базовый URL API
   };
 
   // https://api.excellentjewellery.ru/api
